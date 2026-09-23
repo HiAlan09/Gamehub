@@ -187,7 +187,7 @@
             <span class="text-xs font-medium text-neutral-400">iPad Pro</span>
             <span class="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 select-none pl-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              v1.8
+              v1.9
             </span>
           </div>
           <p class="text-[11px] text-neutral-400 font-normal hidden md:block">独立游戏托管容器 · 本地持久化存储</p>
@@ -975,17 +975,78 @@
       renderGameGrid();
     }
 
+    // 🎨 高精度主题色调映射引擎 (确保所有设备/无网离线状态下色调 100% 稳定呈现)
+    const THEME_CONFIG = {
+      'from-blue-600 to-indigo-700': {
+        gradientCss: 'linear-gradient(135deg, #2563eb 0%, #4338ca 100%)',
+        accent: '#3b82f6',
+        badgeBg: 'rgba(37, 99, 235, 0.28)',
+        badgeBorder: 'rgba(96, 165, 250, 0.45)',
+        badgeText: '#93c5fd',
+        glow: 'rgba(59, 130, 246, 0.35)'
+      },
+      'from-purple-600 to-pink-600': {
+        gradientCss: 'linear-gradient(135deg, #9333ea 0%, #db2777 100%)',
+        accent: '#c084fc',
+        badgeBg: 'rgba(147, 51, 234, 0.28)',
+        badgeBorder: 'rgba(192, 132, 252, 0.45)',
+        badgeText: '#e9d5ff',
+        glow: 'rgba(192, 132, 252, 0.35)'
+      },
+      'from-emerald-600 to-teal-700': {
+        gradientCss: 'linear-gradient(135deg, #059669 0%, #0f766e 100%)',
+        accent: '#34d399',
+        badgeBg: 'rgba(5, 150, 105, 0.28)',
+        badgeBorder: 'rgba(52, 211, 153, 0.45)',
+        badgeText: '#a7f3d0',
+        glow: 'rgba(52, 211, 153, 0.35)'
+      },
+      'from-amber-500 to-orange-600': {
+        gradientCss: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
+        accent: '#fb923c',
+        badgeBg: 'rgba(245, 158, 11, 0.28)',
+        badgeBorder: 'rgba(251, 146, 60, 0.45)',
+        badgeText: '#fed7aa',
+        glow: 'rgba(251, 146, 60, 0.35)'
+      },
+      'from-rose-600 to-red-700': {
+        gradientCss: 'linear-gradient(135deg, #e11d48 0%, #b91c1c 100%)',
+        accent: '#fb7185',
+        badgeBg: 'rgba(225, 29, 72, 0.28)',
+        badgeBorder: 'rgba(251, 113, 133, 0.45)',
+        badgeText: '#fecdd3',
+        glow: 'rgba(251, 113, 133, 0.35)'
+      },
+      'from-neutral-700 to-neutral-900': {
+        gradientCss: 'linear-gradient(135deg, #4b5563 0%, #1f2937 100%)',
+        accent: '#facc15',
+        badgeBg: 'rgba(250, 204, 21, 0.2)',
+        badgeBorder: 'rgba(250, 204, 21, 0.45)',
+        badgeText: '#fef08a',
+        glow: 'rgba(250, 204, 21, 0.3)'
+      }
+    };
+
+    function getTheme(key) {
+      return THEME_CONFIG[key] || THEME_CONFIG['from-blue-600 to-indigo-700'];
+    }
+
     // Helper: Build single game card HTML string
     function buildCardHTML(game) {
-      const gradient = game.gradient || "from-blue-600 to-indigo-700";
+      const theme = getTheme(game.gradient);
       const isUrl = game.sourceType === "url";
       const hasCover = !!(game.cover && game.cover.trim());
 
       return `
         <div 
-          class="game-card glass-card rounded-3xl flex flex-col justify-between group relative overflow-hidden border border-white/10 hover:border-blue-500/40 hover:shadow-glow transition-all duration-300 bg-neutral-900/90 cursor-grab active:cursor-grabbing select-none"
+          class="game-card glass-card rounded-3xl flex flex-col justify-between group relative overflow-hidden border border-white/10 hover:border-white/25 transition-all duration-300 bg-neutral-900/90 cursor-grab active:cursor-grabbing select-none"
           data-game-id="${game.id}"
+          onmouseenter="this.style.boxShadow='0 12px 36px -8px ${theme.glow}'"
+          onmouseleave="this.style.boxShadow=''"
         >
+          <!-- Top Theme Tone Accent Strip (全场景展现选定的专属主题色调) -->
+          <div class="w-full h-1 shrink-0 z-20" style="background: ${theme.gradientCss};"></div>
+
           <!-- Top Hero Media Container (16:9 Aspect Ratio) -->
           <div class="relative w-full h-44 sm:h-48 overflow-hidden bg-neutral-950 pointer-events-none">
             ${hasCover ? `
@@ -996,28 +1057,31 @@
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
               />
-              <div class="hidden absolute inset-0 bg-gradient-to-tr ${gradient} opacity-75 flex items-center justify-center">
-                <span class="text-4xl opacity-30 select-none">${game.icon || '🎮'}</span>
+              <!-- Fallback Gradient if Cover fails -->
+              <div class="hidden absolute inset-0 flex items-center justify-center" style="background: ${theme.gradientCss};">
+                <span class="text-4xl opacity-35 select-none">${game.icon || '🎮'}</span>
               </div>
             ` : `
-              <div class="absolute inset-0 bg-gradient-to-br ${gradient} opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out">
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(255,255,255,0.25),transparent_60%)]"></div>
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(0,0,0,0.6),transparent_50%)]"></div>
-                <div class="absolute -right-4 -bottom-4 text-8xl opacity-15 select-none pointer-events-none filter blur-[1px]">
+              <!-- Pure Theme Tone Hero Banner (未设置封面时的原生纯净渐变背景) -->
+              <div class="absolute inset-0 group-hover:scale-105 transition-transform duration-700 ease-out" style="background: ${theme.gradientCss};">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(255,255,255,0.32),transparent_60%)]"></div>
+                <div class="absolute -right-4 -bottom-4 text-8xl opacity-20 select-none pointer-events-none filter blur-[0.5px]">
                   ${game.icon || '🎮'}
                 </div>
               </div>
             `}
 
-            <!-- Vignette & Bottom Shadow Blend -->
-            <div class="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/40 to-black/40 pointer-events-none"></div>
+            <!-- Ultra-light bottom gradient (消除厚重黑块遮挡，让图标后方的背景图/渐变色完全透出) -->
+            <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to top, rgba(10, 10, 14, 0.68) 0%, rgba(10, 10, 14, 0.12) 36%, transparent 75%);"></div>
 
             <!-- Top Floating Dock -->
             <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between z-10 pointer-events-auto">
-              <span class="text-[11px] font-semibold px-3 py-1 rounded-full bg-neutral-900/70 backdrop-blur-xl text-neutral-200 border border-white/15 shadow-sm flex items-center gap-1.5">
-                <svg class="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 8h16M4 16h16"></path>
-                </svg>
+              <!-- Category Badge Tinted with Theme Tone -->
+              <span 
+                class="text-[11px] font-semibold px-3 py-1 rounded-full backdrop-blur-xl shadow-sm flex items-center gap-1.5 transition-colors"
+                style="background: ${theme.badgeBg}; border: 1px solid ${theme.badgeBorder}; color: ${theme.badgeText}; -webkit-backdrop-filter: blur(16px);"
+              >
+                <span class="w-1.5 h-1.5 rounded-full" style="background: ${theme.accent};"></span>
                 <span>${game.category || '未分类'}</span>
               </span>
               
@@ -1044,9 +1108,12 @@
               </div>
             </div>
 
-            <!-- Floating App Icon (Translucent Frosted Glass with Delicate Border) -->
+            <!-- Floating App Icon: 高通透晶体毛玻璃 (背景图与色彩清晰透出，保留精致亮白晶边) -->
             <div class="absolute bottom-3 left-4 flex items-center space-x-3 z-10 pointer-events-none">
-              <div class="w-11 h-11 rounded-2xl bg-black/25 backdrop-blur-md border border-white/20 shadow-lg flex items-center justify-center text-2xl shrink-0 ring-1 ring-black/20">
+              <div 
+                class="w-11 h-11 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-300"
+                style="background: rgba(255, 255, 255, 0.14); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1.5px solid rgba(255, 255, 255, 0.35); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3);"
+              >
                 ${game.icon || '🎮'}
               </div>
             </div>
@@ -1066,7 +1133,7 @@
             <!-- Bottom Play Action -->
             <div class="pt-4 mt-3 border-t border-white/5 flex items-center justify-between">
               <span class="text-[11px] text-neutral-400 flex items-center gap-1.5 font-normal select-none">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400/90 shadow-[0_0_8px_rgba(52,211,153,0.6)]"></span>
+                <span class="w-1.5 h-1.5 rounded-full" style="background: ${theme.accent}; box-shadow: 0 0 8px ${theme.glow};"></span>
                 <span>即点即玩</span>
               </span>
 
