@@ -11,6 +11,9 @@
   <meta name="apple-mobile-web-app-title" content="GameHub">
   <meta name="theme-color" content="#09090b">
   
+  <!-- 隐私防爬虫协议：严格禁止搜索引擎收录与建立快照 -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -96,9 +99,9 @@
       background: rgba(255, 255, 255, 0.25);
     }
 
-    /* iPad Pro Safe-area handling: ample clearance for time/battery status bar */
+    /* iPad Pro Safe-area handling: 恢复适中舒适高度，避开时钟电量同时不显空旷 */
     .safe-top-nav {
-      padding-top: calc(max(env(safe-area-inset-top, 0px), 24px) + 14px);
+      padding-top: calc(max(env(safe-area-inset-top, 0px), 24px) + 12px);
       padding-bottom: 14px;
     }
 
@@ -143,9 +146,9 @@
   <header class="sticky top-0 z-30 glass-nav border-b border-white/[0.08] transition-all px-6 lg:px-12 safe-top-nav">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
       
-      <!-- Brand & Hub Name -->
+      <!-- Brand & Hub Name with Version Tag -->
       <div class="flex items-center space-x-3.5">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 p-[1px] shadow-glow flex items-center justify-center">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 p-[1px] shadow-glow flex items-center justify-center shrink-0">
           <div class="w-full h-full bg-neutral-900 rounded-2xl flex items-center justify-center">
             <svg class="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
               <path d="M7 6a2 2 0 0 0-2 2v2H3a1 1 0 0 0 0 2h2v2a2 2 0 0 0 2 2h2v2a1 1 0 0 0 2 0v-2h2a2 2 0 0 0 2-2v-2h2a1 1 0 0 0 0-2h-2V8a2 2 0 0 0-2-2h-2V4a1 1 0 0 0-2 0v2H7zm8 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
@@ -157,9 +160,10 @@
             <h1 class="text-lg lg:text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
               Arcade Station
               <span class="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 tracking-wider">iPad Pro</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono" title="已生效最新版">v1.3</span>
             </h1>
           </div>
-          <p class="text-xs text-neutral-400 font-medium hidden sm:block">GitHub 游戏托管容器 · 独立沙盒引擎</p>
+          <p class="text-xs text-neutral-400 font-medium hidden sm:block">独立游戏托管容器 · 本地持久化存储</p>
         </div>
       </div>
 
@@ -336,21 +340,22 @@
 
       <!-- Action Utilities -->
       <div class="flex items-center space-x-2.5">
-        <!-- Reload Game -->
+        <!-- Reload Game (With Cache-Busting) -->
         <button 
-          onclick="reloadActiveGame()" 
-          class="p-2 text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-xl border border-white/10 transition active:scale-95"
-          title="重新载入游戏"
+          onclick="reloadActiveGame(true)" 
+          class="flex items-center space-x-1 px-3 py-1.5 text-xs text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-xl border border-white/10 transition active:scale-95"
+          title="强制拉取 GitHub 最新版本（清除 Safari 本地缓存）"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
           </svg>
+          <span class="hidden sm:inline">拉取最新版</span>
         </button>
 
-        <!-- Immersive Mode Toggle (Replaces non-functional Fullscreen API button) -->
+        <!-- Immersive Mode Toggle -->
         <button 
           onclick="toggleImmersiveBar(true)" 
-          class="flex items-center space-x-1.5 px-3 py-2 text-xs font-semibold text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-xl border border-white/10 transition active:scale-95"
+          class="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-xl border border-white/10 transition active:scale-95"
           title="收起顶栏，享受无干扰纯净画面"
         >
           <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -719,10 +724,11 @@
   <script>
     /* ========================================================================= */
     /* 🎮 游戏注册表 (GAME REGISTRY)                                            */
-    /* 默认初始无内置游戏，保持纯净空白容器。                                      */
-    /* 后续在 GitHub 新增游戏时，您只需在此数组中追加游戏对象！                      */
     /* ========================================================================= */
     const DEFAULT_GAMES = [];
+
+    // Local Storage Key for iPad Persistence
+    const STORAGE_KEY = 'arcade_station_games_v1';
 
     // App State
     let gamesList = [];
@@ -765,10 +771,29 @@
       }
     }
 
-    // Initialize & load games
+    // Persist gamesList into iPad Local Storage
+    function saveToLocalStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(gamesList));
+      } catch (e) {
+        console.warn('LocalStorage save failed:', e);
+      }
+    }
+
+    // Initialize & load games from LocalStorage or Defaults
     function initApp() {
-      // Default to In-Memory state initially populated with DEFAULT_GAMES
-      gamesList = JSON.parse(JSON.stringify(DEFAULT_GAMES));
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          gamesList = JSON.parse(stored);
+        } else {
+          // Fallback to DEFAULT_GAMES
+          gamesList = JSON.parse(JSON.stringify(DEFAULT_GAMES));
+          saveToLocalStorage();
+        }
+      } catch (e) {
+        gamesList = JSON.parse(JSON.stringify(DEFAULT_GAMES));
+      }
       renderCategoryPills();
       renderGameGrid();
     }
@@ -959,6 +984,13 @@
     // Launch Game in Fullscreen Sandbox
     let activeRunningGame = null;
 
+    // Helper: 给外部 URL 附加时间戳参数，强制穿透 Safari 强力缓存
+    function getCacheBustedUrl(url) {
+      if (!url) return '';
+      const separator = url.includes('?') ? '&' : '?';
+      return `${url}${separator}_t=${Date.now()}`;
+    }
+
     function launchGame(gameId) {
       const game = gamesList.find(g => g.id === gameId);
       if (!game) return;
@@ -977,7 +1009,8 @@
       // Load Content
       if (game.sourceType === "url") {
         stageFrame.removeAttribute("srcdoc");
-        stageFrame.src = game.url;
+        // 首次载入时附带防缓存参数，确保加载的是 GitHub 最新已推送版本
+        stageFrame.src = getCacheBustedUrl(game.url);
       } else {
         stageFrame.removeAttribute("src");
         stageFrame.srcdoc = game.code || "<h2 style='color:#fff;font-family:sans-serif;text-align:center;padding-top:100px;'>暂无代码</h2>";
@@ -1010,16 +1043,18 @@
       container.classList.remove("flex");
     }
 
-    function reloadActiveGame() {
+    function reloadActiveGame(forceFresh = false) {
       if (!activeRunningGame) return;
       playTapSound('click');
       const stageFrame = document.getElementById("gameStageFrame");
       if (activeRunningGame.sourceType === "url") {
-        stageFrame.src = activeRunningGame.url;
+        // forceFresh 为 true 时追加全新时间戳，强行穿透并丢弃 Safari 本地旧缓存
+        stageFrame.src = forceFresh ? getCacheBustedUrl(activeRunningGame.url) : activeRunningGame.url;
+        showToast(forceFresh ? "已穿透缓存，拉取最新代码" : "游戏已重载", "🔄");
       } else {
         stageFrame.srcdoc = activeRunningGame.code;
+        showToast("游戏已重载", "🔄");
       }
-      showToast("游戏已重载", "🔄");
     }
 
     let isHeaderCollapsed = false;
@@ -1047,7 +1082,7 @@
     }
 
     // Open Editor for Add or Edit
-    let currentEditingType = 'inline';
+    let currentEditingType = 'url';
 
     function openGameEditorModal(gameId = null) {
       playTapSound('click');
@@ -1069,11 +1104,11 @@
         document.getElementById("gameDescInput").value = game.description || "";
         document.getElementById("gameUrlInput").value = game.url || "";
         document.getElementById("gameCodeInput").value = game.code || "";
-        setSourceType(game.sourceType || 'inline');
+        setSourceType(game.sourceType || 'url');
 
         deleteBtn.classList.remove("hidden");
       } else {
-        // Add Mode
+        // Add Mode (Defaulting to 'url' mode for modular development)
         titleEl.innerText = "录入新游戏到容器";
         document.getElementById("editGameId").value = "";
         document.getElementById("gameTitleInput").value = "";
@@ -1083,7 +1118,7 @@
         document.getElementById("gameDescInput").value = "";
         document.getElementById("gameUrlInput").value = "";
         document.getElementById("gameCodeInput").value = "";
-        setSourceType('inline');
+        setSourceType('url');
 
         deleteBtn.classList.add("hidden");
       }
@@ -1179,6 +1214,8 @@
         showToast(`已成功收录: ${title}`, "🎉");
       }
 
+      // Persist to local storage
+      saveToLocalStorage();
       closeGameEditorModal();
       renderCategoryPills();
       renderGameGrid();
@@ -1190,9 +1227,10 @@
       const game = gamesList.find(g => g.id === editId);
       if (!game) return;
 
-      openConfirmDialog("确认彻底删除？", `确定要从本容器中移除 "${game.title}" 吗？移除后请记得导出最新代码以在 GitHub 中同步。`, confirmed => {
+      openConfirmDialog("确认彻底删除？", `确定要从本容器中移除 "${game.title}" 吗？`, confirmed => {
         if (confirmed) {
           gamesList = gamesList.filter(g => g.id !== editId);
+          saveToLocalStorage();
           closeGameEditorModal();
           renderCategoryPills();
           renderGameGrid();
@@ -1303,13 +1341,14 @@
     }
 
     function resetToDefaultGames() {
-      openConfirmDialog("重置为初始示例？", "确定要将游戏列表恢复为初始内置的三个示例游戏吗？未同步的本地改动将会丢失。", confirmed => {
+      openConfirmDialog("恢复默认设置？", "确定要清空本地游戏并恢复初始状态吗？", confirmed => {
         if (confirmed) {
           gamesList = JSON.parse(JSON.stringify(DEFAULT_GAMES));
+          saveToLocalStorage();
           closeSettingsModal();
           renderCategoryPills();
           renderGameGrid();
-          showToast("已恢复内置示例游戏", "🔄");
+          showToast("已重置游戏列表", "🔄");
         }
       });
     }
