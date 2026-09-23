@@ -187,7 +187,7 @@
             <span class="text-xs font-medium text-neutral-400">iPad Pro</span>
             <span class="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 select-none pl-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              v2.0
+              v2.1
             </span>
           </div>
           <p class="text-[11px] text-neutral-400 font-normal hidden md:block">独立游戏托管容器 · 本地持久化存储</p>
@@ -1052,7 +1052,7 @@
           onmouseleave="this.style.boxShadow='0 10px 30px -10px ${theme.accentGlow}'"
         >
           <!-- Top Hero Media Container (16:9 Aspect Ratio) -->
-          <div class="relative w-full h-44 sm:h-48 overflow-hidden bg-neutral-950 pointer-events-none" style="isolation: isolate; transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0);">
+          <div class="relative w-full h-44 sm:h-48 overflow-hidden bg-neutral-950 pointer-events-none">
             ${hasCover ? `
               <!-- User Game Cover Poster -->
               <img 
@@ -1077,9 +1077,6 @@
                 </div>
               </div>
             `}
-
-            <!-- Ultra-soft vignette at bottom (保留通透度，绝不遮盖后方背景与色彩) -->
-            <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to top, rgba(14, 14, 18, 0.45) 0%, transparent 40%);"></div>
 
             <!-- Top Floating Dock -->
             <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between z-10 pointer-events-auto">
@@ -1115,18 +1112,16 @@
               </div>
             </div>
 
-            <!-- Floating App Icon: 高通透晶体毛玻璃 (完全透视背后海报与光影，带精致高光细边框) -->
-            <div class="absolute bottom-3 left-4 flex items-center space-x-3 z-10 pointer-events-none" style="isolation: isolate;">
+            <!-- Floating App Icon: 高通透若隐若现磨砂晶体 (彻底移除图层隔离，海报图案清晰透视) -->
+            <div class="absolute bottom-3 left-4 z-10 pointer-events-none">
               <div 
-                class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition-transform duration-300"
+                class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0"
                 style="
-                  background: rgba(255, 255, 255, 0.08);
-                  -webkit-backdrop-filter: blur(20px) saturate(190%);
-                  backdrop-filter: blur(20px) saturate(190%);
-                  border: 1px solid rgba(255, 255, 255, 0.35);
-                  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
-                  transform: translate3d(0, 0, 0);
-                  -webkit-transform: translate3d(0, 0, 0);
+                  background: rgba(255, 255, 255, 0.15);
+                  -webkit-backdrop-filter: blur(8px) saturate(150%);
+                  backdrop-filter: blur(8px) saturate(150%);
+                  border: 1px solid rgba(255, 255, 255, 0.32);
+                  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
                 "
               >
                 ${game.icon || '🎮'}
