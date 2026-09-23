@@ -164,7 +164,7 @@
             <span class="text-xs font-medium text-neutral-400">iPad Pro</span>
             <span class="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 select-none pl-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              v1.4
+              v1.5
             </span>
           </div>
           <p class="text-[11px] text-neutral-400 font-normal hidden md:block">独立游戏托管容器 · 本地持久化存储</p>
@@ -457,25 +457,25 @@
           <div class="grid grid-cols-2 gap-2 p-1 bg-neutral-800 rounded-xl border border-white/10">
             <button 
               type="button" 
-              id="sourceTypeInlineBtn" 
-              onclick="setSourceType('inline')" 
+              id="sourceTypeUrlBtn" 
+              onclick="setSourceType('url')" 
               class="py-1.5 text-xs font-medium rounded-lg bg-blue-600 text-white transition"
             >
-              内联 HTML 代码 (独立自闭环)
+              外部 URL 链接 (GitHub Pages)
             </button>
             <button 
               type="button" 
-              id="sourceTypeUrlBtn" 
-              onclick="setSourceType('url')" 
+              id="sourceTypeInlineBtn" 
+              onclick="setSourceType('inline')" 
               class="py-1.5 text-xs font-medium rounded-lg text-neutral-400 hover:text-white transition"
             >
-              外部 URL 链接 (GitHub Pages)
+              内联 HTML 代码 (独立自闭环)
             </button>
           </div>
         </div>
 
         <!-- URL Input section -->
-        <div id="urlInputContainer" class="hidden">
+        <div id="urlInputContainer">
           <label class="block text-xs font-semibold text-neutral-300 mb-1.5">游戏运行 URL</label>
           <input 
             type="url" 
@@ -487,7 +487,7 @@
         </div>
 
         <!-- Inline Code Editor section -->
-        <div id="inlineCodeContainer">
+        <div id="inlineCodeContainer" class="hidden">
           <div class="flex items-center justify-between mb-1.5">
             <label class="block text-xs font-semibold text-neutral-300">游戏单文件 HTML 代码</label>
             <span class="text-[11px] text-neutral-400">包含完整的 &lt;!DOCTYPE html&gt;、CSS 与 JS</span>
@@ -735,7 +735,7 @@
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
+        const gain = audioGain = audioCtx.createGain();
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         const now = audioCtx.currentTime;
@@ -875,13 +875,11 @@
         emptyState.classList.add("flex");
 
         if (gamesList.length === 0) {
-          // 容器本身没有任何游戏
           emptyTitle.innerText = "你的游戏中心还是空的";
           emptyDesc.innerText = "点击右上角「录入游戏」添加你的第一个专属 iPad 游戏！";
           emptyBtn.innerText = "录入第一个游戏";
           emptyBtn.onclick = () => openGameEditorModal();
         } else {
-          // 筛选或搜索无结果
           emptyTitle.innerText = "未找到匹配的游戏";
           emptyDesc.innerText = "尝试更换搜索词或重置分类筛选";
           emptyBtn.innerText = "重置筛选条件";
@@ -948,10 +946,11 @@
               </p>
             </div>
 
-            <!-- Bottom Play Action -->
+            <!-- Bottom Play Action (Clean Apple-Style Footer) -->
             <div class="pt-4 mt-2 border-t border-white/5 flex items-center justify-between">
-              <span class="text-[11px] text-neutral-500 font-mono">
-                ID: ${game.id.substring(0, 14)}
+              <span class="text-[11px] text-neutral-400 flex items-center gap-1.5 font-normal select-none">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400/80"></span>
+                <span>即点即玩</span>
               </span>
 
               <button 
