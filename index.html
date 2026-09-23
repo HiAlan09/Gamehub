@@ -99,15 +99,15 @@
       background: rgba(255, 255, 255, 0.25);
     }
 
-    /* iPad Pro Safe-area handling: 恢复适中舒适高度，避开时钟电量同时不显空旷 */
+    /* iPad Pro Safe-area handling: 极度轻薄紧凑，释放最大可视游戏面积 */
     .safe-top-nav {
-      padding-top: calc(max(env(safe-area-inset-top, 0px), 24px) + 12px);
-      padding-bottom: 14px;
+      padding-top: max(env(safe-area-inset-top, 0px), 10px);
+      padding-bottom: 8px;
     }
 
     .safe-top-sandbox {
-      padding-top: calc(max(env(safe-area-inset-top, 0px), 24px) + 10px);
-      padding-bottom: 12px;
+      padding-top: max(env(safe-area-inset-top, 0px), 6px);
+      padding-bottom: 6px;
     }
 
     /* Sandbox topbar collapse transition */
@@ -143,55 +143,59 @@
   <!-- ================================================================= -->
   <!-- 1. TOP STATUS & NAVIGATION DOCK (iPadOS Style)                     -->
   <!-- ================================================================= -->
-  <header class="sticky top-0 z-30 glass-nav border-b border-white/[0.08] transition-all px-6 lg:px-12 safe-top-nav">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+  <header class="sticky top-0 z-30 glass-nav border-b border-white/[0.08] transition-all px-5 lg:px-10 safe-top-nav">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
       
-      <!-- Brand & Hub Name with Version Tag -->
-      <div class="flex items-center space-x-3.5">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 p-[1px] shadow-glow flex items-center justify-center shrink-0">
-          <div class="w-full h-full bg-neutral-900 rounded-2xl flex items-center justify-center">
-            <svg class="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M7 6a2 2 0 0 0-2 2v2H3a1 1 0 0 0 0 2h2v2a2 2 0 0 0 2 2h2v2a1 1 0 0 0 2 0v-2h2a2 2 0 0 0 2-2v-2h2a1 1 0 0 0 0-2h-2V8a2 2 0 0 0-2-2h-2V4a1 1 0 0 0-2 0v2H7zm8 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+      <!-- Brand & Clean Apple-style Hub Identity -->
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 p-[1px] shadow-glow flex items-center justify-center shrink-0">
+          <div class="w-full h-full bg-neutral-900 rounded-xl flex items-center justify-center">
+            <svg class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 6a2 2 0 0 0-2 2v2H3a1 1 0 0 0 2 2h2v2a2 2 0 0 0 2 2h2v2a1 1 0 0 0 2 0v-2h2a2 2 0 0 0 2-2v-2h2a1 1 0 0 0 0-2h-2V8a2 2 0 0 0-2-2h-2V4a1 1 0 0 0-2 0v2H7zm8 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
             </svg>
           </div>
         </div>
-        <div>
+        <div class="flex flex-col">
           <div class="flex items-center space-x-2">
-            <h1 class="text-lg lg:text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+            <h1 class="text-base lg:text-lg font-bold tracking-tight text-white">
               Arcade Station
-              <span class="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 tracking-wider">iPad Pro</span>
-              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono" title="已生效最新版">v1.3</span>
             </h1>
+            <span class="text-neutral-600 text-xs select-none">/</span>
+            <span class="text-xs font-medium text-neutral-400">iPad Pro</span>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 select-none pl-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              v1.4
+            </span>
           </div>
-          <p class="text-xs text-neutral-400 font-medium hidden sm:block">独立游戏托管容器 · 本地持久化存储</p>
+          <p class="text-[11px] text-neutral-400 font-normal hidden md:block">独立游戏托管容器 · 本地持久化存储</p>
         </div>
       </div>
 
       <!-- Search & Filters in Header -->
-      <div class="flex-1 max-w-md mx-2 hidden md:block">
+      <div class="flex-1 max-w-xs sm:max-w-sm md:max-w-md mx-2">
         <div class="relative">
-          <svg class="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
           <input 
             type="text" 
             id="searchInput" 
             placeholder="搜索已收录的游戏、分类或关键词..." 
-            class="w-full bg-neutral-900/90 text-sm text-neutral-100 placeholder-neutral-500 pl-10 pr-4 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500/70 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            class="w-full bg-neutral-900/90 text-xs text-neutral-100 placeholder-neutral-500 pl-9 pr-4 py-1.5 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500/70 focus:ring-2 focus:ring-blue-500/20 transition-all"
             oninput="handleSearch(this.value)"
           />
         </div>
       </div>
 
       <!-- Action Buttons -->
-      <div class="flex items-center space-x-2.5">
+      <div class="flex items-center space-x-2">
         <!-- New Game Studio Button -->
         <button 
           onclick="openGameEditorModal()" 
-          class="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-xs lg:text-sm font-semibold px-3.5 py-2 rounded-xl transition shadow-glow active:scale-95"
+          class="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-xs font-semibold px-3 py-1.5 rounded-xl transition shadow-glow active:scale-95"
           title="在容器内录入新游戏"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 4v16m8-8H4"></path>
           </svg>
           <span class="hidden sm:inline">录入游戏</span>
@@ -200,10 +204,10 @@
         <!-- Sync & Export Config Button (For GitHub) -->
         <button 
           onclick="openSyncExportModal()" 
-          class="flex items-center space-x-1.5 bg-neutral-800/90 hover:bg-neutral-700 text-neutral-200 text-xs lg:text-sm font-semibold px-3.5 py-2 rounded-xl border border-white/10 transition active:scale-95"
+          class="flex items-center space-x-1.5 bg-neutral-800/90 hover:bg-neutral-700 text-neutral-200 text-xs font-semibold px-3 py-1.5 rounded-xl border border-white/10 transition active:scale-95"
           title="导出最新配置以便在 GitHub 中同步"
         >
-          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
           </svg>
           <span class="hidden sm:inline">导出 GitHub 代码</span>
@@ -212,10 +216,10 @@
         <!-- Container Settings Button -->
         <button 
           onclick="openSettingsModal()" 
-          class="p-2 bg-neutral-800/80 hover:bg-neutral-700 text-neutral-300 rounded-xl border border-white/10 transition active:scale-95"
+          class="p-1.5 bg-neutral-800/80 hover:bg-neutral-700 text-neutral-300 rounded-xl border border-white/10 transition active:scale-95"
           title="容器设置"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
           </svg>
@@ -225,22 +229,7 @@
     </div>
   </header>
 
-  <main class="flex-1 max-w-7xl w-full mx-auto px-6 lg:px-12 py-6 flex flex-col space-y-7 pb-[calc(2rem+var(--sab))]">
-    
-    <!-- Mobile Search input for narrow/split view -->
-    <div class="block md:hidden">
-      <div class="relative">
-        <svg class="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
-        <input 
-          type="text" 
-          placeholder="搜索已收录的游戏..." 
-          class="w-full bg-neutral-900/90 text-sm text-neutral-100 placeholder-neutral-500 pl-10 pr-4 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500"
-          oninput="handleSearch(this.value)"
-        />
-      </div>
-    </div>
+  <main class="flex-1 max-w-7xl w-full mx-auto px-5 lg:px-10 py-5 flex flex-col space-y-5 pb-[calc(2rem+var(--sab))]">
 
     <!-- Category Pill Filter + Sort Bar -->
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -310,7 +299,7 @@
     <button 
       id="sandboxShowBarBtn" 
       onclick="toggleImmersiveBar(false)" 
-      class="fixed top-4 right-5 z-30 hidden items-center space-x-1.5 bg-neutral-900/85 hover:bg-neutral-800 backdrop-blur-md text-neutral-300 hover:text-white text-xs px-3.5 py-1.5 rounded-full border border-white/15 shadow-apple transition active:scale-95"
+      class="fixed top-2.5 right-4 z-30 hidden items-center space-x-1.5 bg-neutral-900/85 hover:bg-neutral-800 backdrop-blur-md text-neutral-300 hover:text-white text-xs px-3 py-1 rounded-full border border-white/15 shadow-apple transition active:scale-95"
     >
       <span>🎮 菜单栏</span>
       <svg class="w-3.5 h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -318,50 +307,50 @@
       </svg>
     </button>
 
-    <!-- Sandbox Floating Top Controller for iPad Safari -->
-    <header id="sandboxHeader" class="safe-top-sandbox bg-neutral-900/95 backdrop-blur-xl border-b border-white/10 px-5 sm:px-8 flex items-center justify-between z-20 shrink-0 shadow-lg">
+    <!-- Ultra-Slim Minimalist Sandbox Top Controller (Max Screen Space for iPad Pro) -->
+    <header id="sandboxHeader" class="safe-top-sandbox bg-neutral-900/90 backdrop-blur-xl border-b border-white/[0.08] px-4 sm:px-6 flex items-center justify-between z-20 shrink-0 shadow-md">
       
-      <!-- Back to Launcher Button -->
+      <!-- Back to Launcher Button (Sleek Compact Pill) -->
       <button 
         onclick="closeGameSandbox()" 
-        class="flex items-center space-x-2 text-sm font-medium text-neutral-200 hover:text-white bg-neutral-800/90 hover:bg-neutral-700 active:scale-95 px-3.5 py-2 rounded-xl border border-white/10 transition shadow-sm"
+        class="flex items-center space-x-1.5 text-xs font-medium text-neutral-300 hover:text-white bg-neutral-800/90 hover:bg-neutral-700 active:scale-95 px-3 py-1.5 rounded-lg border border-white/10 transition"
       >
-        <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        <svg class="w-3.5 h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"></path>
         </svg>
         <span>返回大厅</span>
       </button>
 
-      <!-- Active Game Title & Info -->
-      <div class="flex items-center space-x-2.5 text-center">
-        <span id="sandboxGameIcon" class="text-xl">🎮</span>
-        <span id="sandboxGameTitle" class="text-sm font-bold text-white tracking-wide truncate max-w-[200px] sm:max-w-xs md:max-w-md">正在运行游戏</span>
+      <!-- Active Game Title & Info (Sleek Compact Typography) -->
+      <div class="flex items-center space-x-2 text-center">
+        <span id="sandboxGameIcon" class="text-base">🎮</span>
+        <span id="sandboxGameTitle" class="text-xs sm:text-sm font-semibold text-white tracking-wide truncate max-w-[180px] sm:max-w-xs md:max-w-md">正在运行游戏</span>
       </div>
 
-      <!-- Action Utilities -->
-      <div class="flex items-center space-x-2.5">
+      <!-- Action Utilities (Compact Icon Buttons) -->
+      <div class="flex items-center space-x-2">
         <!-- Reload Game (With Cache-Busting) -->
         <button 
           onclick="reloadActiveGame(true)" 
-          class="flex items-center space-x-1 px-3 py-1.5 text-xs text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-xl border border-white/10 transition active:scale-95"
+          class="flex items-center space-x-1 px-2.5 py-1.5 text-xs text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-lg border border-white/10 transition active:scale-95"
           title="强制拉取 GitHub 最新版本（清除 Safari 本地缓存）"
         >
           <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
           </svg>
-          <span class="hidden sm:inline">拉取最新版</span>
+          <span class="hidden sm:inline">拉取最新</span>
         </button>
 
         <!-- Immersive Mode Toggle -->
         <button 
           onclick="toggleImmersiveBar(true)" 
-          class="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-xl border border-white/10 transition active:scale-95"
+          class="flex items-center space-x-1 px-2.5 py-1.5 text-xs font-medium text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-lg border border-white/10 transition active:scale-95"
           title="收起顶栏，享受无干扰纯净画面"
         >
           <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
           </svg>
-          <span class="hidden sm:inline">沉浸全屏</span>
+          <span class="hidden sm:inline">纯净全屏</span>
         </button>
       </div>
 
