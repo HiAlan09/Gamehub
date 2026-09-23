@@ -96,6 +96,27 @@
       background: rgba(255, 255, 255, 0.25);
     }
 
+    /* iPad Pro Safe-area handling: ample clearance for time/battery status bar */
+    .safe-top-nav {
+      padding-top: calc(max(env(safe-area-inset-top, 0px), 24px) + 14px);
+      padding-bottom: 14px;
+    }
+
+    .safe-top-sandbox {
+      padding-top: calc(max(env(safe-area-inset-top, 0px), 24px) + 10px);
+      padding-bottom: 12px;
+    }
+
+    /* Sandbox topbar collapse transition */
+    #sandboxHeader {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    }
+    #sandboxHeader.header-hidden {
+      transform: translateY(-100%);
+      pointer-events: none;
+      opacity: 0;
+    }
+
     /* Modal animation */
     .fade-in {
       animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -119,7 +140,7 @@
   <!-- ================================================================= -->
   <!-- 1. TOP STATUS & NAVIGATION DOCK (iPadOS Style)                     -->
   <!-- ================================================================= -->
-  <header class="sticky top-0 z-30 glass-nav border-b border-white/[0.08] transition-all px-6 lg:px-12 py-3.5 pt-[max(0.875rem,env(safe-area-inset-top))]">
+  <header class="sticky top-0 z-30 glass-nav border-b border-white/[0.08] transition-all px-6 lg:px-12 safe-top-nav">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
       
       <!-- Brand & Hub Name -->
@@ -281,15 +302,27 @@
     id="gameSandboxContainer" 
     class="fixed inset-0 z-50 bg-black flex-col hidden transition-all"
   >
+    <!-- Floating pill to reveal header when in immersive mode -->
+    <button 
+      id="sandboxShowBarBtn" 
+      onclick="toggleImmersiveBar(false)" 
+      class="fixed top-4 right-5 z-30 hidden items-center space-x-1.5 bg-neutral-900/85 hover:bg-neutral-800 backdrop-blur-md text-neutral-300 hover:text-white text-xs px-3.5 py-1.5 rounded-full border border-white/15 shadow-apple transition active:scale-95"
+    >
+      <span>🎮 菜单栏</span>
+      <svg class="w-3.5 h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+
     <!-- Sandbox Floating Top Controller for iPad Safari -->
-    <header class="h-14 bg-neutral-900/90 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 flex items-center justify-between z-10 pt-[env(safe-area-inset-top)]">
+    <header id="sandboxHeader" class="safe-top-sandbox bg-neutral-900/95 backdrop-blur-xl border-b border-white/10 px-5 sm:px-8 flex items-center justify-between z-20 shrink-0 shadow-lg">
       
       <!-- Back to Launcher Button -->
       <button 
         onclick="closeGameSandbox()" 
-        class="flex items-center space-x-2 text-sm font-medium text-neutral-300 hover:text-white bg-neutral-800/90 hover:bg-neutral-700 active:scale-95 px-3 py-1.5 rounded-xl border border-white/10 transition"
+        class="flex items-center space-x-2 text-sm font-medium text-neutral-200 hover:text-white bg-neutral-800/90 hover:bg-neutral-700 active:scale-95 px-3.5 py-2 rounded-xl border border-white/10 transition shadow-sm"
       >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
         <span>返回大厅</span>
@@ -297,31 +330,33 @@
 
       <!-- Active Game Title & Info -->
       <div class="flex items-center space-x-2.5 text-center">
-        <span id="sandboxGameIcon" class="text-lg">🎮</span>
+        <span id="sandboxGameIcon" class="text-xl">🎮</span>
         <span id="sandboxGameTitle" class="text-sm font-bold text-white tracking-wide truncate max-w-[200px] sm:max-w-xs md:max-w-md">正在运行游戏</span>
       </div>
 
       <!-- Action Utilities -->
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-2.5">
         <!-- Reload Game -->
         <button 
           onclick="reloadActiveGame()" 
-          class="p-2 text-neutral-400 hover:text-white bg-neutral-800/60 hover:bg-neutral-700 rounded-xl border border-white/5 transition active:scale-95"
+          class="p-2 text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-xl border border-white/10 transition active:scale-95"
           title="重新载入游戏"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
           </svg>
         </button>
-        <!-- Fullscreen Window toggle -->
+
+        <!-- Immersive Mode Toggle (Replaces non-functional Fullscreen API button) -->
         <button 
-          onclick="toggleFullScreenIFrame()" 
-          class="p-2 text-neutral-400 hover:text-white bg-neutral-800/60 hover:bg-neutral-700 rounded-xl border border-white/5 transition active:scale-95"
-          title="全屏模式"
+          onclick="toggleImmersiveBar(true)" 
+          class="flex items-center space-x-1.5 px-3 py-2 text-xs font-semibold text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-xl border border-white/10 transition active:scale-95"
+          title="收起顶栏，享受无干扰纯净画面"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+          <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
           </svg>
+          <span class="hidden sm:inline">沉浸全屏</span>
         </button>
       </div>
 
@@ -962,6 +997,15 @@
       stageFrame.removeAttribute("srcdoc");
       activeRunningGame = null;
 
+      isHeaderCollapsed = false;
+      const header = document.getElementById("sandboxHeader");
+      const showBtn = document.getElementById("sandboxShowBarBtn");
+      if (header) header.classList.remove("header-hidden");
+      if (showBtn) {
+        showBtn.classList.add("hidden");
+        showBtn.classList.remove("flex");
+      }
+
       container.classList.add("hidden");
       container.classList.remove("flex");
     }
@@ -978,15 +1022,27 @@
       showToast("游戏已重载", "🔄");
     }
 
-    function toggleFullScreenIFrame() {
+    let isHeaderCollapsed = false;
+    function toggleImmersiveBar(hide) {
       playTapSound('click');
-      const elem = document.getElementById("gameSandboxContainer");
-      if (!document.fullscreenElement) {
-        elem.requestFullscreen().catch(err => {
-          showToast("Safari 需在快捷指令或全屏 PWA 状态运行", "ℹ️");
-        });
+      const header = document.getElementById("sandboxHeader");
+      const showBtn = document.getElementById("sandboxShowBarBtn");
+      
+      if (typeof hide === 'boolean') {
+        isHeaderCollapsed = hide;
       } else {
-        document.exitFullscreen();
+        isHeaderCollapsed = !isHeaderCollapsed;
+      }
+
+      if (isHeaderCollapsed) {
+        header.classList.add("header-hidden");
+        showBtn.classList.remove("hidden");
+        showBtn.classList.add("flex");
+        showToast("已收起顶栏，点击右上角药丸按钮可随时恢复", "✨");
+      } else {
+        header.classList.remove("header-hidden");
+        showBtn.classList.add("hidden");
+        showBtn.classList.remove("flex");
       }
     }
 
