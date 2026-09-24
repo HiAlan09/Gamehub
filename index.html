@@ -134,16 +134,16 @@
       box-shadow: 0 0 30px rgba(59, 130, 246, 0.5) !important;
     }
 
-    /* Hero Cinematic Asymmetric Vignette */
+    /* Hero Cinematic Asymmetric Vignette (中心通透，四角轻柔非对称羽化) */
     .hero-vignette {
       position: absolute;
       inset: 0;
       pointer-events: none;
       background: 
-        radial-gradient(circle at 12% 88%, rgba(8, 8, 10, 0.88) 0%, transparent 60%),
-        radial-gradient(circle at 88% 12%, rgba(8, 8, 10, 0.65) 0%, transparent 55%),
-        radial-gradient(circle at 12% 12%, rgba(8, 8, 10, 0.60) 0%, transparent 50%),
-        radial-gradient(circle at 88% 88%, rgba(8, 8, 10, 0.70) 0%, transparent 60%);
+        radial-gradient(ellipse at 8% 92%, rgba(8, 8, 10, 0.62) 0%, rgba(8, 8, 10, 0.20) 38%, transparent 62%),
+        radial-gradient(ellipse at 92% 8%, rgba(8, 8, 10, 0.30) 0%, transparent 45%),
+        radial-gradient(ellipse at 8% 8%, rgba(8, 8, 10, 0.35) 0%, transparent 42%),
+        radial-gradient(ellipse at 92% 92%, rgba(8, 8, 10, 0.25) 0%, transparent 42%);
     }
 
     /* Hero Breathing Animation */
@@ -203,8 +203,8 @@
   <!-- ================================================================= -->
   <!-- 1. TOP GLOBAL NAVIGATION DOCK (苹果风顶栏)                         -->
   <!-- ================================================================= -->
-  <header class="sticky top-0 z-30 glass-nav px-4 sm:px-6 safe-top-nav transition-all">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+  <header class="sticky top-0 z-30 glass-nav px-3 sm:px-5 lg:px-6 safe-top-nav transition-all">
+    <div class="max-w-[1560px] w-full mx-auto flex items-center justify-between gap-3">
       
       <!-- Brand & Version -->
       <div class="flex items-center space-x-3 shrink-0">
@@ -225,7 +225,7 @@
             <span class="text-xs text-neutral-400 font-medium">iPad Pro</span>
             <span class="flex items-center gap-1 text-[11px] font-mono text-emerald-400">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-              <span>v3.4</span>
+              <span>v3.5</span>
             </span>
           </div>
           <p class="text-[10px] text-neutral-400 hidden sm:block">空间智能游乐场 · 独立沙盒管理器</p>
@@ -296,7 +296,7 @@
   <!-- ================================================================= -->
   <!-- 2. MAIN VIEW AREA (双层视图容器)                                  -->
   <!-- ================================================================= -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+  <main class="flex-1 max-w-[1560px] w-full mx-auto px-3 sm:px-5 lg:px-6 py-4 sm:py-6 space-y-7">
 
     <!-- =============================================================== -->
     <!-- VIEW A: DISCOVER HOMEPAGE (🚀 探索发现展示首页)                 -->
@@ -315,10 +315,10 @@
         />
 
         <!-- Background Layer 1: Sci-Fi Neon Ambient Gradient & Grid (Enhanced Transparency for Posters) -->
-        <div id="heroGradientLayer" class="absolute inset-0 bg-gradient-to-tr from-blue-950/40 via-purple-950/20 to-transparent pointer-events-none transition-all duration-700"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/20 to-transparent pointer-events-none"></div>
+        <div id="heroGradientLayer" class="absolute inset-0 bg-gradient-to-tr from-blue-950/20 via-purple-950/10 to-transparent pointer-events-none transition-all duration-700"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/45 via-transparent to-transparent pointer-events-none"></div>
 
-        <!-- Background Layer 1.5: Cinematic Asymmetric Vignette (四角自然渐变暗角) -->
+        <!-- Background Layer 1.5: Cinematic Asymmetric Vignette (中心通透，四角轻柔非对称) -->
         <div class="hero-vignette z-[2]"></div>
 
         <!-- Background Layer 2: Cyber Floating Ambient Glow -->
@@ -722,8 +722,9 @@
           <span class="block font-semibold text-neutral-300 mb-2">实时效果预览（保留顶层流光渐变）：</span>
           <div class="relative w-full h-36 rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 flex flex-col justify-end p-4">
             <img id="heroBgModalPreviewImg" src="" alt="预览" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 animate-hero-breathe" />
-            <div class="absolute inset-0 bg-gradient-to-tr from-blue-900/40 via-purple-900/20 to-transparent pointer-events-none"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/20 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-tr from-blue-900/20 via-purple-900/10 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/45 via-transparent to-transparent pointer-events-none"></div>
+            <div class="hero-vignette z-[2]"></div>
             
             <div class="relative z-10 flex items-center space-x-2">
               <div class="w-8 h-8 rounded-lg glass-icon flex items-center justify-center text-sm">👾</div>
