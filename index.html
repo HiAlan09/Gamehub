@@ -364,7 +364,7 @@
             <button 
               id="heroSecondaryBtn"
               onclick="switchMainTab('library')" 
-              class="px-4 sm:px-5 py-2.5 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-white font-medium text-xs sm:text-sm rounded-xl border border-white/10 backdrop-blur-md transition active:scale-95"
+              class="hidden px-4 sm:px-5 py-2.5 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-white font-medium text-xs sm:text-sm rounded-xl border border-white/10 backdrop-blur-md transition active:scale-95"
             >
               浏览全部游戏库 →
             </button>
@@ -795,23 +795,26 @@
               id="formGameTitle" 
               required 
               placeholder="如：璀璨宝石、双人中国象棋" 
-              class="w-full bg-neutral-950 text-white text-xs px-3.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
+              class="w-full h-10 bg-neutral-950 text-white text-xs px-3.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 box-border"
             />
           </div>
           <div>
             <label class="block font-semibold text-neutral-300 mb-1">游戏分类 *</label>
-            <div class="flex items-center space-x-1.5">
+            <div class="relative flex items-center">
               <input 
                 type="text" 
                 id="formGameCategory" 
                 required 
-                placeholder="如：棋牌、益智、街机、策略" 
-                class="flex-1 min-w-0 bg-neutral-950 text-white text-xs px-3.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
+                placeholder="输入或选择分类，如：棋牌、益智" 
+                class="w-full h-10 bg-neutral-950 text-white text-xs px-3.5 pr-8 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 box-border"
               />
+              <div class="absolute right-2.5 flex items-center pointer-events-none text-neutral-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </div>
               <select 
                 id="formCategorySelect" 
                 onchange="handleCategorySelectChange(this.value)" 
-                class="shrink-0 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs px-2.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 cursor-pointer"
+                class="absolute right-0 top-0 bottom-0 w-8 opacity-0 cursor-pointer"
                 title="选择已有分类"
               >
                 <option value="">▼ 现有分类</option>
@@ -828,14 +831,14 @@
               type="text" 
               id="formGameIcon" 
               value="🎮" 
-              class="w-full bg-neutral-950 text-center text-lg text-white px-3 py-1.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
+              class="w-full h-10 bg-neutral-950 text-center text-xl text-white px-3 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 box-border leading-10"
             />
           </div>
           <div class="sm:col-span-2">
             <label class="block font-semibold text-neutral-300 mb-1">主题色彩流光</label>
             <select 
               id="formGameTheme" 
-              class="w-full bg-neutral-950 text-white text-xs px-3.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
+              class="w-full h-10 bg-neutral-950 text-white text-xs px-3.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 box-border"
             >
               <option value="blue">科技蓝 (Cyber Blue)</option>
               <option value="purple">霓虹紫 (Neon Purple)</option>
@@ -1272,8 +1275,7 @@
         }
 
         if (secondaryBtn) {
-          secondaryBtn.textContent = '个性装扮 🎨';
-          secondaryBtn.onclick = () => openCustomizationModal('poster');
+          secondaryBtn.classList.add('hidden');
         }
         return;
       }
@@ -1304,6 +1306,7 @@
 
       if (launchBtn) launchBtn.innerHTML = `<span>立即进入</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
       if (secondaryBtn) {
+        secondaryBtn.classList.remove('hidden');
         secondaryBtn.textContent = '浏览全部游戏库 →';
         secondaryBtn.onclick = () => switchMainTab('library');
       }
