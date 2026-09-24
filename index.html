@@ -261,17 +261,20 @@
       <!-- 1. Star Showcase Hero (巨幕展示台) -->
       <section class="relative w-full rounded-3xl overflow-hidden border border-white/10 shadow-apple bg-neutral-950 aspect-[21/9] min-h-[300px] sm:min-h-[360px] flex flex-col justify-end p-6 sm:p-10">
         
-        <!-- Background Layer 0: User Custom Hero Image -->
+        <!-- Background Layer 0: User Custom Hero Image with Subtle Breathing Animation -->
         <img 
           id="heroCustomBgImg" 
           src="" 
           alt="Hero Poster" 
-          class="absolute inset-0 w-full h-full object-cover hidden transition-opacity duration-700" 
+          class="absolute inset-0 w-full h-full object-cover hidden transition-opacity duration-700 animate-hero-breathe" 
         />
 
         <!-- Background Layer 1: Sci-Fi Neon Ambient Gradient & Grid (Enhanced Transparency for Posters) -->
         <div id="heroGradientLayer" class="absolute inset-0 bg-gradient-to-tr from-blue-950/40 via-purple-950/20 to-transparent pointer-events-none transition-all duration-700"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/20 to-transparent pointer-events-none"></div>
+
+        <!-- Background Layer 1.5: Cinematic Asymmetric Vignette (四角自然渐变暗角) -->
+        <div class="hero-vignette z-[2]"></div>
 
         <!-- Background Layer 2: Cyber Floating Ambient Glow -->
         <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
