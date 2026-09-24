@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Arcade Station · iPad Pro 游戏中心</title>
-  
-  <!-- Apple Web App Standalone Meta Tags -->
+  <title>Arcade Station · iPad Pro 游戏大厅</title>
+
+  <!-- iPadOS Web App Fullscreen Optimization -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Arcade" />
+  <meta name="apple-mobile-web-app-title" content="Arcade Station" />
   <meta name="format-detection" content="telephone=no" />
-  <meta name="theme-color" content="#0a0a0c" />
-  
-  <!-- Anti-crawler Privacy Protection -->
+  <meta name="theme-color" content="#090a0f" />
+
+  <!-- Privacy & Anti-Crawler Directives -->
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS Engine -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -24,91 +24,113 @@
         extend: {
           colors: {
             brand: {
-              50: '#f0f7ff',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
+              50: '#eef2ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
             }
           },
-          fontFamily: {
-            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"PingFang SC"', '"Hiragino Sans GB"', '"Microsoft YaHei"', 'sans-serif'],
-            mono: ['"SF Mono"', 'Menlo', 'Monaco', 'Consolas', 'monospace']
-          },
           boxShadow: {
-            'glow-sm': '0 0 15px -3px rgba(59, 130, 246, 0.3)',
-            'glow': '0 0 25px -4px rgba(59, 130, 246, 0.4)',
-            'glow-purple': '0 0 25px -4px rgba(168, 85, 247, 0.4)',
-            'glow-amber': '0 0 25px -4px rgba(245, 158, 11, 0.35)',
-            'apple': '0 20px 40px -15px rgba(0, 0, 0, 0.7)'
+            'apple': '0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08)',
+            'apple-hover': '0 28px 50px -15px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.18)',
+            'glow-cyan': '0 0 35px -5px rgba(6, 182, 212, 0.35)',
+            'glow-purple': '0 0 35px -5px rgba(168, 85, 247, 0.35)'
           }
         }
       }
     }
   </script>
 
-  <!-- SortableJS for Touch Drag and Drop -->
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <!-- SortableJS for Touch-friendly iPad Drag & Drop -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
   <style>
-    /* iPadOS Safe Area Inset Management */
-    :root {
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
-      --safe-left: env(safe-area-inset-left, 0px);
-      --safe-right: env(safe-area-inset-right, 0px);
-    }
-
+    /* System Font stack for Apple Silicon Retina Displays */
     body {
-      background-color: #08080a;
-      color: #f3f4f6;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
       -webkit-user-select: none;
-      overflow-x: hidden;
     }
 
-    /* Compact, Elegant iPadOS Safe Area */
+    /* iPadOS Safe Area Inset Adapters */
     .safe-top-nav {
-      padding-top: calc(max(var(--safe-top), 10px) + 6px);
-      padding-bottom: 8px;
+      padding-top: calc(max(env(safe-area-inset-top, 0px), 10px) + 8px);
     }
-
     .safe-top-sandbox {
-      padding-top: calc(max(var(--safe-top), 6px) + 2px);
-      padding-bottom: 6px;
+      padding-top: calc(max(env(safe-area-inset-top, 0px), 6px) + 2px);
     }
 
-    /* Cyber Ambient Grid */
-    .cyber-grid {
-      background-size: 36px 36px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    /* Hero Breathing Animation */
+    @-webkit-keyframes heroBreathe {
+      0% {
+        -webkit-transform: scale(1.0) translateZ(0);
+        transform: scale(1.0) translateZ(0);
+      }
+      100% {
+        -webkit-transform: scale(1.065) translateZ(0);
+        transform: scale(1.065) translateZ(0);
+      }
+    }
+    @keyframes heroBreathe {
+      0% {
+        -webkit-transform: scale(1.0) translateZ(0);
+        transform: scale(1.0) translateZ(0);
+      }
+      100% {
+        -webkit-transform: scale(1.065) translateZ(0);
+        transform: scale(1.065) translateZ(0);
+      }
+    }
+    .animate-hero-breathe {
+      -webkit-animation: heroBreathe 7s ease-in-out infinite alternate !important;
+      animation: heroBreathe 7s ease-in-out infinite alternate !important;
+      will-change: transform;
+      -webkit-transform-origin: center center;
+      transform-origin: center center;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
-    /* Glassmorphism Classes */
-    .glass-nav {
-      background: rgba(13, 14, 18, 0.85);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /* Asymmetric Vignette Layer for Hero */
+    .hero-vignette {
+      background: radial-gradient(circle at 15% 90%, rgba(10, 10, 12, 0.88) 0%, rgba(10, 10, 12, 0.45) 50%, rgba(10, 10, 12, 0.1) 100%),
+                  radial-gradient(circle at 85% 15%, rgba(10, 10, 12, 0.6) 0%, rgba(10, 10, 12, 0) 60%),
+                  radial-gradient(circle at 15% 15%, rgba(10, 10, 12, 0.5) 0%, rgba(10, 10, 12, 0) 50%),
+                  linear-gradient(to top, rgba(10, 10, 12, 0.95) 0%, rgba(10, 10, 12, 0.3) 40%, rgba(10, 10, 12, 0.1) 100%);
     }
 
-    .glass-card {
-      background: rgba(18, 20, 26, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
+    /* Crystal Glassmorphism Icon Badge */
     .glass-icon {
       background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 4px 12px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
     }
 
-    /* Scrollbar Polish */
+    /* Cyber Matrix Ambient Grid */
+    .cyber-grid {
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Drag Ghost Style */
+    .sortable-ghost {
+      opacity: 0.35;
+      transform: scale(0.97);
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.5) !important;
+      border: 2px dashed rgba(99, 102, 241, 0.7) !important;
+    }
+    .sortable-drag {
+      transform: scale(1.03) !important;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8) !important;
+      cursor: grabbing !important;
+    }
+
+    /* Custom Apple Style Scrollbars */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -121,704 +143,495 @@
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
-    /* Sortable Drag Ghost Styles */
-    .sortable-ghost {
-      opacity: 0.35;
-      transform: scale(0.96);
-      border: 2px dashed rgba(59, 130, 246, 0.8) !important;
-    }
-    .sortable-chosen {
-      box-shadow: 0 0 30px rgba(59, 130, 246, 0.5) !important;
-    }
-
-    /* Animations */
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 0.8; }
-    }
-    .animate-pulse-glow {
-      animation: pulseGlow 4s ease-in-out infinite;
-    }
-
-    .fade-in {
-      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      background: rgba(255, 255, 255, 0.3);
     }
   </style>
 </head>
 
-<body class="cyber-grid min-h-screen flex flex-col font-sans antialiased text-neutral-200">
+<body class="bg-[#090a0f] text-neutral-100 min-h-screen flex flex-col selection:bg-indigo-500/30 overflow-x-hidden cyber-grid">
 
-  <!-- ================================================================= -->
-  <!-- 1. TOP GLOBAL NAVIGATION DOCK (苹果风顶栏)                         -->
-  <!-- ================================================================= -->
-  <header class="sticky top-0 z-30 glass-nav px-4 sm:px-6 safe-top-nav transition-all">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+  <!-- =============================================================== -->
+  <!-- 1. TOP NAVIGATION HEADER                                         -->
+  <!-- =============================================================== -->
+  <header class="sticky top-0 z-40 bg-[#090a0f]/85 backdrop-blur-xl border-b border-white/10 transition-all safe-top-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-3 sm:gap-4">
       
       <!-- Brand & Version -->
       <div class="flex items-center space-x-3 shrink-0">
-        <div 
-          id="navBrandAvatar" 
-          onclick="openAvatarModal()" 
-          class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 p-0.5 shadow-glow-sm flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition-all" 
-          title="点击更换头像"
+        <!-- Interactive Avatar Button -->
+        <button 
+          onclick="openCustomizationModal('avatar')" 
+          title="更换个性头像"
+          class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-neutral-900/90 border border-white/15 flex items-center justify-center overflow-hidden hover:border-indigo-400 transition-all active:scale-95 group shadow-sm"
         >
-          <div id="navBrandAvatarInner" class="w-full h-full bg-neutral-950/80 rounded-[10px] flex items-center justify-center text-base overflow-hidden">
+          <div id="headerAvatarContainer" class="w-full h-full flex items-center justify-center text-lg sm:text-xl">
             👾
           </div>
-        </div>
+          <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-indigo-500 border border-[#090a0f] flex items-center justify-center text-[7px] text-white">✨</span>
+        </button>
+
         <div>
           <div class="flex items-center space-x-2">
             <h1 class="text-sm sm:text-base font-bold text-white tracking-tight">Arcade Station</h1>
             <span class="text-neutral-500 text-xs">/</span>
             <span class="text-xs text-neutral-400 font-medium">iPad Pro</span>
-            <span class="flex items-center gap-1 text-[11px] font-mono text-emerald-400">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-              <span>v3.2</span>
+            <span class="flex items-center gap-1 text-[11px] font-mono text-emerald-400 pl-0.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>v3.5</span>
             </span>
           </div>
-          <p class="text-[10px] text-neutral-400 hidden sm:block">空间智能游乐场 · 独立沙盒管理器</p>
+          <p class="text-[10px] text-neutral-400 hidden sm:block">空间智能游乐场 · 发现与自制容器</p>
         </div>
       </div>
 
-      <!-- Center Segmented Pill: [ 🚀 探索发现 ] / [ 🎮 全部游戏库 ] -->
-      <div class="flex items-center bg-neutral-900/90 p-1 rounded-2xl border border-white/10 shadow-inner">
+      <!-- View Switcher Pills (Explore vs Library) -->
+      <div class="flex items-center bg-neutral-900/90 border border-white/10 rounded-2xl p-1 shadow-inner">
         <button 
           id="tabBtnDiscover" 
-          onclick="switchMainTab('discover')" 
-          class="flex items-center space-x-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-semibold transition-all bg-white text-neutral-950 shadow-md"
+          onclick="switchMainView('discover')" 
+          class="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all bg-white text-neutral-950 shadow-sm"
         >
           <span>🚀</span>
           <span>探索发现</span>
         </button>
         <button 
           id="tabBtnLibrary" 
-          onclick="switchMainTab('library')" 
-          class="flex items-center space-x-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-medium text-neutral-400 hover:text-white transition-all"
+          onclick="switchMainView('library')" 
+          class="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-all"
         >
           <span>🎮</span>
           <span>全部游戏库</span>
-          <span id="navGameCountBadge" class="ml-1 px-1.5 py-0.2 bg-white/10 rounded-full text-[10px] font-mono text-neutral-300">0</span>
         </button>
       </div>
 
-      <!-- Right Action Controls -->
+      <!-- Single Global Search & Top Action Buttons -->
       <div class="flex items-center space-x-2 shrink-0">
+        <!-- Search Box (Expands smoothly on iPad) -->
+        <div class="relative hidden md:block w-44 lg:w-56 transition-all focus-within:w-64">
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="搜索游戏、分类..." 
+            oninput="handleSearchInput(this.value)"
+            class="w-full bg-neutral-900/90 border border-white/10 rounded-xl px-3 py-1.5 pl-8 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+          />
+          <span class="absolute left-2.5 top-2 text-neutral-500 text-xs">🔍</span>
+        </div>
+
+        <!-- Hot Refresh Container -->
         <button 
-          onclick="refreshContainer()" 
-          class="p-2 sm:px-3 sm:py-1.5 bg-neutral-800/80 hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-white/10 flex items-center space-x-1.5 transition active:scale-95" 
-          title="穿透本地缓存，拉取 GitHub 最新代码"
+          onclick="refreshContainerHot()" 
+          title="强制拉取 GitHub 最新代码并刷新容器（保留游戏数据）" 
+          class="px-2.5 py-1.5 bg-neutral-900/90 hover:bg-neutral-800 border border-white/10 rounded-xl text-xs text-neutral-300 hover:text-white transition-all flex items-center space-x-1 active:scale-95"
         >
-          <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-          <span class="hidden md:inline font-medium">刷新容器</span>
+          <span class="text-xs">🔄</span>
+          <span class="hidden lg:inline text-xs font-medium">刷新容器</span>
         </button>
 
+        <!-- Record Game Button -->
         <button 
           onclick="openAddGameModal()" 
-          class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl shadow-glow-sm flex items-center space-x-1.5 transition active:scale-95"
+          class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-medium text-xs rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center space-x-1"
         >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-          <span>录入游戏</span>
+          <span>＋</span>
+          <span class="font-semibold">录入游戏</span>
         </button>
 
+        <!-- Export Config Code -->
         <button 
           onclick="openExportModal()" 
-          class="hidden sm:flex px-3 py-1.5 bg-neutral-800/80 hover:bg-neutral-700 text-neutral-300 text-xs font-medium rounded-xl border border-white/10 items-center space-x-1 transition active:scale-95" 
-          title="导出配置代码以同步至 GitHub"
+          title="导出同步代码，粘贴到 GitHub 永久固化" 
+          class="px-2.5 py-1.5 bg-neutral-900/90 hover:bg-neutral-800 border border-white/10 rounded-xl text-xs text-neutral-300 hover:text-white transition-all flex items-center space-x-1 active:scale-95"
         >
           <span>📋</span>
-          <span>导出代码</span>
+          <span class="hidden xl:inline text-xs font-medium">导出 GitHub 代码</span>
         </button>
 
+        <!-- Settings Button -->
         <button 
           onclick="openSettingsModal()" 
-          class="p-2 bg-neutral-800/80 hover:bg-neutral-700 text-neutral-400 hover:text-white rounded-xl border border-white/10 transition active:scale-95"
           title="容器设置"
+          class="p-2 text-neutral-400 hover:text-white hover:bg-white/10 rounded-xl transition-all active:scale-95"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          ⚙️
         </button>
       </div>
 
     </div>
   </header>
 
-  <!-- ================================================================= -->
-  <!-- 2. MAIN VIEW AREA (双层视图容器)                                  -->
-  <!-- ================================================================= -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+  <!-- =============================================================== -->
+  <!-- 2. MAIN CONTENT STAGE                                            -->
+  <!-- =============================================================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
 
-    <!-- =============================================================== -->
-    <!-- VIEW A: DISCOVER HOMEPAGE (🚀 探索发现展示首页)                 -->
-    <!-- =============================================================== -->
-    <div id="viewDiscover" class="space-y-8 fade-in">
+    <!-- =========================================================== -->
+    <!-- VIEW A: 🚀 DISCOVER & SHOWCASE HOMEPAGE                      -->
+    <!-- =========================================================== -->
+    <div id="viewDiscover" class="space-y-8 transition-opacity duration-300">
       
       <!-- 1. Star Showcase Hero (巨幕展示台) -->
       <section class="relative w-full rounded-3xl overflow-hidden border border-white/10 shadow-apple bg-neutral-950 aspect-[21/9] min-h-[300px] sm:min-h-[360px] flex flex-col justify-end p-6 sm:p-10">
         
-        <!-- Background Layer 0: User Custom Hero Image with Subtle Breathing Animation -->
-        <img 
-          id="heroCustomBgImg" 
-          src="" 
-          alt="Hero Poster" 
-          class="absolute inset-0 w-full h-full object-cover hidden transition-opacity duration-700 animate-hero-breathe" 
-        />
+        <!-- Background Layer 0: Animated Hero Image Wrapper (WebKit-safe, never display:none) -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+          <img 
+            id="heroCustomBgImg" 
+            src="" 
+            alt="Hero Poster" 
+            class="w-full h-full object-cover opacity-0 transition-opacity duration-700 animate-hero-breathe" 
+          />
+        </div>
 
-        <!-- Background Layer 1: Sci-Fi Neon Ambient Gradient & Grid (Enhanced Transparency for Posters) -->
+        <!-- Background Layer 1: Sci-Fi Neon Ambient Gradient -->
         <div id="heroGradientLayer" class="absolute inset-0 bg-gradient-to-tr from-blue-950/40 via-purple-950/20 to-transparent pointer-events-none transition-all duration-700"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/20 to-transparent pointer-events-none"></div>
 
-        <!-- Background Layer 1.5: Cinematic Asymmetric Vignette (四角自然渐变暗角) -->
-        <div class="hero-vignette z-[2]"></div>
+        <!-- Background Layer 2: Asymmetric Cinematic Vignette Layer -->
+        <div class="absolute inset-0 hero-vignette pointer-events-none"></div>
 
-        <!-- Background Layer 2: Cyber Floating Ambient Glow -->
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
-        <div class="absolute top-1/2 -left-20 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
-
-        <!-- Top HUD Strip: Spotlight Indicator + Change Poster Button + Carousel Arrows -->
-        <div class="absolute top-5 left-6 right-6 flex items-center justify-between z-10 select-none">
+        <!-- Top Status Bar & Controls inside Hero -->
+        <div class="absolute top-4 sm:top-6 left-4 sm:left-6 right-4 sm:right-6 flex items-center justify-between z-10">
           <div class="flex items-center space-x-2">
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase bg-blue-500/20 text-blue-300 border border-blue-500/40 backdrop-blur-xl flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping"></span>
-              <span>HOLO SPOTLIGHT // 01</span>
+            <span class="px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-[10px] sm:text-xs font-mono text-indigo-300 tracking-wider flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-ping"></span>
+              <span id="heroHudTag">HOLO SPOTLIGHT // 01</span>
             </span>
-            <span id="heroCategoryBadge" class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white/10 text-neutral-300 border border-white/10 backdrop-blur-xl">
-              精选主打
-            </span>
+            <span id="heroStatusBadge" class="px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] text-neutral-300">我的主页</span>
           </div>
 
-          <!-- Controls: Unified Appearance Button + Navigation Arrows -->
-          <div class="flex items-center space-x-1.5 sm:space-x-2">
-            <!-- Single Unified Appearance Customization Button (Art Palette Icon) -->
+          <!-- Hero Action Controls -->
+          <div class="flex items-center space-x-2">
+            <!-- Appearance Palette Icon Button -->
             <button 
-              onclick="openCustomizationModal('poster')" 
-              class="p-1.5 sm:p-2 bg-neutral-950/70 hover:bg-neutral-800 text-neutral-300 hover:text-white rounded-xl border border-white/15 backdrop-blur-xl transition active:scale-95 shadow-md flex items-center justify-center"
-              title="个性装扮（海报与头像）"
+              onclick="openCustomizationModal()" 
+              title="个性装扮与展台设置" 
+              class="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/15 hover:border-white/40 text-white flex items-center justify-center text-sm transition-all active:scale-90"
             >
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
-                <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
-                <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
-                <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
-                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 9.5 10c.8 0 1.5-.7 1.5-1.5 0-.4-.1-.7-.3-1-.3-.4-.5-.9-.5-1.5 0-1.1.9-2 2-2h2.3c3.6 0 6.5-2.9 6.5-6.5C23 5.8 18 2 12 2z"/>
-              </svg>
+              🎨
             </button>
-
-            <!-- Carousel Prev/Next Buttons -->
-            <div class="flex items-center space-x-2 bg-neutral-950/70 p-1 rounded-xl border border-white/15 backdrop-blur-xl">
-              <button onclick="prevHeroSlide()" class="p-1 text-neutral-400 hover:text-white rounded-lg transition" title="上一项">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-              </button>
-              <span id="heroSlideIndicator" class="text-[11px] font-mono text-neutral-300 px-1.5">1 / 1</span>
-              <button onclick="nextHeroSlide()" class="p-1 text-neutral-400 hover:text-white rounded-lg transition" title="下一项">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-              </button>
+            <!-- Slide Carousel Controls -->
+            <div class="flex items-center bg-black/40 backdrop-blur-md border border-white/15 rounded-full px-2 py-1 space-x-2 text-xs text-neutral-300 font-mono">
+              <button onclick="prevHeroSlide()" class="hover:text-white active:scale-75 transition-transform px-1 font-bold">‹</button>
+              <span id="heroSlideIndicator">1 / 1</span>
+              <button onclick="nextHeroSlide()" class="hover:text-white active:scale-75 transition-transform px-1 font-bold">›</button>
             </div>
           </div>
         </div>
 
-        <!-- Hero Content Block -->
+        <!-- Hero Content Overlay (Text & CTAs) -->
         <div class="relative z-10 max-w-2xl space-y-3">
-          <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-3.5">
             <div 
-              id="heroAvatarWrapper" 
-              onclick="openAvatarModal()" 
-              class="relative group cursor-pointer shrink-0" 
-              title="点击更换头像"
+              id="heroAvatarBox" 
+              onclick="openCustomizationModal('avatar')" 
+              title="点击更换个性头像"
+              class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl glass-icon flex items-center justify-center text-3xl sm:text-4xl shadow-xl shrink-0 cursor-pointer hover:border-indigo-400 transition-all active:scale-95 group relative overflow-hidden"
             >
-              <div id="heroGameIcon" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl glass-icon flex items-center justify-center text-3xl sm:text-4xl shadow-xl overflow-hidden group-hover:scale-105 transition-all">
-                👾
-              </div>
-              <div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-neutral-900/90 border border-white/20 text-white flex items-center justify-center text-[10px] opacity-75 group-hover:opacity-100 shadow transition-opacity">
-                ✏️
-              </div>
+              <div id="heroAvatarInner">👾</div>
+              <span class="absolute bottom-0 right-0 p-1 text-[9px] opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 rounded-tl-lg">✏️</span>
             </div>
             <div>
-              <h2 id="heroGameTitle" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-md">
-                欢迎进入 Arcade Station
-              </h2>
-              <p id="heroGameSub" class="text-xs sm:text-sm font-mono text-blue-400 mt-1 flex items-center gap-1.5">
-                <span>STATUS: READY</span>
-                <span>•</span>
-                <span>iPad Pro 120Hz PROMOTION 适配</span>
-              </p>
+              <h2 id="heroTitle" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight drop-shadow-md">欢迎进入 Arcade Station</h2>
+              <p id="heroCategory" class="text-xs sm:text-sm font-mono text-indigo-400 tracking-wider mt-0.5">STATUS: READY · iPad Pro 120Hz PROMOTION 适配</p>
             </div>
           </div>
 
-          <p id="heroGameDesc" class="text-xs sm:text-sm text-neutral-300 line-clamp-2 max-w-xl">
+          <p id="heroDescription" class="text-xs sm:text-sm text-neutral-300/90 leading-relaxed line-clamp-2 max-w-xl drop-shadow">
             iPad Pro 专属独立沙盒游戏中心。点击右上角「录入游戏」即可开启你的专属游戏库！
           </p>
 
-          <!-- Call to Action Buttons -->
-          <div class="flex items-center space-x-3 pt-2">
+          <div class="pt-2 flex items-center space-x-3">
             <button 
-              id="heroLaunchBtn" 
-              onclick="launchHeroGame()" 
-              class="px-5 sm:px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-glow transition active:scale-95 flex items-center space-x-2"
+              id="heroPrimaryBtn" 
+              onclick="handleHeroPrimaryAction()" 
+              class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-semibold text-xs sm:text-sm shadow-xl shadow-indigo-600/30 transition-all flex items-center space-x-1.5"
             >
-              <span>立即进入</span>
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <span>录入新游戏</span>
+              <span>＋</span>
             </button>
             <button 
-              id="heroSecondaryBtn"
-              onclick="switchMainTab('library')" 
-              class="hidden px-4 sm:px-5 py-2.5 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-white font-medium text-xs sm:text-sm rounded-xl border border-white/10 backdrop-blur-md transition active:scale-95"
+              id="heroSecondaryBtn" 
+              onclick="switchMainView('library')" 
+              class="px-4 py-2.5 rounded-2xl bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/15 text-neutral-200 hover:text-white text-xs sm:text-sm font-medium transition-all flex items-center space-x-1"
             >
-              浏览全部游戏库 →
+              <span>浏览全部游戏库</span>
+              <span>→</span>
             </button>
           </div>
         </div>
 
       </section>
 
-      <!-- 2. DUAL MODULES: [今日推荐] & [随机选游] (并排对称并列展示) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 items-stretch">
+      <!-- 2. Dual Feature Showcase Row (Strictly Side-by-Side on iPad) -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 items-stretch">
         
-        <!-- Module A: Today's Featured Pick (今日特别推荐) -->
-        <section class="glass-card rounded-3xl p-5 sm:p-6 border border-white/10 relative overflow-hidden flex flex-col justify-between shadow-lg">
-          <div class="absolute -top-10 -right-10 w-36 h-36 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
-                <h3 class="text-xs sm:text-sm font-bold text-white tracking-wide uppercase">今日特别推荐 · TODAY'S PICK</h3>
-              </div>
-              <span id="todayDateBadge" class="text-[10px] sm:text-[11px] font-mono text-neutral-400 bg-neutral-900 px-2 py-0.5 rounded-md border border-white/5">
-                2026-09-24
-              </span>
+        <!-- Feature Left: Today's Pick (今日特别推荐) -->
+        <div class="rounded-3xl p-5 sm:p-6 bg-gradient-to-br from-neutral-900/90 via-neutral-900/70 to-neutral-950 border border-white/10 shadow-apple flex flex-col justify-between space-y-4 hover:border-amber-500/30 transition-all">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              <h3 class="text-xs sm:text-sm font-bold tracking-wider text-white uppercase">今日特别推荐 · TODAY'S PICK</h3>
             </div>
+            <span id="todayDateLabel" class="text-[10px] font-mono text-neutral-400">2026-09-24</span>
+          </div>
 
-            <!-- Featured Card Content -->
-            <div id="todayPickCard" class="flex items-center space-x-3.5 p-3.5 sm:p-4 rounded-2xl bg-neutral-950/60 border border-white/5 hover:border-amber-500/30 transition">
-              <div id="todayPickIcon" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-2xl sm:text-3xl shrink-0">
-                ⭐
+          <div id="todayPickCard" class="flex-1 flex items-center space-x-4 p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
+            <div id="todayPickIcon" class="w-14 h-14 rounded-2xl glass-icon flex items-center justify-center text-3xl shrink-0">
+              🕹️
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center space-x-2">
+                <h4 id="todayPickTitle" class="text-sm sm:text-base font-bold text-white truncate">等待收录首款游戏</h4>
+                <span id="todayPickCategory" class="px-2 py-0.5 rounded-full text-[10px] bg-white/10 text-neutral-300">准备中</span>
               </div>
-              <div class="flex-1 min-w-0">
-                <div class="flex items-center space-x-2">
-                  <h4 id="todayPickTitle" class="text-sm sm:text-base font-bold text-white truncate">等待收录首款游戏</h4>
-                  <span id="todayPickCategory" class="text-[10px] px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-300 border border-white/5 shrink-0">准备中</span>
-                </div>
-                <p id="todayPickDesc" class="text-xs text-neutral-400 mt-1 line-clamp-2">
-                  请录入游戏以激活今日精选推荐算法。
-                </p>
-              </div>
+              <p id="todayPickDesc" class="text-xs text-neutral-400 mt-1 line-clamp-1">请录入游戏以激活今日精选推荐算法。</p>
             </div>
           </div>
 
-          <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
-            <span class="text-[11px] text-neutral-500 font-mono">每天 00:00 自动轮换</span>
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-[10px] text-neutral-500">每天 00:00 自动轮换</span>
             <button 
-              id="todayPickLaunchBtn"
-              onclick="launchTodayPick()" 
-              class="flex items-center space-x-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-xs rounded-xl border border-amber-500/30 transition active:scale-95"
+              id="todayPickLaunchBtn" 
+              onclick="launchTodayPickGame()" 
+              disabled 
+              class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 disabled:opacity-40 disabled:pointer-events-none font-semibold text-xs transition-all flex items-center space-x-1"
             >
               <span>立即畅玩</span>
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <span>▶</span>
             </button>
           </div>
-        </section>
+        </div>
 
-        <!-- Module B: Quantum Random Roulette (量子核心·随机选游) -->
-        <section class="glass-card rounded-3xl p-5 sm:p-6 border border-white/10 relative overflow-hidden flex flex-col justify-between shadow-lg">
-          <div class="absolute -top-10 -right-10 w-36 h-36 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
-                <h3 class="text-xs sm:text-sm font-bold text-white tracking-wide uppercase">量子核心 · 随机选游</h3>
-              </div>
-              <span class="text-[10px] sm:text-[11px] font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">
-                PROBABILITY 100%
-              </span>
+        <!-- Feature Right: Quantum Roulette (量子核心 · 随机选游) -->
+        <div class="rounded-3xl p-5 sm:p-6 bg-gradient-to-br from-neutral-900/90 via-neutral-900/70 to-neutral-950 border border-white/10 shadow-apple flex flex-col justify-between space-y-4 hover:border-purple-500/30 transition-all">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+              <h3 class="text-xs sm:text-sm font-bold tracking-wider text-white uppercase">量子核心 · 随机选游</h3>
             </div>
+            <span class="text-[10px] font-mono text-purple-400/80 bg-purple-950/40 border border-purple-800/40 px-2 py-0.5 rounded-full">PROBABILITY 100%</span>
+          </div>
 
-            <!-- Roulette Stage Box -->
-            <div id="rouletteDisplayBox" class="p-3.5 sm:p-4 rounded-2xl bg-neutral-950/60 border border-white/5 flex items-center space-x-3.5 transition-all">
-              <div id="rouletteIcon" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center justify-center text-2xl sm:text-3xl shrink-0 transition-transform">
-                🎲
-              </div>
-              <div class="flex-1 min-w-0">
-                <h4 id="rouletteTitle" class="text-sm sm:text-base font-bold text-white truncate">点击抽取随机游戏</h4>
-                <p id="rouletteDesc" class="text-xs text-neutral-400 mt-1 line-clamp-2">
-                  不知道今天玩什么？让算法为你从游戏库中挑选一份惊喜。
-                </p>
-              </div>
+          <div id="rouletteResultBox" class="flex-1 flex items-center space-x-4 p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 transition-all">
+            <div id="rouletteIcon" class="w-14 h-14 rounded-2xl glass-icon flex items-center justify-center text-3xl shrink-0 transition-transform">
+              🎲
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 id="rouletteTitle" class="text-sm sm:text-base font-bold text-white truncate">点击抽取随机游戏</h4>
+              <p id="rouletteDesc" class="text-xs text-neutral-400 mt-1 line-clamp-1">不知道今天玩什么？让算法为你从游戏库中挑选一份惊喜。</p>
             </div>
           </div>
 
-          <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
-            <span class="text-[11px] text-neutral-500 font-mono">治愈选择困难症</span>
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-[10px] text-neutral-500">治愈选择困难症</span>
             <div class="flex items-center space-x-2">
               <button 
-                id="rouletteSpinBtn"
-                onclick="spinRandomGame()" 
-                class="flex items-center space-x-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-glow transition active:scale-95"
+                id="rouletteRollBtn" 
+                onclick="runQuantumRoulette()" 
+                class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 active:scale-95 text-white font-semibold text-xs shadow-md shadow-purple-600/30 transition-all flex items-center space-x-1"
               >
                 <span>🎲 启动量子抽取</span>
               </button>
               <button 
-                id="rouletteLaunchBtn"
+                id="roulettePlayBtn" 
                 onclick="launchRouletteGame()" 
-                class="hidden items-center space-x-1 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-white text-neutral-900 font-bold text-xs rounded-xl transition active:scale-95 shadow-md"
+                style="display: none;" 
+                class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-semibold text-xs shadow-md shadow-emerald-600/30 transition-all flex items-center space-x-1"
               >
-                <span>立即游玩</span>
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <span>立即游玩 ▶</span>
               </button>
             </div>
           </div>
-        </section>
-
-      </div>
-
-      <!-- 3. Quick Portals (快速分类传送门) -->
-      <section class="space-y-4">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs sm:text-sm font-bold text-neutral-400 tracking-wider uppercase">分类极速入口 · QUICK PORTALS</h3>
-          <button onclick="switchMainTab('library')" class="text-xs text-blue-400 hover:text-blue-300 flex items-center space-x-1">
-            <span>进入游戏大厅</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </button>
         </div>
 
-        <div id="quickPortalsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      </section>
+
+      <!-- 3. Category Quick Portals -->
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold text-neutral-400 tracking-wider uppercase">分类极速入口 · QUICK PORTALS</h3>
+          <button onclick="switchMainView('library')" class="text-xs text-indigo-400 hover:underline">进入游戏大厅 →</button>
+        </div>
+        <div id="quickPortalsContainer" class="flex flex-wrap gap-2.5">
           <!-- Dynamically populated -->
         </div>
       </section>
 
     </div>
 
-    <!-- =============================================================== -->
-    <!-- VIEW B: FULL LIBRARY (🎮 全部游戏库大厅)                          -->
-    <!-- =============================================================== -->
-    <div id="viewLibrary" class="space-y-6 hidden fade-in">
+    <!-- =========================================================== -->
+    <!-- VIEW B: 🎮 ALL GAMES LIBRARY (FULL CATALOG)                 -->
+    <!-- =========================================================== -->
+    <div id="viewLibrary" class="space-y-6" style="display: none;">
       
-      <!-- Library Control Bar: Filter Pills, Search Bar, Grouping Switch -->
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-neutral-900/60 p-3 sm:p-4 rounded-3xl border border-white/10 backdrop-blur-xl">
+      <!-- Sub-Bar: Filter Pills & View Layout Controls -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-neutral-900/60 backdrop-blur-md p-3 rounded-2xl border border-white/5">
         
         <!-- Category Filter Pills -->
-        <div id="categoryPillContainer" class="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0 scrollbar-none">
-          <!-- Populated by renderCategoryPills() -->
+        <div id="categoryPillsContainer" class="flex flex-wrap items-center gap-2 overflow-x-auto py-1">
+          <!-- Rendered dynamically -->
         </div>
 
-        <!-- Right Side: Search & View Mode Switch -->
-        <div class="flex items-center space-x-3 shrink-0">
-          <!-- Search Input -->
-          <div class="relative w-full sm:w-56">
-            <input 
-              type="text" 
-              id="librarySearchInput" 
-              placeholder="搜索游戏库..." 
-              class="w-full bg-neutral-950/80 text-white placeholder-neutral-500 text-xs px-3.5 py-2 pl-9 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500 transition"
-              oninput="handleSearch(this.value)"
-            />
-            <svg class="w-4 h-4 text-neutral-500 absolute left-3 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-          </div>
-
-          <!-- View Mode: [分组展示] vs [连续平铺] -->
-          <div class="flex items-center bg-neutral-950 p-1 rounded-xl border border-white/10">
+        <!-- View Mode (Grouped vs Flat) & Sort Controls -->
+        <div class="flex items-center space-x-2 shrink-0">
+          <div class="flex items-center bg-black/40 border border-white/10 rounded-xl p-1 text-xs">
             <button 
               id="viewModeGroupedBtn" 
               onclick="setViewMode('grouped')" 
-              class="p-1.5 rounded-lg text-xs font-medium transition bg-neutral-800 text-white" 
-              title="按分类分行展示"
+              class="px-2.5 py-1 rounded-lg text-neutral-300 font-medium transition-all"
             >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+              分行分组
             </button>
             <button 
               id="viewModeFlatBtn" 
               onclick="setViewMode('flat')" 
-              class="p-1.5 rounded-lg text-xs font-medium transition text-neutral-400 hover:text-white" 
-              title="网格平铺"
+              class="px-2.5 py-1 rounded-lg text-neutral-400 font-medium transition-all"
             >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+              连续平铺
             </button>
           </div>
+
+          <select 
+            id="sortSelector" 
+            onchange="handleSortChange(this.value)" 
+            class="bg-black/40 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-neutral-300 focus:outline-none focus:border-indigo-500 cursor-pointer"
+          >
+            <option value="custom">长按自由拖拽排序</option>
+            <option value="newest">最新添加优先</option>
+            <option value="name">游戏名称 A-Z</option>
+          </select>
         </div>
 
       </div>
 
-      <!-- Games Grid Container -->
-      <div id="gamesDisplayArea" class="min-h-[400px]">
-        <!-- Dynamic populated by renderLibrary() -->
+      <!-- Games Display Container (Grouped or Flat) -->
+      <div id="libraryContainer" class="min-h-[300px]">
+        <!-- Dynamic Cards rendered here -->
       </div>
 
     </div>
 
   </main>
 
-  <!-- ================================================================= -->
-  <!-- 3. FULLSCREEN SANDBOX STAGE (全屏无边框游戏沙盒舞台)              -->
-  <!-- ================================================================= -->
-  <div id="gameSandboxStage" class="fixed inset-0 z-50 bg-black hidden flex-col">
-    
-    <!-- Ultra-Slim Sandbox Control Bar (紧凑轻薄顶栏) -->
-    <header id="sandboxTopBar" class="glass-nav safe-top-sandbox px-4 flex items-center justify-between transition-all duration-300">
-      <div class="flex items-center space-x-2.5">
+  <!-- =============================================================== -->
+  <!-- 3. FULLSCREEN SANDBOX STAGE (ISOLATED RUNTIME)                  -->
+  <!-- =============================================================== -->
+  <div 
+    id="sandboxStage" 
+    class="fixed inset-0 z-50 bg-black flex flex-col transition-all duration-300 opacity-0 pointer-events-none"
+  >
+    <!-- Ultra-Slim Game Top Bar (iPad Pro Optimized) -->
+    <div 
+      id="sandboxHeader" 
+      class="bg-neutral-950/90 backdrop-blur-xl border-b border-white/10 px-4 py-1.5 flex items-center justify-between transition-transform duration-300 safe-top-sandbox shrink-0"
+    >
+      <!-- Exit Button & Title -->
+      <div class="flex items-center space-x-3">
         <button 
-          onclick="exitSandboxGame()" 
-          class="flex items-center space-x-1.5 px-3 py-1 bg-neutral-800/80 hover:bg-neutral-700 text-neutral-200 text-xs rounded-lg border border-white/10 active:scale-95 transition"
+          onclick="closeSandbox()" 
+          class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-xs font-semibold text-white transition-all flex items-center space-x-1"
         >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-          <span class="font-semibold">返回大厅</span>
+          <span>‹</span>
+          <span>返回大厅</span>
         </button>
-        <span class="text-neutral-600 text-xs">|</span>
-        <div class="flex items-center space-x-1.5">
-          <span id="sandboxGameIcon" class="text-sm">🎮</span>
-          <h3 id="sandboxGameTitle" class="text-xs sm:text-sm font-bold text-white tracking-wide truncate max-w-[140px] sm:max-w-xs">游戏加载中</h3>
+        <div class="flex items-center space-x-2">
+          <span id="sandboxGameIcon" class="text-base">🎮</span>
+          <span id="sandboxGameTitle" class="text-xs sm:text-sm font-bold text-white truncate max-w-[200px] sm:max-w-md">当前运行游戏</span>
+          <span id="sandboxGameCategory" class="px-2 py-0.5 rounded-full text-[10px] bg-indigo-950 border border-indigo-700/50 text-indigo-300 hidden sm:inline">分类</span>
         </div>
       </div>
 
-      <div class="flex items-center space-x-1.5">
+      <!-- Action Tools (Force Reload Cache-Buster & Collapse) -->
+      <div class="flex items-center space-x-2">
         <button 
-          onclick="reloadCurrentGame()" 
-          class="px-2.5 py-1 bg-neutral-800/80 hover:bg-neutral-700 text-neutral-300 text-xs rounded-lg border border-white/10 flex items-center space-x-1 transition active:scale-95" 
-          title="强制拉取 GitHub 最新版本代码"
+          onclick="reloadSandboxWithCacheBuster()" 
+          title="强制拉取 GitHub 最新版本（绕过 Safari 缓存）" 
+          class="px-2.5 py-1 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-white/10 text-xs text-neutral-300 hover:text-white transition-all flex items-center space-x-1 active:scale-95"
         >
-          <svg class="w-3 h-3 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-          <span class="text-[11px]">拉取最新</span>
+          <span>🔄</span>
+          <span class="hidden sm:inline">拉取最新版</span>
         </button>
-        
         <button 
-          onclick="toggleImmersiveMode()" 
-          class="px-2.5 py-1 bg-neutral-800/80 hover:bg-neutral-700 text-neutral-300 text-xs rounded-lg border border-white/10 flex items-center space-x-1 transition active:scale-95"
-          title="收起顶栏以全屏沉浸游玩"
+          onclick="toggleSandboxImmersive()" 
+          title="收起顶栏以最大化视野" 
+          class="px-2.5 py-1 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-white/10 text-xs text-neutral-300 hover:text-white transition-all flex items-center space-x-1 active:scale-95"
         >
-          <span class="text-[11px]">沉浸全屏</span>
+          <span>▲</span>
+          <span class="hidden sm:inline">沉浸全屏</span>
         </button>
       </div>
-    </header>
+    </div>
 
-    <!-- Floating Bubble to recall the top bar if hidden -->
+    <!-- Floating Mini Pill to Restore Header when Immersed -->
     <button 
-      id="sandboxRecallBtn" 
-      onclick="toggleImmersiveMode()" 
-      class="fixed top-2 right-4 z-50 hidden bg-neutral-900/80 border border-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md shadow-lg"
+      id="sandboxRestorePill" 
+      onclick="toggleSandboxImmersive()" 
+      class="fixed top-3 right-3 z-50 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-xs font-medium shadow-2xl flex items-center space-x-1.5 hover:bg-black/90 active:scale-95 transition-all"
+      style="display: none;"
     >
-      🎮 控制栏
+      <span>🎮</span>
+      <span>菜单栏</span>
     </button>
 
-    <!-- IFrame Sandbox -->
+    <!-- Sandbox IFrame Execution Container -->
     <div class="flex-1 w-full h-full relative overflow-hidden bg-neutral-950">
       <iframe 
-        id="gameSandboxFrame" 
-        class="w-full h-full border-none" 
-        sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms allow-popups allow-modals"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        id="sandboxIframe" 
+        src="about:blank" 
+        class="w-full h-full border-0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; gamepad; microphone; camera"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
       ></iframe>
     </div>
-
   </div>
 
-  <!-- ================================================================= -->
-  <!-- 4. MODALS & OVERLAYS                                              -->
-  <!-- ================================================================= -->
-
-  <!-- Modal A: Unified Customization Modal (个性装扮与展台设置弹窗：海报 + 头像) -->
-  <div id="customizationModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 fade-in">
-    <div class="bg-neutral-900 border border-white/15 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col">
-      <!-- Modal Header -->
-      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <span class="text-lg">🎨</span>
-          <h3 class="text-sm font-bold text-white">个性装扮与展台设置</h3>
-        </div>
-        <button onclick="closeCustomizationModal()" class="text-neutral-400 hover:text-white p-1 rounded-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-
-      <!-- Segmented Tabs: [ 🖼️ 巨幕海报 ] / [ 👤 个性头像 ] -->
-      <div class="px-6 pt-3 flex items-center space-x-2 border-b border-white/10 bg-neutral-950/40">
-        <button 
-          id="customTabPosterBtn" 
-          onclick="switchCustomTab('poster')" 
-          class="pb-2.5 px-3 text-xs font-semibold border-b-2 border-blue-500 text-white flex items-center gap-1.5 transition"
-        >
-          <span>🖼️</span>
-          <span>巨幕海报</span>
-        </button>
-        <button 
-          id="customTabAvatarBtn" 
-          onclick="switchCustomTab('avatar')" 
-          class="pb-2.5 px-3 text-xs font-medium border-b-2 border-transparent text-neutral-400 hover:text-white flex items-center gap-1.5 transition"
-        >
-          <span>👤</span>
-          <span>个性头像</span>
-        </button>
-      </div>
-
-      <!-- Tab 1: Hero Poster Customization -->
-      <div id="customPosterSection" class="p-6 space-y-4 text-xs">
-        <div>
-          <label class="block font-semibold text-neutral-300 mb-1.5">海报图片路径 / URL：</label>
-          <input 
-            type="text" 
-            id="heroBgModalInput" 
-            placeholder="./covers/hero_poster.webp 或 https://..." 
-            class="w-full bg-neutral-950 text-white font-mono text-xs px-3.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
-            oninput="handleHeroBgPreview(this.value)"
-          />
-          <p class="text-[11px] text-neutral-400 mt-1.5">
-            推荐 16:9 横版海报。支持相对路径（如 <code class="text-blue-300">./covers/hero.webp</code>）或网络图片链接。
-          </p>
-        </div>
-
-        <!-- Live Preview -->
-        <div>
-          <span class="block font-semibold text-neutral-300 mb-2">实时效果预览（保留顶层流光渐变）：</span>
-          <div class="relative w-full h-36 rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 flex flex-col justify-end p-4">
-            <img id="heroBgModalPreviewImg" src="" alt="预览" class="absolute inset-0 w-full h-full object-cover hidden" />
-            <div class="absolute inset-0 bg-gradient-to-tr from-blue-900/40 via-purple-900/20 to-transparent pointer-events-none"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/20 to-transparent pointer-events-none"></div>
-            
-            <div class="relative z-10 flex items-center space-x-2">
-              <div class="w-8 h-8 rounded-lg glass-icon flex items-center justify-center text-sm">👾</div>
-              <div>
-                <div class="text-xs font-bold text-white">Arcade Station 效果预览</div>
-                <div class="text-[10px] text-neutral-400">顶层科幻光效已自动覆盖</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 2: Avatar Customization -->
-      <div id="customAvatarSection" class="p-6 space-y-4 text-xs hidden">
-        <!-- Quick Select Emojis -->
-        <div>
-          <label class="block font-semibold text-neutral-300 mb-2">快速选择 Emoji 徽标：</label>
-          <div class="grid grid-cols-6 gap-2">
-            <button type="button" onclick="selectQuickAvatar('👾')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">👾</button>
-            <button type="button" onclick="selectQuickAvatar('🎮')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">🎮</button>
-            <button type="button" onclick="selectQuickAvatar('🚀')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">🚀</button>
-            <button type="button" onclick="selectQuickAvatar('👑')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">👑</button>
-            <button type="button" onclick="selectQuickAvatar('💎')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">💎</button>
-            <button type="button" onclick="selectQuickAvatar('⚡')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">⚡</button>
-            <button type="button" onclick="selectQuickAvatar('🦊')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">🦊</button>
-            <button type="button" onclick="selectQuickAvatar('🐱')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">🐱</button>
-            <button type="button" onclick="selectQuickAvatar('🤖')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">🤖</button>
-            <button type="button" onclick="selectQuickAvatar('🪐')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">🪐</button>
-            <button type="button" onclick="selectQuickAvatar('🎲')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">🎲</button>
-            <button type="button" onclick="selectQuickAvatar('🔥')" class="p-2.5 rounded-xl bg-neutral-950 hover:bg-blue-600/30 border border-white/10 text-xl transition hover:scale-110 active:scale-95">🔥</button>
-          </div>
-        </div>
-
-        <!-- Custom Image URL or Custom Emoji -->
-        <div>
-          <label class="block font-semibold text-neutral-300 mb-1.5">或输入自定义图片路径 / 网络 URL / Emoji：</label>
-          <input 
-            type="text" 
-            id="avatarModalInput" 
-            placeholder="./covers/avatar.webp 或单个 Emoji" 
-            class="w-full bg-neutral-950 text-white font-mono text-xs px-3.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
-            oninput="handleAvatarPreview(this.value)"
-          />
-          <p class="text-[11px] text-neutral-400 mt-1.5">
-            支持相对路径（如 <code class="text-blue-300">./covers/me.png</code>）、网络图片链接或任意 Emoji 字符。
-          </p>
-        </div>
-
-        <!-- Live Preview -->
-        <div class="flex items-center space-x-3.5 p-3.5 bg-neutral-950/60 rounded-2xl border border-white/10">
-          <div id="avatarModalPreview" class="w-14 h-14 rounded-2xl glass-icon flex items-center justify-center text-2xl shadow-lg shrink-0 overflow-hidden">
-            👾
-          </div>
-          <div>
-            <div class="text-xs font-bold text-white">当前头像效果预览</div>
-            <div class="text-[10px] text-neutral-400 mt-0.5">将同步呈现在顶栏标识与首页展台</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Action Footers (Tab-dependent) -->
-      <!-- Poster Footer -->
-      <div id="customPosterFooter" class="px-6 py-3.5 border-t border-white/10 bg-neutral-950/60 flex items-center justify-between">
-        <button onclick="clearHeroBg()" class="text-xs text-rose-400 hover:text-rose-300 transition">
-          恢复默认星芒背景
-        </button>
-        <div class="flex items-center space-x-2">
-          <button onclick="closeCustomizationModal()" class="px-4 py-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-xl font-medium transition">
-            取消
-          </button>
-          <button onclick="saveHeroBg()" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-glow transition">
-            保存并应用海报
-          </button>
-        </div>
-      </div>
-
-      <!-- Avatar Footer -->
-      <div id="customAvatarFooter" class="px-6 py-3.5 border-t border-white/10 bg-neutral-950/60 items-center justify-between hidden">
-        <button onclick="resetDefaultAvatar()" class="text-xs text-rose-400 hover:text-rose-300 transition">
-          恢复默认头像
-        </button>
-        <div class="flex items-center space-x-2">
-          <button onclick="closeCustomizationModal()" class="px-4 py-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-xl font-medium transition">
-            取消
-          </button>
-          <button onclick="saveAvatar()" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-glow transition">
-            保存并应用头像
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal B: Add / Edit Game Modal (录入与编辑游戏弹窗) -->
-  <div id="gameEditModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 fade-in">
-    <div class="bg-neutral-900 border border-white/15 rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+  <!-- =============================================================== -->
+  <!-- 4. MODALS & OVERLAYS                                             -->
+  <!-- =============================================================== -->
+  
+  <!-- A. Game Add/Edit Modal -->
+  <div id="gameModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all opacity-0 pointer-events-none">
+    <div class="bg-neutral-900 border border-white/15 rounded-3xl w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl p-6 space-y-5">
       
-      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <span id="modalHeaderIcon" class="text-xl">✨</span>
-          <h3 id="modalHeaderTitle" class="text-sm font-bold text-white">录入新游戏</h3>
-        </div>
-        <button onclick="closeGameModal()" class="text-neutral-400 hover:text-white p-1 rounded-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
+      <div class="flex items-center justify-between pb-3 border-b border-white/10">
+        <h3 id="modalTitle" class="text-base font-bold text-white flex items-center gap-2">
+          <span>🎮</span>
+          <span>录入新游戏</span>
+        </h3>
+        <button onclick="closeGameModal()" class="text-neutral-400 hover:text-white text-lg px-2">✕</button>
       </div>
 
-      <form id="gameEditForm" onsubmit="handleGameFormSubmit(event)" class="p-6 space-y-4 overflow-y-auto text-xs flex-1">
-        <input type="hidden" id="formGameId" value="" />
+      <form id="gameForm" onsubmit="handleGameFormSubmit(event)" class="space-y-4">
+        <input type="hidden" id="formGameId" />
 
-        <!-- Title & Category -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block font-semibold text-neutral-300 mb-1">游戏名称 *</label>
+        <!-- Game Title -->
+        <div>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">游戏名称 *</label>
+          <input 
+            type="text" 
+            id="formTitle" 
+            required 
+            placeholder="例如：以色列麻将、璀璨宝石、赛博街机" 
+            class="w-full bg-neutral-950 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500"
+          />
+        </div>
+
+        <!-- Integrated Category Input with Dropdown Arrow -->
+        <div>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">游戏分类 * (输入或选择已有分类)</label>
+          <div class="relative flex items-center">
             <input 
               type="text" 
-              id="formGameTitle" 
+              id="formCategory" 
               required 
-              placeholder="如：璀璨宝石、双人中国象棋" 
-              class="w-full h-10 bg-neutral-950 text-white text-xs px-3.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 box-border"
+              placeholder="如：棋牌、益智、街机、策略" 
+              class="w-full bg-neutral-950 border border-white/10 rounded-xl px-3.5 py-2 pr-28 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500"
             />
-          </div>
-          <div>
-            <label class="block font-semibold text-neutral-300 mb-1">游戏分类 *</label>
-            <div class="relative flex items-center">
-              <input 
-                type="text" 
-                id="formGameCategory" 
-                required 
-                placeholder="输入或选择分类，如：棋牌、益智" 
-                class="w-full h-10 bg-neutral-950 text-white text-xs px-3.5 pr-8 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 box-border"
-              />
-              <div class="absolute right-2.5 flex items-center pointer-events-none text-neutral-400">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-              </div>
+            <div class="absolute right-1 top-1 bottom-1 flex items-center">
               <select 
                 id="formCategorySelect" 
-                onchange="handleCategorySelectChange(this.value)" 
-                class="absolute right-0 top-0 bottom-0 w-8 opacity-0 cursor-pointer"
-                title="选择已有分类"
+                onchange="handleCategoryDropdownPick(this.value)"
+                class="h-full bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs px-2.5 rounded-lg border-0 focus:outline-none cursor-pointer"
               >
                 <option value="">▼ 现有分类</option>
               </select>
@@ -826,111 +639,118 @@
           </div>
         </div>
 
-        <!-- Emoji Icon & Theme Color Palette -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
-            <label class="block font-semibold text-neutral-300 mb-1">Emoji 图标</label>
-            <input 
-              type="text" 
-              id="formGameIcon" 
-              value="🎮" 
-              class="w-full h-10 bg-neutral-950 text-center text-xl text-white px-3 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 box-border leading-10"
-            />
-          </div>
-          <div class="sm:col-span-2">
-            <label class="block font-semibold text-neutral-300 mb-1">主题色彩流光</label>
-            <select 
-              id="formGameTheme" 
-              class="w-full h-10 bg-neutral-950 text-white text-xs px-3.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 box-border"
+        <!-- Source Mode (URL vs Inline Code) -->
+        <div>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">代码载入模式</label>
+          <div class="grid grid-cols-2 gap-2 bg-neutral-950 p-1 rounded-xl border border-white/10">
+            <button 
+              type="button" 
+              id="sourceModeUrlBtn" 
+              onclick="setSourceMode('url')" 
+              class="py-1.5 rounded-lg text-xs font-semibold transition-all bg-indigo-600 text-white"
             >
-              <option value="blue">科技蓝 (Cyber Blue)</option>
-              <option value="purple">霓虹紫 (Neon Purple)</option>
-              <option value="emerald">翡翠绿 (Emerald)</option>
-              <option value="amber">黑晶金 (Gold & Amber)</option>
-              <option value="orange">落日橙 (Sunset Orange)</option>
-              <option value="rose">烈焰红 (Crimson Rose)</option>
-              <option value="cyan">极光青 (Aurora Cyan)</option>
-            </select>
+              外部 URL 链接 (推荐)
+            </button>
+            <button 
+              type="button" 
+              id="sourceModeInlineBtn" 
+              onclick="setSourceMode('inline')" 
+              class="py-1.5 rounded-lg text-xs font-semibold transition-all text-neutral-400 hover:text-white"
+            >
+              单文件内联代码
+            </button>
           </div>
         </div>
 
-        <!-- Cover Poster Image Input -->
-        <div>
-          <label class="block font-semibold text-neutral-300 mb-1">
-            封面海报图片（16:9，可选）
-          </label>
+        <!-- Mode A: URL Input -->
+        <div id="sourceUrlField">
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">相对路径或外部网址 *</label>
           <input 
             type="text" 
-            id="formGameCover" 
-            placeholder="./covers/game.webp 或 https://..." 
-            class="w-full bg-neutral-950 text-white font-mono text-xs px-3.5 py-2 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
-            oninput="handleGameCoverPreview(this.value)"
+            id="formUrl" 
+            placeholder="例如：./games/rummikub/index.html 或完整网址" 
+            class="w-full bg-neutral-950 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500"
           />
-          <p class="text-[11px] text-neutral-500 mt-1">若不填，系统将自动渲染晶体全息渐变质感。</p>
-          
-          <!-- Live Cover Preview Box -->
-          <div id="formCoverPreviewBox" class="mt-2 relative w-full aspect-[16/9] max-h-36 rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 hidden">
-            <img id="formCoverPreviewImg" src="" alt="封面预览" class="w-full h-full object-cover" onerror="handleCoverPreviewError()" />
-            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent pointer-events-none"></div>
-            <div class="absolute bottom-2 left-3 text-[10px] text-neutral-300 font-mono bg-black/60 px-2 py-0.5 rounded-md backdrop-blur-md">
-              🖼️ 16:9 封面预览
-            </div>
+          <p class="text-[10px] text-neutral-400 mt-1">推荐在同个 GitHub 仓库中建子文件夹独立存放，例如 `./games/贪吃蛇/index.html`</p>
+        </div>
+
+        <!-- Mode B: Inline Code Textarea -->
+        <div id="sourceInlineField" style="display: none;">
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">单文件 HTML 完整源码 *</label>
+          <textarea 
+            id="formCode" 
+            rows="6" 
+            placeholder="<!DOCTYPE html><html>...粘贴完整游戏单文件代码...</html>" 
+            class="w-full bg-neutral-950 border border-white/10 rounded-xl p-3 font-mono text-[11px] text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-indigo-500 leading-relaxed"
+          ></textarea>
+        </div>
+
+        <!-- Cover Image Poster with 16:9 Live Preview Box -->
+        <div>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">封面海报图片 (推荐 16:9 比例)</label>
+          <input 
+            type="text" 
+            id="formCover" 
+            placeholder="例如：./covers/rummikub.webp 或 https://..." 
+            oninput="handleCoverPreviewInput(this.value)"
+            class="w-full bg-neutral-950 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500"
+          />
+          <!-- Live 16:9 Preview Frame -->
+          <div id="coverPreviewContainer" class="mt-2.5 rounded-xl overflow-hidden border border-white/10 bg-neutral-950 aspect-[16/9] max-h-36 relative flex flex-col justify-end p-3">
+            <img id="formCoverPreviewImg" src="" alt="封面预览" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity" />
+            <div id="formCoverGradientOverlay" class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/20 to-transparent"></div>
+            <span id="coverPreviewStatus" class="relative z-10 text-[10px] text-neutral-400 font-mono">未配置封面（将使用主题流光弥散底衬）</span>
+          </div>
+        </div>
+
+        <!-- Emoji Icon and Theme Palette (Pixel-Aligned Height) -->
+        <div class="grid grid-cols-2 gap-3 items-end">
+          <div>
+            <label class="block text-xs font-semibold text-neutral-300 mb-1.5">游戏 Emoji 图标</label>
+            <input 
+              type="text" 
+              id="formIcon" 
+              maxlength="4" 
+              value="🎮" 
+              class="w-full h-10 box-border bg-neutral-950 border border-white/10 rounded-xl px-3 text-center text-lg text-white focus:outline-none focus:border-indigo-500"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-neutral-300 mb-1.5">主题色调</label>
+            <select 
+              id="formTheme" 
+              class="w-full h-10 box-border bg-neutral-950 border border-white/10 rounded-xl px-3 text-xs text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
+            >
+              <option value="cyber-blue">科技蓝 (Cyber Blue)</option>
+              <option value="neon-purple">霓虹紫 (Neon Purple)</option>
+              <option value="emerald-green">翡翠绿 (Emerald Green)</option>
+              <option value="gold-amber">黑晶金 (Gold Amber)</option>
+              <option value="sunset-orange">落日橙 (Sunset Orange)</option>
+              <option value="flame-red">烈焰红 (Flame Red)</option>
+              <option value="aurora-cyan">极光青 (Aurora Cyan)</option>
+            </select>
           </div>
         </div>
 
         <!-- Description -->
         <div>
-          <label class="block font-semibold text-neutral-300 mb-1">游戏简述</label>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">简介说明 (可选)</label>
           <input 
             type="text" 
-            id="formGameDesc" 
-            placeholder="简要规则、触控提示等..." 
-            class="w-full bg-neutral-950 text-white text-xs px-3.5 py-2 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
+            id="formDescription" 
+            placeholder="简要玩法、触控技巧或游戏特色..." 
+            class="w-full bg-neutral-950 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500"
           />
         </div>
 
-        <!-- Source Mode: URL vs Inline HTML -->
-        <div class="border-t border-white/10 pt-3">
-          <label class="block font-semibold text-neutral-300 mb-2">载入来源方式：</label>
-          <div class="flex items-center space-x-4 mb-3">
-            <label class="flex items-center space-x-1.5 cursor-pointer text-neutral-300">
-              <input type="radio" name="sourceType" value="url" id="sourceTypeUrl" checked onchange="toggleSourceType(this.value)" />
-              <span>外部 URL 链接（推荐，独立解耦）</span>
-            </label>
-            <label class="flex items-center space-x-1.5 cursor-pointer text-neutral-300">
-              <input type="radio" name="sourceType" value="inline" id="sourceTypeInline" onchange="toggleSourceType(this.value)" />
-              <span>单文件 HTML 代码（直接内联）</span>
-            </label>
-          </div>
-
-          <!-- URL Input -->
-          <div id="urlInputContainer">
-            <input 
-              type="text" 
-              id="formGameUrl" 
-              placeholder="./games/chess/index.html 或完整网络链接" 
-              class="w-full bg-neutral-950 text-white font-mono text-xs px-3.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <!-- Inline HTML Input -->
-          <div id="inlineCodeContainer" class="hidden">
-            <textarea 
-              id="formGameCode" 
-              rows="6" 
-              placeholder="<!DOCTYPE html> 粘贴完整的单文件代码..." 
-              class="w-full bg-neutral-950 text-white font-mono text-xs p-3 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
-            ></textarea>
-          </div>
-        </div>
-
-        <!-- Modal Footer Actions -->
-        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+        <!-- Form Actions -->
+        <div class="flex items-center justify-between pt-3 border-t border-white/10">
           <button 
             type="button" 
-            id="deleteGameBtn" 
-            onclick="handleDeleteGame()" 
-            class="hidden px-4 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 rounded-xl font-medium transition"
+            id="formDeleteBtn" 
+            onclick="handleDeleteGameFromModal()" 
+            style="display: none;" 
+            class="px-4 py-2 rounded-xl bg-red-950/60 border border-red-800/40 text-red-400 hover:bg-red-900/80 text-xs font-semibold transition-all"
           >
             删除此游戏
           </button>
@@ -938,13 +758,13 @@
             <button 
               type="button" 
               onclick="closeGameModal()" 
-              class="px-4 py-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-xl font-medium transition"
+              class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-neutral-300 text-xs font-medium transition-all"
             >
               取消
             </button>
             <button 
               type="submit" 
-              class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-glow transition"
+              class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white text-xs font-semibold shadow-lg shadow-indigo-600/30 transition-all"
             >
               保存并收录
             </button>
@@ -955,172 +775,328 @@
     </div>
   </div>
 
-  <!-- Modal C: Export Code to GitHub (代码导出弹窗) -->
-  <div id="exportModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 fade-in">
-    <div class="bg-neutral-900 border border-white/15 rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
-      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <span class="text-xl">📋</span>
-          <h3 class="text-sm font-bold text-white">同步代码至 GitHub</h3>
-        </div>
-        <button onclick="closeExportModal()" class="text-neutral-400 hover:text-white p-1 rounded-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  <!-- B. Appearance & Showcase Customization Modal (Hero Poster & Avatar) -->
+  <div id="customizationModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all opacity-0 pointer-events-none">
+    <div class="bg-neutral-900 border border-white/15 rounded-3xl w-full max-w-lg shadow-2xl p-6 space-y-5">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-white/10">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span>🎨</span>
+          <span>个性装扮与展台设置</span>
+        </h3>
+        <button onclick="closeCustomizationModal()" class="text-neutral-400 hover:text-white text-lg px-2">✕</button>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="flex bg-neutral-950 p-1 rounded-xl border border-white/10 text-xs">
+        <button 
+          id="customTabPosterBtn" 
+          onclick="switchCustomTab('poster')" 
+          class="flex-1 py-1.5 rounded-lg font-semibold bg-indigo-600 text-white transition-all"
+        >
+          🖼️ 巨幕海报
+        </button>
+        <button 
+          id="customTabAvatarBtn" 
+          onclick="switchCustomTab('avatar')" 
+          class="flex-1 py-1.5 rounded-lg font-semibold text-neutral-400 hover:text-white transition-all"
+        >
+          👤 个性头像
         </button>
       </div>
 
-      <div class="p-6 space-y-3 text-xs overflow-y-auto">
-        <p class="text-neutral-300 leading-relaxed">
-          点击下方按钮复制配置。在 GitHub 打开本仓库的 <code class="text-blue-300">index.html</code>，直接替换开头的 <code class="text-amber-300 font-mono">const DEFAULT_GAMES = [...]</code> 即可永久固化云端！
-        </p>
+      <!-- Tab 1: Hero Poster Settings -->
+      <div id="customTabPosterContent" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">海报图片路径或网络链接</label>
+          <input 
+            type="text" 
+            id="heroBgModalInput" 
+            placeholder="例如：./covers/hero.webp 或 https://..." 
+            oninput="handleHeroBgPreview(this.value)"
+            class="w-full bg-neutral-950 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500"
+          />
+        </div>
+
+        <!-- Live Preview -->
+        <div>
+          <span class="block text-[11px] font-semibold text-neutral-400 mb-1.5">实时光效与呼吸动效预览：</span>
+          <div class="relative w-full h-36 rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 flex flex-col justify-end p-4">
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+              <img id="heroBgModalPreviewImg" src="" alt="预览" class="w-full h-full object-cover opacity-0 transition-opacity duration-500 animate-hero-breathe" />
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-tr from-blue-900/40 via-purple-900/20 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 hero-vignette pointer-events-none"></div>
+            <span class="relative z-10 text-xs font-bold text-white drop-shadow">欢迎进入 Arcade Station</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <button 
+            type="button" 
+            onclick="clearHeroBg()" 
+            class="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-red-400 text-xs font-medium transition-all"
+          >
+            恢复默认星芒
+          </button>
+          <button 
+            type="button" 
+            onclick="saveHeroBg()" 
+            class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white text-xs font-semibold transition-all shadow-md"
+          >
+            保存并应用海报
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab 2: Custom Avatar Settings -->
+      <div id="customTabAvatarContent" class="space-y-4" style="display: none;">
+        <!-- Avatar Preset Grid -->
+        <div>
+          <label class="block text-xs font-semibold text-neutral-300 mb-2">精选快捷 Emoji 头像</label>
+          <div class="grid grid-cols-6 gap-2">
+            <button type="button" onclick="selectPresetAvatar('👾')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">👾</button>
+            <button type="button" onclick="selectPresetAvatar('🚀')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">🚀</button>
+            <button type="button" onclick="selectPresetAvatar('🕹️')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">🕹️</button>
+            <button type="button" onclick="selectPresetAvatar('♟️')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">♟️</button>
+            <button type="button" onclick="selectPresetAvatar('💎')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">💎</button>
+            <button type="button" onclick="selectPresetAvatar('⚡')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">⚡</button>
+            <button type="button" onclick="selectPresetAvatar('🐉')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">🐉</button>
+            <button type="button" onclick="selectPresetAvatar('🎯')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">🎯</button>
+            <button type="button" onclick="selectPresetAvatar('🐱')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">🐱</button>
+            <button type="button" onclick="selectPresetAvatar('🦊')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">🦊</button>
+            <button type="button" onclick="selectPresetAvatar('🛸')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">🛸</button>
+            <button type="button" onclick="selectPresetAvatar('🏆')" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-2xl transition-all">🏆</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">或输入自定义 Emoji / 图片路径</label>
+          <input 
+            type="text" 
+            id="avatarInput" 
+            placeholder="例如：🦄 或 ./covers/my_avatar.webp" 
+            oninput="handleAvatarPreview(this.value)"
+            class="w-full bg-neutral-950 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500"
+          />
+        </div>
+
+        <!-- Live Avatar Preview -->
+        <div class="flex items-center space-x-3 p-3 rounded-2xl bg-neutral-950 border border-white/10">
+          <div id="avatarModalPreviewBox" class="w-14 h-14 rounded-2xl glass-icon flex items-center justify-center text-3xl">
+            👾
+          </div>
+          <div>
+            <span class="text-xs font-bold text-white block">头像显示预览</span>
+            <span class="text-[10px] text-neutral-400">将同步应用至顶栏左上角与主页展台</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <button 
+            type="button" 
+            onclick="clearAvatar()" 
+            class="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-red-400 text-xs font-medium transition-all"
+          >
+            恢复默认
+          </button>
+          <button 
+            type="button" 
+            onclick="saveAvatar()" 
+            class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white text-xs font-semibold transition-all shadow-md"
+          >
+            保存并应用头像
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- C. Export GitHub Code Modal -->
+  <div id="exportModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all opacity-0 pointer-events-none">
+    <div class="bg-neutral-900 border border-white/15 rounded-3xl w-full max-w-2xl shadow-2xl p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-white/10">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span>📋</span>
+          <span>导出 GitHub 配置代码</span>
+        </h3>
+        <button onclick="closeExportModal()" class="text-neutral-400 hover:text-white text-lg px-2">✕</button>
+      </div>
+
+      <p class="text-xs text-neutral-400 leading-relaxed">
+        在 iPad 上新增、排序或修改的游戏，可以通过以下代码永久固化到 GitHub。复制后，打开 GitHub 仓库的 <code class="text-indigo-300 font-mono">index.html</code>，替换代码开头的 <code class="text-indigo-300 font-mono">const DEFAULT_GAMES = [...]</code> 即可：
+      </p>
+
+      <div class="relative">
         <textarea 
-          id="exportTextarea" 
+          id="exportCodeArea" 
           readonly 
           rows="10" 
-          class="w-full bg-neutral-950 text-neutral-300 font-mono text-[11px] p-3 rounded-xl border border-white/15 focus:outline-none select-all"
+          class="w-full bg-neutral-950 border border-white/10 rounded-2xl p-4 font-mono text-[11px] text-neutral-300 focus:outline-none leading-relaxed select-all"
         ></textarea>
       </div>
 
-      <div class="px-6 py-3.5 border-t border-white/10 bg-neutral-950/60 flex items-center justify-between">
-        <span class="text-[11px] text-neutral-500 font-mono">一键同步，永不丢失</span>
+      <div class="flex items-center justify-between pt-2">
+        <span class="text-[11px] text-neutral-500">提示：不导出也能在当前 iPad 上永久持久化游玩。</span>
         <button 
           onclick="copyExportCode()" 
-          class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-glow transition active:scale-95"
+          class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white text-xs font-semibold shadow-lg shadow-indigo-600/30 transition-all flex items-center space-x-1"
         >
-          一键复制配置代码
+          <span>一键复制配置代码</span>
+          <span>📋</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Modal D: Settings (设置弹窗) -->
-  <div id="settingsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 fade-in">
-    <div class="bg-neutral-900 border border-white/15 rounded-3xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
-      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-        <h3 class="text-sm font-bold text-white">Arcade Station 设置</h3>
-        <button onclick="closeSettingsModal()" class="text-neutral-400 hover:text-white p-1 rounded-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
+  <!-- D. Settings Modal -->
+  <div id="settingsModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all opacity-0 pointer-events-none">
+    <div class="bg-neutral-900 border border-white/15 rounded-3xl w-full max-w-md shadow-2xl p-6 space-y-5">
+      <div class="flex items-center justify-between pb-3 border-b border-white/10">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span>⚙️</span>
+          <span>容器设置与维护</span>
+        </h3>
+        <button onclick="closeSettingsModal()" class="text-neutral-400 hover:text-white text-lg px-2">✕</button>
       </div>
 
-      <div class="p-6 space-y-4 text-xs">
-        <div class="flex items-center justify-between py-2 border-b border-white/5">
-          <div>
-            <div class="font-semibold text-white">触控音效</div>
-            <div class="text-[11px] text-neutral-400">长按与抽签时播放轻微交互音</div>
-          </div>
-          <input type="checkbox" id="soundToggle" checked class="w-4 h-4 accent-blue-600 rounded" />
-        </div>
-
-        <div class="py-2 border-b border-white/5">
-          <div class="font-semibold text-white mb-1">首页巨幕海报</div>
-          <button onclick="closeSettingsModal(); openHeroBgModal();" class="text-blue-400 hover:text-blue-300 text-xs">
-            进入海报自定义设置 →
+      <div class="space-y-3 text-xs text-neutral-300">
+        <div class="p-3.5 rounded-2xl bg-neutral-950 border border-white/10 space-y-1.5">
+          <span class="font-bold text-white block">🔄 容器热更新机制</span>
+          <p class="text-neutral-400 leading-relaxed">
+            如果在 GitHub 修改了容器本身的代码，无需在 iPad 桌面重新添加图标。点击下方的「立即更新」按钮，即可瞬间穿透 Safari 缓存抓取最新代码，已录入的游戏 100% 完好保留！
+          </p>
+          <button 
+            onclick="refreshContainerHot()" 
+            class="mt-2 w-full py-2 bg-indigo-600 hover:bg-indigo-500 active:scale-95 rounded-xl text-white font-semibold transition-all"
+          >
+            立即拉取 GitHub 最新代码并刷新
           </button>
         </div>
 
-        <div class="pt-2">
-          <div class="font-semibold text-rose-400 mb-1">重置所有数据</div>
-          <p class="text-[11px] text-neutral-400 mb-2">清空本地存储的所有游戏，恢复默认空白状态。</p>
-          <button onclick="handleResetAllData()" class="px-3 py-1.5 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 rounded-xl transition">
-            清空本地数据
+        <div class="p-3.5 rounded-2xl bg-neutral-950 border border-white/10 space-y-1.5">
+          <span class="font-bold text-red-400 block">⚠️ 数据重置</span>
+          <p class="text-neutral-400 leading-relaxed">清空此 iPad 上的所有本地游戏数据并重置为初始状态：</p>
+          <button 
+            onclick="clearAllLocalData()" 
+            class="mt-1 w-full py-2 bg-red-950/60 hover:bg-red-900/80 border border-red-800/40 rounded-xl text-red-400 font-semibold transition-all"
+          >
+            清空所有游戏数据
           </button>
         </div>
-      </div>
-
-      <div class="px-6 py-3 border-t border-white/10 bg-neutral-950/60 flex justify-end">
-        <button onclick="closeSettingsModal()" class="px-4 py-1.5 bg-neutral-800 text-white rounded-xl font-medium">
-          完成
-        </button>
       </div>
     </div>
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-neutral-900/90 border border-white/20 text-white text-xs px-4 py-2.5 rounded-2xl shadow-2xl backdrop-blur-xl pointer-events-none opacity-0 transition-all duration-300 flex items-center space-x-2">
+  <div 
+    id="toastBox" 
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-2xl bg-neutral-900/90 backdrop-blur-xl border border-white/20 text-white text-xs font-medium shadow-2xl flex items-center space-x-2 pointer-events-none transition-all duration-300 opacity-0 translate-y-4"
+  >
     <span id="toastIcon">✨</span>
-    <span id="toastMessage">已更新</span>
+    <span id="toastMsg">通知信息</span>
   </div>
 
-  <!-- ================================================================= -->
-  <!-- 5. JAVASCRIPT LOGIC & ENGINE                                      -->
-  <!-- ================================================================= -->
+  <!-- =============================================================== -->
+  <!-- 5. JAVASCRIPT ENGINE & ARCHITECTURE                             -->
+  <!-- =============================================================== -->
   <script>
     /* =============================================================== */
-    /* A. DEFAULT REGISTRY & STORAGE KEYS                              */
+    /* A. DEFAULT REPOSITORY REGISTRY                                  */
+    /* 后续将 iPad 导出的代码替换此处即可在 GitHub 上永久固化            */
     /* =============================================================== */
-    // 您在 GitHub 上新增游戏后，也可以将配置直接放置于此数组中
     const DEFAULT_GAMES = [];
 
-    const STORAGE_KEY_GAMES = 'arcade_games_db_v3';
-    const STORAGE_KEY_HERO_BG = 'arcade_hero_custom_bg';
-    const STORAGE_KEY_AVATAR = 'arcade_custom_avatar_v3';
-    const STORAGE_KEY_VIEW_MODE = 'arcade_view_mode';
+    /* =============================================================== */
+    /* B. STORAGE KEYS & APP STATE                                     */
+    /* =============================================================== */
+    const STORAGE_KEY_GAMES = 'arcade_station_games_v3';
+    const STORAGE_KEY_HERO_BG = 'arcade_station_hero_bg_v3';
+    const STORAGE_KEY_AVATAR = 'arcade_station_avatar_v3';
+    const STORAGE_KEY_VIEW_MODE = 'arcade_station_view_mode_v3';
+    const STORAGE_KEY_SORT = 'arcade_station_sort_v3';
 
-    // Theme Color Schemes
+    let games = [];
+    let heroIndex = 0; // 0 = "我的主页", 1 ~ N = 轮播具体收录游戏
+    let heroAutoTimer = null;
+    let currentView = 'discover'; // 'discover' | 'library'
+    let viewMode = 'grouped'; // 'grouped' | 'flat'
+    let activeCategory = 'all';
+    let searchQuery = '';
+    let sortMode = 'custom';
+    let sortableInstances = [];
+    let currentRunningGame = null;
+
+    /* Theme Color Presets */
     const THEME_PRESETS = {
-      blue: {
-        gradient: 'from-blue-600 via-indigo-700 to-neutral-950',
-        accentGlow: 'rgba(59, 130, 246, 0.35)',
-        badgeBg: 'bg-blue-500/20 text-blue-300 border-blue-500/40',
-        overlayGradient: 'linear-gradient(135deg, rgba(37, 99, 235, 0.35) 0%, rgba(15, 23, 42, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
+      'cyber-blue': {
+        gradient: 'from-blue-600 via-indigo-600 to-cyan-500',
+        cardBgGradient: 'linear-gradient(135deg, rgba(37,99,235,0.4) 0%, rgba(30,58,138,0.2) 100%)',
+        overlayGradient: 'linear-gradient(135deg, rgba(59,130,246,0.25) 0%, rgba(99,102,241,0.12) 60%, transparent 100%)',
+        accentGlow: 'rgba(59,130,246,0.35)',
+        badgeBg: 'bg-blue-950/80 text-blue-300 border-blue-800/40',
+        dot: 'bg-blue-400'
       },
-      purple: {
-        gradient: 'from-purple-600 via-violet-800 to-neutral-950',
-        accentGlow: 'rgba(168, 85, 247, 0.35)',
-        badgeBg: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
-        overlayGradient: 'linear-gradient(135deg, rgba(147, 51, 234, 0.35) 0%, rgba(30, 15, 42, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
+      'neon-purple': {
+        gradient: 'from-purple-600 via-fuchsia-600 to-pink-500',
+        cardBgGradient: 'linear-gradient(135deg, rgba(147,51,234,0.4) 0%, rgba(88,28,135,0.2) 100%)',
+        overlayGradient: 'linear-gradient(135deg, rgba(168,85,247,0.25) 0%, rgba(217,70,239,0.12) 60%, transparent 100%)',
+        accentGlow: 'rgba(168,85,247,0.35)',
+        badgeBg: 'bg-purple-950/80 text-purple-300 border-purple-800/40',
+        dot: 'bg-purple-400'
       },
-      emerald: {
-        gradient: 'from-emerald-600 via-teal-800 to-neutral-950',
-        accentGlow: 'rgba(16, 185, 129, 0.35)',
-        badgeBg: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
-        overlayGradient: 'linear-gradient(135deg, rgba(5, 150, 105, 0.35) 0%, rgba(6, 42, 30, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
+      'emerald-green': {
+        gradient: 'from-emerald-600 via-teal-600 to-cyan-600',
+        cardBgGradient: 'linear-gradient(135deg, rgba(5,150,105,0.4) 0%, rgba(6,78,59,0.2) 100%)',
+        overlayGradient: 'linear-gradient(135deg, rgba(16,185,129,0.25) 0%, rgba(20,184,166,0.12) 60%, transparent 100%)',
+        accentGlow: 'rgba(16,185,129,0.35)',
+        badgeBg: 'bg-emerald-950/80 text-emerald-300 border-emerald-800/40',
+        dot: 'bg-emerald-400'
       },
-      amber: {
-        gradient: 'from-amber-500 via-orange-700 to-neutral-950',
-        accentGlow: 'rgba(245, 158, 11, 0.35)',
-        badgeBg: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
-        overlayGradient: 'linear-gradient(135deg, rgba(217, 119, 6, 0.35) 0%, rgba(42, 25, 6, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
+      'gold-amber': {
+        gradient: 'from-amber-500 via-orange-600 to-yellow-500',
+        cardBgGradient: 'linear-gradient(135deg, rgba(217,119,6,0.4) 0%, rgba(120,53,15,0.2) 100%)',
+        overlayGradient: 'linear-gradient(135deg, rgba(245,158,11,0.25) 0%, rgba(234,88,12,0.12) 60%, transparent 100%)',
+        accentGlow: 'rgba(245,158,11,0.35)',
+        badgeBg: 'bg-amber-950/80 text-amber-300 border-amber-800/40',
+        dot: 'bg-amber-400'
       },
-      orange: {
-        gradient: 'from-orange-500 via-amber-600 to-neutral-950',
-        accentGlow: 'rgba(249, 115, 22, 0.35)',
-        badgeBg: 'bg-orange-500/20 text-orange-300 border-orange-500/40',
-        overlayGradient: 'linear-gradient(135deg, rgba(234, 88, 12, 0.35) 0%, rgba(45, 20, 5, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
+      'sunset-orange': {
+        gradient: 'from-orange-500 via-rose-600 to-amber-500',
+        cardBgGradient: 'linear-gradient(135deg, rgba(234,88,12,0.4) 0%, rgba(159,18,57,0.2) 100%)',
+        overlayGradient: 'linear-gradient(135deg, rgba(249,115,22,0.25) 0%, rgba(244,63,94,0.12) 60%, transparent 100%)',
+        accentGlow: 'rgba(249,115,22,0.35)',
+        badgeBg: 'bg-orange-950/80 text-orange-300 border-orange-800/40',
+        dot: 'bg-orange-400'
       },
-      rose: {
-        gradient: 'from-rose-600 via-pink-800 to-neutral-950',
-        accentGlow: 'rgba(244, 63, 94, 0.35)',
-        badgeBg: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
-        overlayGradient: 'linear-gradient(135deg, rgba(225, 29, 72, 0.35) 0%, rgba(42, 10, 20, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
+      'flame-red': {
+        gradient: 'from-red-600 via-rose-600 to-pink-600',
+        cardBgGradient: 'linear-gradient(135deg, rgba(220,38,38,0.4) 0%, rgba(136,19,55,0.2) 100%)',
+        overlayGradient: 'linear-gradient(135deg, rgba(239,68,68,0.25) 0%, rgba(225,29,72,0.12) 60%, transparent 100%)',
+        accentGlow: 'rgba(239,68,68,0.35)',
+        badgeBg: 'bg-red-950/80 text-red-300 border-red-800/40',
+        dot: 'bg-red-400'
       },
-      cyan: {
-        gradient: 'from-cyan-500 via-teal-700 to-neutral-950',
-        accentGlow: 'rgba(6, 182, 212, 0.35)',
-        badgeBg: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
-        overlayGradient: 'linear-gradient(135deg, rgba(8, 145, 178, 0.35) 0%, rgba(8, 30, 40, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
+      'aurora-cyan': {
+        gradient: 'from-cyan-500 via-teal-500 to-blue-600',
+        cardBgGradient: 'linear-gradient(135deg, rgba(6,182,212,0.4) 0%, rgba(15,118,110,0.2) 100%)',
+        overlayGradient: 'linear-gradient(135deg, rgba(6,182,212,0.25) 0%, rgba(20,184,166,0.12) 60%, transparent 100%)',
+        accentGlow: 'rgba(6,182,212,0.35)',
+        badgeBg: 'bg-cyan-950/80 text-cyan-300 border-cyan-800/40',
+        dot: 'bg-cyan-400'
       }
     };
 
-    /* =============================================================== */
-    /* B. STATE MANAGEMENT                                             */
-    /* =============================================================== */
-    let games = [];
-    let currentCategory = 'all';
-    let searchQuery = '';
-    let viewMode = 'grouped'; // 'grouped' or 'flat'
-    let heroIndex = 0;
-    let heroTimer = null;
-    let currentActiveGame = null;
-    let rouletteSelectedGame = null;
-    let isImmersive = false;
-    let sortableInstances = [];
+    function getTheme(themeKey) {
+      return THEME_PRESETS[themeKey] || THEME_PRESETS['cyber-blue'];
+    }
 
-    // Synthetic Audio Context for Touch Feedback
+    /* =============================================================== */
+    /* C. WEB AUDIO SYNTHESIZER (Micro Sound Effects for iPad Touch)   */
+    /* =============================================================== */
     let audioCtx = null;
-    function playBeep(freq = 440, type = 'sine', duration = 0.08) {
-      const toggle = document.getElementById('soundToggle');
-      if (toggle && !toggle.checked) return;
+    function playSound(type) {
       try {
         if (!audioCtx) {
           audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1130,155 +1106,181 @@
         }
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-      } catch (e) {}
+
+        const now = audioCtx.currentTime;
+        if (type === 'tap') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(600, now);
+          osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+          gain.gain.setValueAtTime(0.04, now);
+          gain.gain.linearRampToValueAtTime(0.0, now + 0.05);
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } else if (type === 'drag') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(320, now);
+          osc.frequency.exponentialRampToValueAtTime(540, now + 0.08);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.linearRampToValueAtTime(0.0, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === 'success') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(523.25, now); // C5
+          osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.linearRampToValueAtTime(0.0, now + 0.2);
+          osc.start(now);
+          osc.stop(now + 0.2);
+        } else if (type === 'tick') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(850, now);
+          gain.gain.setValueAtTime(0.03, now);
+          gain.gain.linearRampToValueAtTime(0.0, now + 0.03);
+          osc.start(now);
+          osc.stop(now + 0.03);
+        }
+      } catch (e) {
+        // Ignore audio failures if blocked
+      }
     }
 
     /* =============================================================== */
-    /* C. INITIALIZATION & STORAGE LOAD                                */
+    /* D. DATA PERSISTENCE & INITIALIZATION                            */
     /* =============================================================== */
-    window.addEventListener('DOMContentLoaded', () => {
-      loadStoredData();
-      applyHeroCustomBg();
-      applyCustomAvatar();
-      updateTodayDateBadge();
-      initHeroCarousel();
-      renderAll();
-    });
-
-    function loadStoredData() {
-      try {
-        const storedGames = localStorage.getItem(STORAGE_KEY_GAMES);
-        if (storedGames) {
-          games = JSON.parse(storedGames);
-        } else {
+    function loadInitialData() {
+      // 1. Load Games
+      const saved = localStorage.getItem(STORAGE_KEY_GAMES);
+      if (saved) {
+        try {
+          games = JSON.parse(saved);
+        } catch (e) {
           games = [...DEFAULT_GAMES];
-          saveGamesToStorage();
         }
-        const storedView = localStorage.getItem(STORAGE_KEY_VIEW_MODE);
-        if (storedView) viewMode = storedView;
-      } catch (e) {
+      } else {
         games = [...DEFAULT_GAMES];
       }
+
+      // 2. Load View Mode & Sort Mode
+      viewMode = localStorage.getItem(STORAGE_KEY_VIEW_MODE) || 'grouped';
+      sortMode = localStorage.getItem(STORAGE_KEY_SORT) || 'custom';
+      const sortSel = document.getElementById('sortSelector');
+      if (sortSel) sortSel.value = sortMode;
+
+      // 3. Apply Custom Avatar
+      applyCustomAvatar();
+
+      // 4. Apply Hero Background
+      applyHeroCustomBg();
     }
 
-    function saveGamesToStorage() {
-      try {
-        localStorage.setItem(STORAGE_KEY_GAMES, JSON.stringify(games));
-      } catch (e) {}
-      updateNavGameCount();
+    function saveGames() {
+      localStorage.setItem(STORAGE_KEY_GAMES, JSON.stringify(games));
     }
 
-    function showToast(msg, icon = '✨') {
-      const toast = document.getElementById('toast');
-      document.getElementById('toastIcon').textContent = icon;
-      document.getElementById('toastMessage').textContent = msg;
-      toast.classList.remove('opacity-0', 'translate-y-2');
-      toast.classList.add('opacity-100', 'translate-y-0');
-      setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-2');
-      }, 2400);
-    }
+    /* Helper: Avatar Renderer (Supports Emoji or Image) */
+    function renderAvatarElement(containerEl, avatarVal, sizeClass = 'text-2xl') {
+      if (!containerEl) return;
+      containerEl.innerHTML = '';
+      if (!avatarVal || !avatarVal.trim()) avatarVal = '👾';
 
-    /* =============================================================== */
-    /* D. TAB SWITCHING (探索发现 vs 全部游戏库)                         */
-    /* =============================================================== */
-    function switchMainTab(tab) {
-      playBeep(520, 'sine', 0.05);
-      const btnDiscover = document.getElementById('tabBtnDiscover');
-      const btnLibrary = document.getElementById('tabBtnLibrary');
-      const viewDiscover = document.getElementById('viewDiscover');
-      const viewLibrary = document.getElementById('viewLibrary');
+      const trimmed = avatarVal.trim();
+      const isImg = trimmed.startsWith('./') || trimmed.startsWith('/') || trimmed.startsWith('http://') || trimmed.startsWith('https://');
 
-      if (tab === 'discover') {
-        btnDiscover.className = 'flex items-center space-x-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-semibold transition-all bg-white text-neutral-950 shadow-md';
-        btnLibrary.className = 'flex items-center space-x-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-medium text-neutral-400 hover:text-white transition-all';
-        viewDiscover.classList.remove('hidden');
-        viewLibrary.classList.add('hidden');
-        updateHeroBanner();
+      if (isImg) {
+        const img = document.createElement('img');
+        img.src = trimmed;
+        img.alt = 'Avatar';
+        img.className = 'w-full h-full object-cover rounded-xl';
+        img.onerror = () => {
+          containerEl.innerHTML = `<span class="${sizeClass}">👾</span>`;
+        };
+        containerEl.appendChild(img);
       } else {
-        btnLibrary.className = 'flex items-center space-x-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-semibold transition-all bg-white text-neutral-950 shadow-md';
-        btnDiscover.className = 'flex items-center space-x-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-medium text-neutral-400 hover:text-white transition-all';
-        viewLibrary.classList.remove('hidden');
-        viewDiscover.classList.add('hidden');
-        renderLibrary();
+        containerEl.innerHTML = `<span class="${sizeClass}">${trimmed}</span>`;
       }
     }
 
+    function applyCustomAvatar() {
+      const avatar = localStorage.getItem(STORAGE_KEY_AVATAR) || '👾';
+      renderAvatarElement(document.getElementById('headerAvatarContainer'), avatar, 'text-lg sm:text-xl');
+      renderAvatarElement(document.getElementById('heroAvatarInner'), avatar, 'text-3xl sm:text-4xl');
+      renderAvatarElement(document.getElementById('avatarModalPreviewBox'), avatar, 'text-3xl');
+    }
+
     /* =============================================================== */
-    /* E. HERO SPOTLIGHT CAROUSEL & CUSTOM BG                          */
+    /* E. HERO SPOTLIGHT CAROUSEL & CUSTOM POSTER                      */
     /* =============================================================== */
     function applyHeroCustomBg() {
       const bg = localStorage.getItem(STORAGE_KEY_HERO_BG);
       const img = document.getElementById('heroCustomBgImg');
-      if (bg && bg.trim()) {
-        img.src = bg.trim();
-        img.classList.remove('hidden');
-      } else {
-        img.src = '';
-        img.classList.add('hidden');
+      if (img) {
+        if (bg && bg.trim()) {
+          img.src = bg.trim();
+          img.classList.remove('opacity-0');
+          img.classList.add('opacity-100');
+        } else {
+          img.src = '';
+          img.classList.add('opacity-0');
+          img.classList.remove('opacity-100');
+        }
       }
     }
 
     function initHeroCarousel() {
-      if (heroTimer) clearInterval(heroTimer);
-      heroTimer = setInterval(() => {
-        if (games.length > 0) {
-          nextHeroSlide(false);
-        }
-      }, 7000);
+      if (heroAutoTimer) clearInterval(heroAutoTimer);
+      // Auto cycle every 8 seconds if there are games
+      if (games.length > 0) {
+        heroAutoTimer = setInterval(() => {
+          nextHeroSlide(true);
+        }, 8000);
+      }
       updateHeroBanner();
     }
 
     function updateHeroBanner() {
-      const titleEl = document.getElementById('heroGameTitle');
-      const descEl = document.getElementById('heroGameDesc');
-      const iconEl = document.getElementById('heroGameIcon');
-      const subEl = document.getElementById('heroGameSub');
-      const categoryBadge = document.getElementById('heroCategoryBadge');
-      const indicator = document.getElementById('heroSlideIndicator');
-      const launchBtn = document.getElementById('heroLaunchBtn');
-      const secondaryBtn = document.getElementById('heroSecondaryBtn');
-      const heroBgImg = document.getElementById('heroCustomBgImg');
-      const totalSlides = games.length + 1; // Slide 0 is ALWAYS "我的主页"
-
+      const totalSlides = games.length + 1; // Slide 0 = "我的主页", 1 ~ N = 游戏
       if (heroIndex >= totalSlides) heroIndex = 0;
       if (heroIndex < 0) heroIndex = totalSlides - 1;
 
-      if (indicator) indicator.textContent = `${heroIndex + 1} / ${totalSlides}`;
+      const indicator = document.getElementById('heroSlideIndicator');
+      const hudTag = document.getElementById('heroHudTag');
+      const statusBadge = document.getElementById('heroStatusBadge');
+      const titleEl = document.getElementById('heroTitle');
+      const categoryEl = document.getElementById('heroCategory');
+      const descEl = document.getElementById('heroDescription');
+      const iconEl = document.getElementById('heroAvatarInner');
+      const primaryBtn = document.getElementById('heroPrimaryBtn');
+      const secondaryBtn = document.getElementById('heroSecondaryBtn');
+      const heroBgImg = document.getElementById('heroCustomBgImg');
 
-      // SLIDE 0: 始终为用户的专属「我的主页」
+      if (indicator) {
+        indicator.textContent = `${heroIndex + 1} / ${totalSlides}`;
+      }
+
+      // SLIDE 0: 我的主页 (PERMANENT HOME PAGE)
       if (heroIndex === 0) {
-        applyHeroCustomBg();
-        const savedAvatar = localStorage.getItem(STORAGE_KEY_AVATAR) || '👾';
-        renderAvatarElement(iconEl, savedAvatar, 'text-3xl sm:text-4xl');
-        
-        if (categoryBadge) {
-          categoryBadge.textContent = '我的主页';
-          categoryBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 backdrop-blur-xl';
+        if (hudTag) hudTag.textContent = 'HOLO SPOTLIGHT // 01';
+        if (statusBadge) {
+          statusBadge.textContent = '我的主页';
+          statusBadge.className = 'px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] text-neutral-300';
         }
-
         if (titleEl) titleEl.textContent = '欢迎进入 Arcade Station';
-        if (subEl) subEl.innerHTML = '<span>STATUS: READY</span> • <span>iPad Pro 120Hz PROMOTION 适配</span>';
-        
-        if (games.length === 0) {
-          if (descEl) descEl.textContent = 'iPad Pro 专属独立沙盒游戏中心。点击右上角「录入游戏」即可开启你的专属游戏库！';
-          if (launchBtn) launchBtn.innerHTML = `<span>录入新游戏</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>`;
-        } else {
-          if (descEl) descEl.textContent = `iPad Pro 专属独立沙盒游戏中心。已收录 ${games.length} 款精彩游戏，可向右翻动查看精选展台，或直接进入游戏库畅玩！`;
-          if (launchBtn) launchBtn.innerHTML = `<span>进入游戏大厅</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
-        }
+        if (categoryEl) categoryEl.textContent = 'STATUS: READY · iPad Pro 120Hz PROMOTION 适配';
+        if (descEl) descEl.textContent = 'iPad Pro 专属独立沙盒游戏中心。点击右上角「录入游戏」即可开启你的专属游戏库！';
 
+        applyCustomAvatar();
+        applyHeroCustomBg();
+
+        if (primaryBtn) {
+          primaryBtn.innerHTML = `<span>录入新游戏</span><span>＋</span>`;
+          primaryBtn.className = 'px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-semibold text-xs sm:text-sm shadow-xl shadow-indigo-600/30 transition-all flex items-center space-x-1.5';
+        }
         if (secondaryBtn) {
-          secondaryBtn.classList.add('hidden');
+          secondaryBtn.innerHTML = `<span>浏览全部游戏库</span><span>→</span>`;
+          secondaryBtn.onclick = () => switchMainView('library');
         }
         return;
       }
@@ -1287,656 +1289,326 @@
       const g = games[heroIndex - 1];
       if (!g) return;
 
-      // 如果游戏配置了海报，使用游戏海报；否则回退到全局海报或渐变
+      // 如果游戏配置了海报，使用游戏海报；否则回退到全局海报或默认
       if (heroBgImg) {
         if (g.cover && g.cover.trim().length > 0) {
           heroBgImg.src = g.cover.trim();
-          heroBgImg.classList.remove('hidden');
+          heroBgImg.classList.remove('opacity-0');
+          heroBgImg.classList.add('opacity-100');
         } else {
           applyHeroCustomBg();
         }
       }
 
       renderAvatarElement(iconEl, g.icon || '🎮', 'text-3xl sm:text-4xl');
-      if (titleEl) titleEl.textContent = g.title;
-      if (subEl) subEl.innerHTML = `<span>CATEGORY: ${g.category || '独立精选'}</span> • <span>HOT SPOTLIGHT</span>`;
-      if (categoryBadge) {
-        categoryBadge.textContent = g.category || '精选主打';
-        categoryBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white/10 text-neutral-300 border border-white/10 backdrop-blur-xl';
+
+      if (hudTag) hudTag.textContent = `FEATURED GAME // 0${heroIndex}`;
+      if (statusBadge) {
+        statusBadge.textContent = g.category || '精选';
+        statusBadge.className = 'px-2 py-0.5 rounded-full bg-indigo-950/80 border border-indigo-700/50 text-[10px] text-indigo-300';
       }
+      if (titleEl) titleEl.textContent = g.title;
+      if (categoryEl) categoryEl.textContent = `CATEGORY: ${g.category.toUpperCase()} · READY TO PLAY`;
+      if (descEl) descEl.textContent = g.description || '暂无描述信息。点击下方按钮立即在沙盒中体验！';
 
-      if (descEl) descEl.textContent = g.description || '暂无描述信息。享受沉浸触控博弈乐趣。';
-
-      if (launchBtn) launchBtn.innerHTML = `<span>立即进入</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+      if (primaryBtn) {
+        primaryBtn.innerHTML = `<span>立即进入游玩</span><span>▶</span>`;
+        primaryBtn.className = 'px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-semibold text-xs sm:text-sm shadow-xl shadow-emerald-600/30 transition-all flex items-center space-x-1.5';
+      }
       if (secondaryBtn) {
-        secondaryBtn.classList.remove('hidden');
-        secondaryBtn.textContent = '浏览全部游戏库 →';
-        secondaryBtn.onclick = () => switchMainTab('library');
+        secondaryBtn.innerHTML = `<span>查看游戏库</span><span>→</span>`;
+        secondaryBtn.onclick = () => switchMainView('library');
+      }
+    }
+
+    function handleHeroPrimaryAction() {
+      if (heroIndex === 0) {
+        openAddGameModal();
+      } else {
+        const g = games[heroIndex - 1];
+        if (g) launchGame(g.id);
       }
     }
 
     function prevHeroSlide() {
-      playBeep(380, 'triangle', 0.05);
-      const totalSlides = games.length + 1;
-      heroIndex = (heroIndex - 1 + totalSlides) % totalSlides;
+      playSound('tap');
+      heroIndex--;
       updateHeroBanner();
     }
 
-    function nextHeroSlide(manual = true) {
-      if (manual) playBeep(440, 'triangle', 0.05);
-      const totalSlides = games.length + 1;
-      heroIndex = (heroIndex + 1) % totalSlides;
+    function nextHeroSlide(isAuto = false) {
+      if (!isAuto) playSound('tap');
+      heroIndex++;
       updateHeroBanner();
     }
 
-    function launchHeroGame() {
-      if (heroIndex === 0) {
-        if (games.length === 0) {
-          openAddGameModal();
-        } else {
-          switchMainTab('library');
-        }
-      } else if (games.length > 0 && games[heroIndex - 1]) {
-        openSandboxGame(games[heroIndex - 1].id);
-      }
-    }
-
-    /* Helper: Render Emoji or Image Avatar into Container */
-    function renderAvatarElement(container, val, textSizeClass = 'text-base') {
-      if (!container) return;
-      const cleanVal = (val || '').trim();
-      const isImg = cleanVal.startsWith('http') || 
-                    cleanVal.startsWith('./') || 
-                    cleanVal.startsWith('/') || 
-                    cleanVal.includes('.png') || 
-                    cleanVal.includes('.jpg') || 
-                    cleanVal.includes('.webp') || 
-                    cleanVal.includes('.svg');
-      if (isImg) {
-        container.innerHTML = `<img src="${cleanVal}" alt="Avatar" class="w-full h-full object-cover rounded-xl" onerror="this.outerHTML='👾'" />`;
-      } else {
-        container.innerHTML = `<span class="${textSizeClass}">${cleanVal || '👾'}</span>`;
-      }
-    }
-
-    function applyCustomAvatar() {
-      const saved = localStorage.getItem(STORAGE_KEY_AVATAR) || '👾';
-      const navAvatar = document.getElementById('navBrandAvatarInner');
-      if (navAvatar) {
-        renderAvatarElement(navAvatar, saved, 'text-base');
-      }
-      if (games.length === 0) {
-        const heroIcon = document.getElementById('heroGameIcon');
-        if (heroIcon) {
-          renderAvatarElement(heroIcon, saved, 'text-3xl sm:text-4xl');
-        }
-      }
-    }
-
-    let currentCustomTab = 'poster';
-
-    function openCustomizationModal(tab = 'poster') {
-      playBeep(480, 'sine', 0.05);
-
-      // Load poster data
-      const bg = localStorage.getItem(STORAGE_KEY_HERO_BG) || '';
-      document.getElementById('heroBgModalInput').value = bg;
-      handleHeroBgPreview(bg);
-
-      // Load avatar data
-      const savedAvatar = localStorage.getItem(STORAGE_KEY_AVATAR) || '👾';
-      document.getElementById('avatarModalInput').value = savedAvatar;
-      handleAvatarPreview(savedAvatar);
-
-      switchCustomTab(tab);
-
-      const modal = document.getElementById('customizationModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function closeCustomizationModal() {
-      const modal = document.getElementById('customizationModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    // Backwards-compatible aliases
-    function openHeroBgModal() { openCustomizationModal('poster'); }
-    function closeHeroBgModal() { closeCustomizationModal(); }
-    function openAvatarModal() { openCustomizationModal('avatar'); }
-    function closeAvatarModal() { closeCustomizationModal(); }
-
-    function switchCustomTab(tab) {
-      playBeep(520, 'sine', 0.04);
-      currentCustomTab = tab;
-      const posterBtn = document.getElementById('customTabPosterBtn');
-      const avatarBtn = document.getElementById('customTabAvatarBtn');
-      const posterSection = document.getElementById('customPosterSection');
-      const avatarSection = document.getElementById('customAvatarSection');
-      const posterFooter = document.getElementById('customPosterFooter');
-      const avatarFooter = document.getElementById('customAvatarFooter');
-
-      if (tab === 'poster') {
-        posterBtn.className = 'pb-2.5 px-3 text-xs font-semibold border-b-2 border-blue-500 text-white flex items-center gap-1.5 transition';
-        avatarBtn.className = 'pb-2.5 px-3 text-xs font-medium border-b-2 border-transparent text-neutral-400 hover:text-white flex items-center gap-1.5 transition';
-        posterSection.classList.remove('hidden');
-        avatarSection.classList.add('hidden');
-        posterFooter.classList.remove('hidden');
-        posterFooter.classList.add('flex');
-        avatarFooter.classList.add('hidden');
-        avatarFooter.classList.remove('flex');
-      } else {
-        avatarBtn.className = 'pb-2.5 px-3 text-xs font-semibold border-b-2 border-blue-500 text-white flex items-center gap-1.5 transition';
-        posterBtn.className = 'pb-2.5 px-3 text-xs font-medium border-b-2 border-transparent text-neutral-400 hover:text-white flex items-center gap-1.5 transition';
-        avatarSection.classList.remove('hidden');
-        posterSection.classList.add('hidden');
-        avatarFooter.classList.remove('hidden');
-        avatarFooter.classList.add('flex');
-        posterFooter.classList.add('hidden');
-        posterFooter.classList.remove('flex');
-      }
-    }
-
-    function selectQuickAvatar(emoji) {
-      playBeep(520, 'sine', 0.04);
-      document.getElementById('avatarModalInput').value = emoji;
-      handleAvatarPreview(emoji);
-    }
-
-    function handleAvatarPreview(val) {
-      const preview = document.getElementById('avatarModalPreview');
-      renderAvatarElement(preview, val || '👾', 'text-2xl');
-    }
-
-    function saveAvatar() {
-      const val = document.getElementById('avatarModalInput').value.trim();
-      if (val) {
-        localStorage.setItem(STORAGE_KEY_AVATAR, val);
-        showToast('个性头像已更新', '👤');
-      } else {
-        localStorage.removeItem(STORAGE_KEY_AVATAR);
-        showToast('已恢复默认头像', '👾');
-      }
-      applyCustomAvatar();
-      closeCustomizationModal();
-    }
-
-    function resetDefaultAvatar() {
-      document.getElementById('avatarModalInput').value = '👾';
-      handleAvatarPreview('👾');
-      localStorage.removeItem(STORAGE_KEY_AVATAR);
-      applyCustomAvatar();
-      closeCustomizationModal();
-      showToast('已恢复默认头像', '👾');
-    }
-
-    function handleHeroBgPreview(url) {
-      const pImg = document.getElementById('heroBgModalPreviewImg');
-      if (url && url.trim()) {
-        pImg.src = url.trim();
-        pImg.classList.remove('hidden');
-      } else {
-        pImg.src = '';
-        pImg.classList.add('hidden');
-      }
-    }
-
-    /* Game Edit Form: Live Cover Preview Engine */
-    function handleGameCoverPreview(url) {
-      const box = document.getElementById('formCoverPreviewBox');
-      const img = document.getElementById('formCoverPreviewImg');
-      if (!box || !img) return;
-
-      if (url && url.trim().length > 0) {
-        img.src = url.trim();
-        box.classList.remove('hidden');
-      } else {
-        img.src = '';
-        box.classList.add('hidden');
-      }
-    }
-
-    function handleCoverPreviewError() {
-      const box = document.getElementById('formCoverPreviewBox');
-      if (box) box.classList.add('hidden');
-    }
-
-    /* Category Dropdown Engine: Memorize & Quick Select */
-    function populateCategoryDropdown() {
-      const select = document.getElementById('formCategorySelect');
-      if (!select) return;
-
-      // 从当前已有游戏库中提取全部不重复的分类列表
-      const existingCategories = Array.from(
-        new Set(games.map(g => (g.category || '').trim()).filter(Boolean))
-      );
-
-      select.innerHTML = '<option value="">▼ 现有分类</option>';
-      if (existingCategories.length === 0) {
-        select.innerHTML += '<option value="" disabled>（暂无已有分类）</option>';
-      } else {
-        existingCategories.forEach(cat => {
-          const opt = document.createElement('option');
-          opt.value = cat;
-          opt.textContent = cat;
-          select.appendChild(opt);
-        });
-      }
-    }
-
-    function handleCategorySelectChange(val) {
-      if (val) {
-        document.getElementById('formGameCategory').value = val;
-        // 选用后自动重置下拉选框为占位符
-        document.getElementById('formCategorySelect').value = '';
-      }
-    }
-
-    function saveHeroBg() {
-      const val = document.getElementById('heroBgModalInput').value.trim();
-      if (val) {
-        localStorage.setItem(STORAGE_KEY_HERO_BG, val);
-        showToast('巨幕背景海报已应用', '🖼️');
-      } else {
-        localStorage.removeItem(STORAGE_KEY_HERO_BG);
-        showToast('已恢复默认星芒背景', '🌌');
-      }
-      applyHeroCustomBg();
-      closeCustomizationModal();
-    }
-
-    function clearHeroBg() {
-      document.getElementById('heroBgModalInput').value = '';
-      localStorage.removeItem(STORAGE_KEY_HERO_BG);
-      applyHeroCustomBg();
-      closeCustomizationModal();
-      showToast('已恢复默认星芒背景', '🌌');
-    }
-
     /* =============================================================== */
-    /* F. TODAY'S PICK & QUANTUM ROULETTE                              */
+    /* F. TODAY'S PICK & QUANTUM ROULETTE ENGINES                      */
     /* =============================================================== */
-    function updateTodayDateBadge() {
-      const now = new Date();
-      const yr = now.getFullYear();
-      const mo = String(now.getMonth() + 1).padStart(2, '0');
-      const da = String(now.getDate()).padStart(2, '0');
-      const badge = document.getElementById('todayDateBadge');
-      if (badge) badge.textContent = `${yr}-${mo}-${da}`;
-    }
-
-    function getTodayFeaturedGame() {
-      if (!games || games.length === 0) return null;
-      const now = new Date();
-      const dateNum = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
-      const idx = dateNum % games.length;
-      return games[idx];
-    }
+    let currentTodayGame = null;
+    let currentRouletteGame = null;
 
     function renderTodayPick() {
-      const game = getTodayFeaturedGame();
-      const card = document.getElementById('todayPickCard');
+      const todayLabel = document.getElementById('todayDateLabel');
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      if (todayLabel) todayLabel.textContent = dateStr;
+
       const titleEl = document.getElementById('todayPickTitle');
+      const catEl = document.getElementById('todayPickCategory');
       const descEl = document.getElementById('todayPickDesc');
       const iconEl = document.getElementById('todayPickIcon');
-      const catEl = document.getElementById('todayPickCategory');
-      const launchBtn = document.getElementById('todayPickLaunchBtn');
+      const btn = document.getElementById('todayPickLaunchBtn');
 
-      if (!game) {
-        titleEl.textContent = '等待收录首款游戏';
-        descEl.textContent = '请录入游戏以激活今日精选推荐算法。';
-        iconEl.textContent = '⭐';
-        catEl.textContent = '准备中';
-        launchBtn.classList.add('opacity-50', 'pointer-events-none');
+      if (!games || games.length === 0) {
+        if (titleEl) titleEl.textContent = '等待收录首款游戏';
+        if (catEl) catEl.textContent = '准备中';
+        if (descEl) descEl.textContent = '请录入游戏以激活今日精选推荐算法。';
+        if (iconEl) renderAvatarElement(iconEl, '🕹️', 'text-3xl');
+        if (btn) btn.disabled = true;
+        currentTodayGame = null;
         return;
       }
 
-      launchBtn.classList.remove('opacity-50', 'pointer-events-none');
-      titleEl.textContent = game.title;
-      descEl.textContent = game.description || '今日专属推荐。根据游玩节奏与触控最佳调校，体验纯粹的博弈乐趣。';
-      iconEl.textContent = game.icon || '⭐';
-      catEl.textContent = game.category || '精选';
+      // Hash algorithm based on date
+      let hash = 0;
+      for (let i = 0; i < dateStr.length; i++) {
+        hash = (hash * 31 + dateStr.charCodeAt(i)) & 0xffffffff;
+      }
+      const pickIdx = Math.abs(hash) % games.length;
+      currentTodayGame = games[pickIdx];
+
+      if (titleEl) titleEl.textContent = currentTodayGame.title;
+      if (catEl) catEl.textContent = currentTodayGame.category;
+      if (descEl) descEl.textContent = currentTodayGame.description || '今日专属推荐。根据游戏节奏与触控最佳调校，体验纯粹的博弈乐趣。';
+      if (iconEl) renderAvatarElement(iconEl, currentTodayGame.icon || '⭐', 'text-3xl');
+      if (btn) btn.disabled = false;
     }
 
-    function launchTodayPick() {
-      const g = getTodayFeaturedGame();
-      if (g) openSandboxGame(g.id);
+    function launchTodayPickGame() {
+      if (currentTodayGame) {
+        playSound('tap');
+        launchGame(currentTodayGame.id);
+      }
     }
 
-    /* Quantum Roulette */
-    function spinRandomGame() {
-      if (games.length === 0) {
+    function runQuantumRoulette() {
+      if (!games || games.length === 0) {
         showToast('游戏库为空，请先录入游戏', '⚠️');
         return;
       }
-      playBeep(600, 'triangle', 0.08);
-
-      const spinBtn = document.getElementById('rouletteSpinBtn');
-      const launchBtn = document.getElementById('rouletteLaunchBtn');
+      playSound('tap');
+      const rollBtn = document.getElementById('rouletteRollBtn');
+      const playBtn = document.getElementById('roulettePlayBtn');
       const titleEl = document.getElementById('rouletteTitle');
       const descEl = document.getElementById('rouletteDesc');
       const iconEl = document.getElementById('rouletteIcon');
 
-      spinBtn.disabled = true;
-      spinBtn.classList.add('opacity-50');
-      launchBtn.classList.add('hidden');
+      rollBtn.disabled = true;
+      if (playBtn) playBtn.style.display = 'none';
 
-      let cycles = 16;
-      let intervalSpeed = 60;
+      let count = 0;
+      const maxTicks = 16;
+      const timer = setInterval(() => {
+        count++;
+        const tempG = games[Math.floor(Math.random() * games.length)];
+        titleEl.textContent = tempG.title;
+        descEl.textContent = tempG.category + ' · 随机概率共振中...';
+        renderAvatarElement(iconEl, tempG.icon || '🎲', 'text-3xl');
+        playSound('tick');
 
-      function step() {
-        const randIdx = Math.floor(Math.random() * games.length);
-        const tempGame = games[randIdx];
-        iconEl.textContent = tempGame.icon || '🎲';
-        titleEl.textContent = tempGame.title;
-        descEl.textContent = `随机轮盘高速筛选中... [${cycles}]`;
-        playBeep(400 + (16 - cycles) * 30, 'sine', 0.03);
-
-        cycles--;
-        if (cycles > 0) {
-          setTimeout(step, intervalSpeed);
-          intervalSpeed += 12;
-        } else {
-          // Final Selected Game
-          rouletteSelectedGame = tempGame;
-          iconEl.textContent = tempGame.icon || '🎯';
-          titleEl.textContent = `🎉 抽中：${tempGame.title}`;
-          descEl.textContent = tempGame.description || '算法已为你选定，即刻开启游玩体验！';
-          spinBtn.disabled = false;
-          spinBtn.classList.remove('opacity-50');
-          launchBtn.classList.remove('hidden');
-          launchBtn.classList.add('flex');
-          playBeep(880, 'sine', 0.15);
+        if (count >= maxTicks) {
+          clearInterval(timer);
+          // Pick final target
+          currentRouletteGame = games[Math.floor(Math.random() * games.length)];
+          titleEl.textContent = currentRouletteGame.title;
+          descEl.textContent = `已锁定！分类：${currentRouletteGame.category}。点击右侧立即启动。`;
+          renderAvatarElement(iconEl, currentRouletteGame.icon || '🎯', 'text-3xl');
+          rollBtn.disabled = false;
+          rollBtn.innerHTML = '<span>🎲 再抽一次</span>';
+          if (playBtn) {
+            playBtn.style.display = 'flex';
+          }
+          playSound('success');
         }
-      }
-      step();
+      }, 75);
     }
 
     function launchRouletteGame() {
-      if (rouletteSelectedGame) {
-        openSandboxGame(rouletteSelectedGame.id);
+      if (currentRouletteGame) {
+        playSound('tap');
+        launchGame(currentRouletteGame.id);
       }
     }
 
-    /* Quick Portals */
-    function renderQuickPortals() {
-      const container = document.getElementById('quickPortalsGrid');
-      if (!container) return;
+    /* =============================================================== */
+    /* G. QUICK PORTALS & CATEGORY FILTERS                             */
+    /* =============================================================== */
+    function getUniqueCategories() {
+      const cats = new Set();
+      games.forEach(g => {
+        if (g.category && g.category.trim()) cats.add(g.category.trim());
+      });
+      return Array.from(cats);
+    }
 
-      const cats = Array.from(new Set(games.map(g => g.category || '未分类'))).slice(0, 4);
+    function renderQuickPortals() {
+      const container = document.getElementById('quickPortalsContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const cats = getUniqueCategories();
       if (cats.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full p-4 rounded-2xl bg-neutral-900/40 border border-white/5 text-center text-xs text-neutral-500">
-            录入游戏并设置分类后，此处将自动生成极速传送门。
-          </div>
-        `;
+        container.innerHTML = '<span class="text-xs text-neutral-500">暂无分类，录入游戏后将自动生成分类传送门</span>';
         return;
       }
 
-      container.innerHTML = cats.map(cat => {
-        const count = games.filter(g => (g.category || '未分类') === cat).length;
-        return `
-          <div 
-            onclick="jumpToCategory('${cat}')" 
-            class="p-3.5 rounded-2xl bg-neutral-900/60 border border-white/10 hover:border-blue-500/40 transition cursor-pointer active:scale-95 group flex items-center justify-between"
-          >
-            <div>
-              <div class="text-xs font-bold text-white group-hover:text-blue-300 transition">${cat}</div>
-              <div class="text-[10px] text-neutral-500 font-mono mt-0.5">${count} 款游戏</div>
-            </div>
-            <span class="text-neutral-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-transform">→</span>
-          </div>
-        `;
-      }).join('');
+      cats.forEach(c => {
+        const count = games.filter(g => g.category === c).length;
+        const btn = document.createElement('button');
+        btn.className = 'px-3 py-1.5 rounded-xl bg-neutral-900/80 hover:bg-neutral-800 border border-white/10 text-xs text-neutral-300 hover:text-white flex items-center space-x-1.5 transition-all active:scale-95';
+        btn.innerHTML = `<span>#</span><span class="font-semibold">${c}</span><span class="text-[10px] text-neutral-500 font-mono">(${count})</span>`;
+        btn.onclick = () => {
+          playSound('tap');
+          activeCategory = c;
+          switchMainView('library');
+        };
+        container.appendChild(btn);
+      });
     }
 
-    function jumpToCategory(cat) {
-      switchMainTab('library');
-      selectCategory(cat);
-    }
-
-    /* =============================================================== */
-    /* G. LIBRARY VIEW RENDERING & DRAG-AND-DROP                       */
-    /* =============================================================== */
     function renderCategoryPills() {
-      const container = document.getElementById('categoryPillContainer');
+      const container = document.getElementById('categoryPillsContainer');
       if (!container) return;
+      container.innerHTML = '';
 
-      const categories = ['all', ...Array.from(new Set(games.map(g => g.category || '未分类')))];
-      container.innerHTML = categories.map(cat => {
-        const isSelected = currentCategory === cat;
-        const label = cat === 'all' ? '全部' : cat;
-        const count = cat === 'all' ? games.length : games.filter(g => (g.category || '未分类') === cat).length;
+      const cats = ['all', ...getUniqueCategories()];
+      cats.forEach(c => {
+        const isAll = c === 'all';
+        const label = isAll ? '全部游戏' : c;
+        const count = isAll ? games.length : games.filter(g => g.category === c).length;
+        const isSelected = activeCategory === c;
 
-        return `
-          <button 
-            onclick="selectCategory('${cat}')" 
-            class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center space-x-1.5 ${
-              isSelected 
-                ? 'bg-blue-600 text-white shadow-glow-sm' 
-                : 'bg-neutral-950/70 text-neutral-400 hover:text-white border border-white/10'
-            }"
-          >
-            <span>${label}</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] font-mono ${isSelected ? 'bg-white/20 text-white' : 'bg-white/5 text-neutral-400'}">${count}</span>
-          </button>
-        `;
-      }).join('');
-    }
-
-    function selectCategory(cat) {
-      playBeep(480, 'sine', 0.04);
-      currentCategory = cat;
-      renderCategoryPills();
-      renderLibrary();
-    }
-
-    function handleSearch(val) {
-      searchQuery = val.trim().toLowerCase();
-      renderLibrary();
-    }
-
-    function setViewMode(mode) {
-      playBeep(450, 'sine', 0.04);
-      viewMode = mode;
-      localStorage.setItem(STORAGE_KEY_VIEW_MODE, mode);
-      
-      const groupBtn = document.getElementById('viewModeGroupedBtn');
-      const flatBtn = document.getElementById('viewModeFlatBtn');
-      if (mode === 'grouped') {
-        groupBtn.className = 'p-1.5 rounded-lg text-xs font-medium transition bg-neutral-800 text-white';
-        flatBtn.className = 'p-1.5 rounded-lg text-xs font-medium transition text-neutral-400 hover:text-white';
-      } else {
-        flatBtn.className = 'p-1.5 rounded-lg text-xs font-medium transition bg-neutral-800 text-white';
-        groupBtn.className = 'p-1.5 rounded-lg text-xs font-medium transition text-neutral-400 hover:text-white';
-      }
-      renderLibrary();
-    }
-
-    function cleanupSortables() {
-      sortableInstances.forEach(s => s.destroy());
-      sortableInstances = [];
-    }
-
-    function renderLibrary() {
-      cleanupSortables();
-      const displayArea = document.getElementById('gamesDisplayArea');
-      if (!displayArea) return;
-
-      let filtered = games.filter(g => {
-        const matchesCategory = currentCategory === 'all' || (g.category || '未分类') === currentCategory;
-        const matchesSearch = !searchQuery || 
-          g.title.toLowerCase().includes(searchQuery) || 
-          (g.description && g.description.toLowerCase().includes(searchQuery));
-        return matchesCategory && matchesSearch;
+        const btn = document.createElement('button');
+        btn.className = `px-3.5 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all flex items-center space-x-1.5 ${
+          isSelected 
+            ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30' 
+            : 'bg-black/40 text-neutral-400 hover:text-white hover:bg-white/10'
+        }`;
+        btn.innerHTML = `<span>${label}</span><span class="text-[10px] opacity-70 font-mono">(${count})</span>`;
+        btn.onclick = () => {
+          playSound('tap');
+          activeCategory = c;
+          renderCategoryPills();
+          renderLibrary();
+        };
+        container.appendChild(btn);
       });
 
-      if (filtered.length === 0) {
-        displayArea.innerHTML = `
-          <div class="flex flex-col items-center justify-center p-12 text-center rounded-3xl bg-neutral-900/40 border border-white/10 space-y-4">
-            <div class="w-16 h-16 rounded-2xl bg-neutral-800/80 flex items-center justify-center text-3xl">🎮</div>
-            <div>
-              <h3 class="text-sm font-bold text-white">暂无匹配游戏</h3>
-              <p class="text-xs text-neutral-500 mt-1">点击右上角「录入游戏」按钮即可添加。</p>
-            </div>
-          </div>
-        `;
-        return;
-      }
+      // Update Form Category Dropdown
+      updateFormCategoryDropdown();
+    }
 
-      if (viewMode === 'grouped' && currentCategory === 'all') {
-        // Grouped by categories
-        const catMap = {};
-        filtered.forEach(g => {
-          const c = g.category || '未分类';
-          if (!catMap[c]) catMap[c] = [];
-          catMap[c].push(g);
-        });
+    function updateFormCategoryDropdown() {
+      const select = document.getElementById('formCategorySelect');
+      if (!select) return;
+      select.innerHTML = '<option value="">▼ 现有分类</option>';
+      getUniqueCategories().forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        select.appendChild(opt);
+      });
+    }
 
-        displayArea.innerHTML = Object.keys(catMap).map(catName => `
-          <section class="space-y-3 mb-8">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-2">
-                <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                <h3 class="text-sm font-bold text-white tracking-wide">${catName}</h3>
-                <span class="text-[11px] font-mono text-neutral-400">(${catMap[catName].length})</span>
-              </div>
-            </div>
-            <div 
-              data-category="${catName}" 
-              class="sortable-group-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            >
-              ${catMap[catName].map(g => buildCardHTML(g)).join('')}
-            </div>
-          </section>
-        `).join('');
-
-        // Init drag and drop for each group
-        document.querySelectorAll('.sortable-group-grid').forEach(el => {
-          const sortable = new Sortable(el, {
-            group: 'arcadeGamesShared',
-            animation: 250,
-            delay: 300,
-            delayOnTouchOnly: true,
-            ghostClass: 'sortable-ghost',
-            chosenClass: 'sortable-chosen',
-            onStart: () => {
-              playBeep(520, 'triangle', 0.08);
-              showToast('🖐️ 已激活拖拽：可随心换位或跨组移动', '🔄');
-            },
-            onEnd: (evt) => {
-              handleDragEnd(evt);
-            }
-          });
-          sortableInstances.push(sortable);
-        });
-
-      } else {
-        // Flat Grid View
-        displayArea.innerHTML = `
-          <div id="flatSortableGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            ${filtered.map(g => buildCardHTML(g)).join('')}
-          </div>
-        `;
-
-        const flatGridEl = document.getElementById('flatSortableGrid');
-        if (flatGridEl) {
-          const sortable = new Sortable(flatGridEl, {
-            animation: 250,
-            delay: 300,
-            delayOnTouchOnly: true,
-            ghostClass: 'sortable-ghost',
-            chosenClass: 'sortable-chosen',
-            onStart: () => {
-              playBeep(520, 'triangle', 0.08);
-              showToast('🖐️ 已激活拖拽：可随心调整位置', '🔄');
-            },
-            onEnd: (evt) => {
-              handleDragEnd(evt);
-            }
-          });
-          sortableInstances.push(sortable);
-        }
+    function handleCategoryDropdownPick(val) {
+      if (val) {
+        document.getElementById('formCategory').value = val;
+        document.getElementById('formCategorySelect').value = '';
       }
     }
 
-    function buildCardHTML(game) {
-      const theme = THEME_PRESETS[game.theme || 'blue'] || THEME_PRESETS.blue;
-      const hasCover = game.cover && game.cover.trim().length > 0;
+    /* =============================================================== */
+    /* H. GAME CARD BUILDER (16:9 Cover & Transparent Glass Icon)      */
+    /* =============================================================== */
+    function buildCardHTML(g) {
+      const theme = getTheme(g.theme);
+      const isUrl = g.sourceType === 'url';
+      const hasCover = g.cover && g.cover.trim().length > 0;
 
       return `
         <div 
-          data-game-id="${game.id}" 
-          class="game-card group relative rounded-3xl overflow-hidden border border-white/10 bg-neutral-900/80 hover:border-white/20 transition-all duration-300 shadow-lg flex flex-col justify-between"
-          style="box-shadow: 0 10px 25px -5px ${theme.accentGlow};"
+          data-id="${g.id}" 
+          data-category="${g.category}" 
+          class="game-card group relative rounded-3xl overflow-hidden bg-neutral-900/90 border border-white/10 shadow-apple hover:shadow-apple-hover transition-all duration-300 flex flex-col justify-between"
+          style="box-shadow: 0 10px 30px -10px ${theme.accentGlow};"
         >
-          <!-- Top 16:9 Banner Box -->
-          <div class="relative w-full aspect-[16/9] overflow-hidden bg-neutral-950">
+          <!-- Top 16:9 Poster Stage -->
+          <div class="relative w-full aspect-[16/9] overflow-hidden bg-neutral-950 flex flex-col justify-end p-4">
             
-            ${hasCover ? `
-              <img 
-                src="${game.cover}" 
-                alt="${game.title}" 
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                loading="lazy" 
-                onerror="this.style.display='none'"
-              />
-            ` : ''}
+            <!-- Layer 0: Cover Image or Fallback Gradient -->
+            ${
+              hasCover 
+                ? `<img src="${g.cover.trim()}" alt="${g.title}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'" />` 
+                : `<div class="absolute inset-0 bg-gradient-to-tr ${theme.gradient} opacity-40"></div>`
+            }
 
-            <!-- Theme Ambient Glow Overlay -->
-            <div 
-              class="absolute inset-0 pointer-events-none transition-opacity" 
-              style="background: ${theme.overlayGradient}; opacity: 0.9;"
-            ></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent pointer-events-none"></div>
+            <!-- Layer 1: Atmospheric Theme Overlay Gradient -->
+            <div class="absolute inset-0 pointer-events-none" style="background: ${theme.overlayGradient};"></div>
 
-            <!-- Top Floating Pills -->
+            <!-- Layer 2: Subtle Bottom Vignette for Legibility -->
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/30 to-transparent pointer-events-none"></div>
+
+            <!-- Top Corner Controls -->
             <div class="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold border backdrop-blur-md ${theme.badgeBg}">
-                ${game.category || '未分类'}
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold border ${theme.badgeBg} backdrop-blur-md">
+                ${g.category}
               </span>
               <div class="flex items-center space-x-1.5">
-                <span class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-neutral-950/80 text-neutral-400 border border-white/10">
-                  ${game.sourceType === 'inline' ? 'HTML' : 'URL'}
+                <span class="px-2 py-0.5 rounded-full text-[9px] font-mono bg-black/50 backdrop-blur-md text-neutral-400 border border-white/10">
+                  ${isUrl ? 'URL' : 'CODE'}
                 </span>
                 <button 
-                  onclick="openEditGameModal('${game.id}')" 
-                  class="p-1.5 rounded-xl bg-neutral-950/70 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-white/10 backdrop-blur-md transition active:scale-95"
-                  title="编辑游戏信息"
+                  onclick="event.stopPropagation(); openEditGameModal('${g.id}')" 
+                  title="编辑游戏" 
+                  class="w-7 h-7 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/15 text-neutral-300 hover:text-white flex items-center justify-center text-xs transition-all active:scale-90"
                 >
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                  ✏️
                 </button>
               </div>
             </div>
 
-            <!-- Bottom Left Crystal Translucent Emoji Icon -->
-            <div class="absolute bottom-3 left-3 z-10">
-              <div class="w-12 h-12 rounded-2xl glass-icon flex items-center justify-center text-2xl shadow-lg">
-                ${game.icon || '🎮'}
+            <!-- Bottom Left Transparent Glassmorphic Emoji Icon -->
+            <div class="relative z-10 flex items-center space-x-3">
+              <div class="w-12 h-12 rounded-2xl glass-icon flex items-center justify-center text-2xl shadow-xl shrink-0 group-hover:scale-105 transition-transform">
+                ${g.icon || '🎮'}
               </div>
             </div>
 
           </div>
 
-          <!-- Card Content Body -->
-          <div class="p-4 space-y-2 flex-1 flex flex-col justify-between">
+          <!-- Bottom Meta & Actions Area -->
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3 bg-neutral-900/60">
             <div>
-              <h4 class="text-base font-bold text-white tracking-tight truncate">${game.title}</h4>
-              <p class="text-xs text-neutral-400 line-clamp-2 mt-1">${game.description || '暂无描述信息。'}</p>
+              <h4 class="text-base font-bold text-white group-hover:text-indigo-300 transition-colors truncate">
+                ${g.title}
+              </h4>
+              <p class="text-xs text-neutral-400 mt-1 line-clamp-2 leading-relaxed">
+                ${g.description || '暂无描述信息。'}
+              </p>
             </div>
 
-            <div class="pt-3 border-t border-white/5 flex items-center justify-between">
-              <div class="flex items-center space-x-1.5 text-[11px] text-neutral-400">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <div class="flex items-center justify-between pt-2 border-t border-white/5">
+              <span class="flex items-center gap-1.5 text-[11px] text-neutral-400 font-medium">
+                <span class="w-2 h-2 rounded-full ${theme.dot} animate-pulse"></span>
                 <span>即点即玩</span>
-              </div>
+              </span>
               <button 
-                onclick="openSandboxGame('${game.id}')" 
-                class="px-4 py-1.5 bg-white text-neutral-950 hover:bg-neutral-200 font-bold text-xs rounded-xl shadow-md transition active:scale-95 flex items-center space-x-1"
+                onclick="launchGame('${g.id}')" 
+                class="px-4 py-2 rounded-xl bg-white hover:bg-neutral-200 active:scale-95 text-neutral-950 font-bold text-xs shadow-md transition-all flex items-center space-x-1"
               >
                 <span>进入游玩</span>
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <span>▶</span>
               </button>
             </div>
           </div>
@@ -1945,345 +1617,702 @@
       `;
     }
 
-    function handleDragEnd(evt) {
-      playBeep(420, 'triangle', 0.05);
-      const movedCard = evt.item;
-      const gameId = movedCard.getAttribute('data-game-id');
-      const targetGroup = evt.to.closest('.sortable-group-grid');
-      
-      // If moved across categories in grouped mode, auto-update category
-      if (targetGroup) {
-        const newCategory = targetGroup.getAttribute('data-category');
-        const g = games.find(item => item.id === gameId);
-        if (g && newCategory && g.category !== newCategory) {
-          g.category = newCategory;
-        }
+    /* =============================================================== */
+    /* I. LIBRARY RENDERER & DRAG/DROP SORTING ENGINE                  */
+    /* =============================================================== */
+    function renderLibrary() {
+      const container = document.getElementById('libraryContainer');
+      if (!container) return;
+
+      cleanupSortables();
+
+      // Filter by Category
+      let filtered = games;
+      if (activeCategory !== 'all') {
+        filtered = filtered.filter(g => g.category === activeCategory);
       }
 
-      // Reconstruct order from DOM
-      const currentCards = document.querySelectorAll('[data-game-id]');
-      const newOrderedIds = Array.from(currentCards).map(el => el.getAttribute('data-game-id'));
-      
-      const newGames = [];
-      newOrderedIds.forEach(id => {
-        const item = games.find(g => g.id === id);
-        if (item && !newGames.includes(item)) newGames.push(item);
-      });
-      // Append any leftovers
-      games.forEach(item => {
-        if (!newGames.includes(item)) newGames.push(item);
+      // Filter by Search Query
+      if (searchQuery.trim().length > 0) {
+        const q = searchQuery.toLowerCase();
+        filtered = filtered.filter(g => 
+          g.title.toLowerCase().includes(q) || 
+          g.category.toLowerCase().includes(q) || 
+          (g.description && g.description.toLowerCase().includes(q))
+        );
+      }
+
+      // Sort
+      if (sortMode === 'newest') {
+        filtered = [...filtered].reverse();
+      } else if (sortMode === 'name') {
+        filtered = [...filtered].sort((a, b) => a.title.localeCompare(b.title, 'zh-Hans-CN'));
+      }
+
+      // Empty State
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="rounded-3xl border border-dashed border-white/15 p-12 text-center flex flex-col items-center justify-center space-y-4 bg-neutral-900/30">
+            <span class="text-5xl">🎮</span>
+            <div class="space-y-1">
+              <h3 class="text-base font-bold text-white">游戏库空空如也</h3>
+              <p class="text-xs text-neutral-400 max-w-sm">点击右上角「录入游戏」按钮，把你的独立单文件代码或 GitHub 链接收录到这里。</p>
+            </div>
+            <button 
+              onclick="openAddGameModal()" 
+              class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-lg shadow-indigo-600/30 active:scale-95 transition-all"
+            >
+              ＋ 录入第一款游戏
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      // MODE 1: Flat Continuous Grid
+      if (viewMode === 'flat' || activeCategory !== 'all' || searchQuery.trim().length > 0) {
+        container.innerHTML = `
+          <div id="flatSortableGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            ${filtered.map(g => buildCardHTML(g)).join('')}
+          </div>
+        `;
+        initSortableForElement(document.getElementById('flatSortableGrid'));
+        return;
+      }
+
+      // MODE 2: Grouped by Category in Rows
+      const categories = getUniqueCategories();
+      let html = `<div class="space-y-8">`;
+
+      categories.forEach(cat => {
+        const catGames = filtered.filter(g => g.category === cat);
+        if (catGames.length === 0) return;
+
+        html += `
+          <div class="category-group space-y-4" data-group-category="${cat}">
+            <div class="flex items-center justify-between pb-2 border-b border-white/5">
+              <div class="flex items-center space-x-2">
+                <span class="text-base font-bold text-white tracking-tight">${cat}</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-neutral-800 text-neutral-400">
+                  ${catGames.length} 款
+                </span>
+              </div>
+              <span class="text-[10px] text-neutral-500 hidden sm:inline">长按卡片可跨分类直接拖动换组</span>
+            </div>
+
+            <div class="grouped-sortable-row grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" data-category="${cat}">
+              ${catGames.map(g => buildCardHTML(g)).join('')}
+            </div>
+          </div>
+        `;
       });
 
-      games = newGames;
-      saveGamesToStorage();
-      renderAll();
-      showToast('顺序已即时保存', '💾');
+      html += `</div>`;
+      container.innerHTML = html;
+
+      // Initialize Sortable on every category row for seamless cross-group dragging
+      document.querySelectorAll('.grouped-sortable-row').forEach(row => {
+        initSortableForElement(row, 'arcade-grouped-channel');
+      });
     }
 
-    function renderAll() {
-      updateNavGameCount();
-      updateHeroBanner();
+    function cleanupSortables() {
+      sortableInstances.forEach(inst => {
+        try { inst.destroy(); } catch (e) {}
+      });
+      sortableInstances = [];
+    }
+
+    function initSortableForElement(el, groupName = 'arcade-flat-channel') {
+      if (!el || typeof Sortable === 'undefined') return;
+
+      const inst = new Sortable(el, {
+        group: groupName,
+        animation: 250,
+        delay: 300, // 300ms long press for iPad touch to prevent scroll interference
+        delayOnTouchOnly: true,
+        touchStartThreshold: 5,
+        ghostClass: 'sortable-ghost',
+        dragClass: 'sortable-drag',
+        onStart: () => {
+          playSound('drag');
+          showToast('🖐️ 已激活拖拽：可随心换位，在分组模式下跨类拖动直接换组', '🖐️');
+        },
+        onEnd: (evt) => {
+          playSound('tap');
+          handleDragEndSync();
+        }
+      });
+      sortableInstances.push(inst);
+    }
+
+    function handleDragEndSync() {
+      // Re-read DOM order to update games array and auto-migrate categories
+      const newOrderGames = [];
+      const cards = document.querySelectorAll('.game-card');
+
+      cards.forEach(card => {
+        const id = card.getAttribute('data-id');
+        const g = games.find(item => item.id === id);
+        if (g) {
+          // If in grouped mode, check if parent row category changed
+          const parentRow = card.closest('.grouped-sortable-row');
+          if (parentRow) {
+            const newCat = parentRow.getAttribute('data-category');
+            if (newCat && newCat !== g.category) {
+              g.category = newCat;
+            }
+          }
+          newOrderGames.push(g);
+        }
+      });
+
+      // Keep any remaining games not rendered in current filter
+      games.forEach(g => {
+        if (!newOrderGames.find(item => item.id === g.id)) {
+          newOrderGames.push(g);
+        }
+      });
+
+      games = newOrderGames;
+      saveGames();
+      initHeroCarousel();
       renderTodayPick();
-      renderQuickPortals();
       renderCategoryPills();
+      showToast('排序与分类已即时保存', '💾');
+    }
+
+    /* =============================================================== */
+    /* J. VIEW SWITCHER & SANDBOX EXECUTION                            */
+    /* =============================================================== */
+    function switchMainView(view) {
+      playSound('tap');
+      currentView = view;
+      const vDiscover = document.getElementById('viewDiscover');
+      const vLibrary = document.getElementById('viewLibrary');
+      const btnDiscover = document.getElementById('tabBtnDiscover');
+      const btnLibrary = document.getElementById('tabBtnLibrary');
+
+      if (view === 'discover') {
+        if (vDiscover) vDiscover.style.display = 'block';
+        if (vLibrary) vLibrary.style.display = 'none';
+        btnDiscover.className = 'flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all bg-white text-neutral-950 shadow-sm';
+        btnLibrary.className = 'flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-all';
+        initHeroCarousel();
+        renderTodayPick();
+        renderQuickPortals();
+      } else {
+        if (vDiscover) vDiscover.style.display = 'none';
+        if (vLibrary) vLibrary.style.display = 'block';
+        btnLibrary.className = 'flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all bg-white text-neutral-950 shadow-sm';
+        btnDiscover.className = 'flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-all';
+        renderCategoryPills();
+        renderLibrary();
+      }
+    }
+
+    function setViewMode(mode) {
+      playSound('tap');
+      viewMode = mode;
+      localStorage.setItem(STORAGE_KEY_VIEW_MODE, mode);
+      const bGrouped = document.getElementById('viewModeGroupedBtn');
+      const bFlat = document.getElementById('viewModeFlatBtn');
+
+      if (mode === 'grouped') {
+        bGrouped.className = 'px-2.5 py-1 rounded-lg text-neutral-300 font-medium transition-all bg-white/10';
+        bFlat.className = 'px-2.5 py-1 rounded-lg text-neutral-400 font-medium transition-all';
+      } else {
+        bFlat.className = 'px-2.5 py-1 rounded-lg text-neutral-300 font-medium transition-all bg-white/10';
+        bGrouped.className = 'px-2.5 py-1 rounded-lg text-neutral-400 font-medium transition-all';
+      }
       renderLibrary();
     }
 
-    function updateNavGameCount() {
-      const el = document.getElementById('navGameCountBadge');
-      if (el) el.textContent = games.length;
+    function handleSortChange(val) {
+      playSound('tap');
+      sortMode = val;
+      localStorage.setItem(STORAGE_KEY_SORT, val);
+      renderLibrary();
     }
 
-    /* =============================================================== */
-    /* H. FULLSCREEN SANDBOX PLAYER ENGINE                             */
-    /* =============================================================== */
-    function openSandboxGame(gameId) {
-      playBeep(580, 'sine', 0.06);
-      const game = games.find(g => g.id === gameId);
-      if (!game) return;
+    function handleSearchInput(val) {
+      searchQuery = val;
+      if (currentView === 'discover' && val.trim().length > 0) {
+        switchMainView('library');
+      } else {
+        renderLibrary();
+      }
+    }
 
-      currentActiveGame = game;
-      document.getElementById('sandboxGameTitle').textContent = game.title;
-      document.getElementById('sandboxGameIcon').textContent = game.icon || '🎮';
+    /* Sandbox Player Operations */
+    function launchGame(gameId) {
+      const g = games.find(item => item.id === gameId);
+      if (!g) {
+        showToast('未找到指定游戏', '⚠️');
+        return;
+      }
 
-      const frame = document.getElementById('gameSandboxFrame');
-      
-      if (game.sourceType === 'inline') {
-        frame.src = 'about:blank';
-        frame.removeAttribute('src');
-        // Inject inline HTML code
+      currentRunningGame = g;
+      playSound('tap');
+
+      const stage = document.getElementById('sandboxStage');
+      const iframe = document.getElementById('sandboxIframe');
+      const titleEl = document.getElementById('sandboxGameTitle');
+      const catEl = document.getElementById('sandboxGameCategory');
+      const iconEl = document.getElementById('sandboxGameIcon');
+
+      titleEl.textContent = g.title;
+      catEl.textContent = g.category;
+      iconEl.textContent = g.icon || '🎮';
+
+      // Load Content
+      if (g.sourceType === 'url') {
+        const bustUrl = appendCacheBuster(g.url);
+        iframe.src = bustUrl;
+      } else {
+        iframe.src = 'about:blank';
         setTimeout(() => {
-          const doc = frame.contentWindow.document;
-          doc.open();
-          doc.write(game.code || '<h2 style="color:white;text-align:center;padding-top:100px;">游戏代码为空</h2>');
-          doc.close();
+          try {
+            const doc = iframe.contentWindow.document;
+            doc.open();
+            doc.write(g.code || '<h2>无代码内容</h2>');
+            doc.close();
+          } catch (e) {
+            iframe.srcdoc = g.code || '<h2>无代码内容</h2>';
+          }
         }, 50);
-      } else {
-        // Cache-busting URL with timestamp
-        const cacheBust = (game.url.includes('?') ? '&' : '?') + '_t=' + Date.now();
-        frame.src = game.url + cacheBust;
       }
 
-      // Show Sandbox
-      const stage = document.getElementById('gameSandboxStage');
-      stage.classList.remove('hidden');
-      stage.classList.add('flex');
+      // Show Stage
+      stage.classList.remove('pointer-events-none', 'opacity-0');
+      stage.classList.add('opacity-100');
     }
 
-    function exitSandboxGame() {
-      playBeep(380, 'sine', 0.05);
-      const stage = document.getElementById('gameSandboxStage');
-      const frame = document.getElementById('gameSandboxFrame');
-      frame.src = 'about:blank';
-      stage.classList.add('hidden');
-      stage.classList.remove('flex');
-      currentActiveGame = null;
-      
-      if (isImmersive) toggleImmersiveMode();
+    function closeSandbox() {
+      playSound('tap');
+      const stage = document.getElementById('sandboxStage');
+      const iframe = document.getElementById('sandboxIframe');
+
+      stage.classList.remove('opacity-100');
+      stage.classList.add('opacity-0', 'pointer-events-none');
+
+      setTimeout(() => {
+        iframe.src = 'about:blank';
+        currentRunningGame = null;
+        // Restore header visibility if hidden
+        const header = document.getElementById('sandboxHeader');
+        const pill = document.getElementById('sandboxRestorePill');
+        if (header) header.style.transform = 'translateY(0)';
+        if (pill) pill.style.display = 'none';
+      }, 300);
     }
 
-    function reloadCurrentGame() {
-      if (!currentActiveGame) return;
-      playBeep(500, 'triangle', 0.06);
-      const frame = document.getElementById('gameSandboxFrame');
+    function appendCacheBuster(url) {
+      if (!url) return '';
+      const separator = url.includes('?') ? '&' : '?';
+      return `${url}${separator}_t=${Date.now()}`;
+    }
 
-      if (currentActiveGame.sourceType === 'inline') {
-        const doc = frame.contentWindow.document;
-        doc.open();
-        doc.write(currentActiveGame.code || '');
-        doc.close();
+    function reloadSandboxWithCacheBuster() {
+      if (!currentRunningGame) return;
+      playSound('tap');
+      showToast('正在从 GitHub 强制穿透拉取最新代码...', '🔄');
+
+      const iframe = document.getElementById('sandboxIframe');
+      if (currentRunningGame.sourceType === 'url') {
+        iframe.src = appendCacheBuster(currentRunningGame.url);
       } else {
-        const cacheBust = (currentActiveGame.url.includes('?') ? '&' : '?') + '_t=' + Date.now();
-        frame.src = currentActiveGame.url + cacheBust;
+        iframe.contentWindow.location.reload();
       }
-      showToast('已拉取最新版本代码', '🔄');
     }
 
-    function toggleImmersiveMode() {
-      isImmersive = !isImmersive;
-      const topBar = document.getElementById('sandboxTopBar');
-      const recallBtn = document.getElementById('sandboxRecallBtn');
+    let isSandboxHeaderHidden = false;
+    function toggleSandboxImmersive() {
+      playSound('tap');
+      const header = document.getElementById('sandboxHeader');
+      const pill = document.getElementById('sandboxRestorePill');
 
-      if (isImmersive) {
-        topBar.classList.add('-translate-y-full', 'opacity-0');
-        recallBtn.classList.remove('hidden');
+      if (!isSandboxHeaderHidden) {
+        header.style.transform = 'translateY(-100%)';
+        pill.style.display = 'flex';
+        isSandboxHeaderHidden = true;
       } else {
-        topBar.classList.remove('-translate-y-full', 'opacity-0');
-        recallBtn.classList.add('hidden');
+        header.style.transform = 'translateY(0)';
+        pill.style.display = 'none';
+        isSandboxHeaderHidden = false;
       }
     }
 
     /* =============================================================== */
-    /* I. ADD / EDIT GAME MODAL & CRUD HANDLERS                        */
+    /* K. FORM MODALS & MANAGEMENT ACTIONS                             */
     /* =============================================================== */
+    let currentSourceMode = 'url'; // 'url' | 'inline'
+
     function openAddGameModal() {
-      playBeep(480, 'sine', 0.04);
-      document.getElementById('modalHeaderTitle').textContent = '录入新游戏';
-      document.getElementById('modalHeaderIcon').textContent = '✨';
+      playSound('tap');
+      document.getElementById('modalTitle').innerHTML = '<span>🎮</span><span>录入新游戏</span>';
       document.getElementById('formGameId').value = '';
-      document.getElementById('formGameTitle').value = '';
-      document.getElementById('formGameCategory').value = '';
-      document.getElementById('formGameIcon').value = '🎮';
-      document.getElementById('formGameTheme').value = 'blue';
-      document.getElementById('formGameCover').value = '';
-      document.getElementById('formGameDesc').value = '';
-      document.getElementById('formGameUrl').value = '';
-      document.getElementById('formGameCode').value = '';
+      document.getElementById('formTitle').value = '';
+      document.getElementById('formCategory').value = '';
+      document.getElementById('formUrl').value = '';
+      document.getElementById('formCode').value = '';
+      document.getElementById('formCover').value = '';
+      document.getElementById('formIcon').value = '🎮';
+      document.getElementById('formTheme').value = 'cyber-blue';
+      document.getElementById('formDescription').value = '';
+      document.getElementById('formDeleteBtn').style.display = 'none';
 
-      // 填充分类下拉选框并重置海报预览
-      populateCategoryDropdown();
-      handleGameCoverPreview('');
+      setSourceMode('url');
+      handleCoverPreviewInput('');
+      updateFormCategoryDropdown();
 
-      document.getElementById('sourceTypeUrl').checked = true;
-      toggleSourceType('url');
-      document.getElementById('deleteGameBtn').classList.add('hidden');
-
-      document.getElementById('gameEditModal').classList.remove('hidden');
-      document.getElementById('gameEditModal').classList.add('flex');
+      const modal = document.getElementById('gameModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
     }
 
     function openEditGameModal(id) {
-      playBeep(480, 'sine', 0.04);
+      playSound('tap');
       const g = games.find(item => item.id === id);
       if (!g) return;
 
-      document.getElementById('modalHeaderTitle').textContent = '编辑游戏';
-      document.getElementById('modalHeaderIcon').textContent = '✏️';
+      document.getElementById('modalTitle').innerHTML = '<span>✏️</span><span>编辑游戏信息</span>';
       document.getElementById('formGameId').value = g.id;
-      document.getElementById('formGameTitle').value = g.title || '';
-      document.getElementById('formGameCategory').value = g.category || '';
-      document.getElementById('formGameIcon').value = g.icon || '🎮';
-      document.getElementById('formGameTheme').value = g.theme || 'blue';
-      document.getElementById('formGameCover').value = g.cover || '';
-      document.getElementById('formGameDesc').value = g.description || '';
-      document.getElementById('formGameUrl').value = g.url || '';
-      document.getElementById('formGameCode').value = g.code || '';
+      document.getElementById('formTitle').value = g.title || '';
+      document.getElementById('formCategory').value = g.category || '';
+      document.getElementById('formUrl').value = g.url || '';
+      document.getElementById('formCode').value = g.code || '';
+      document.getElementById('formCover').value = g.cover || '';
+      document.getElementById('formIcon').value = g.icon || '🎮';
+      document.getElementById('formTheme').value = g.theme || 'cyber-blue';
+      document.getElementById('formDescription').value = g.description || '';
+      document.getElementById('formDeleteBtn').style.display = 'block';
 
-      // 填充已有分类列表并呈现当前封面预览
-      populateCategoryDropdown();
-      handleGameCoverPreview(g.cover || '');
+      setSourceMode(g.sourceType || 'url');
+      handleCoverPreviewInput(g.cover || '');
+      updateFormCategoryDropdown();
 
-      if (g.sourceType === 'inline') {
-        document.getElementById('sourceTypeInline').checked = true;
-        toggleSourceType('inline');
-      } else {
-        document.getElementById('sourceTypeUrl').checked = true;
-        toggleSourceType('url');
-      }
-
-      document.getElementById('deleteGameBtn').classList.remove('hidden');
-      document.getElementById('gameEditModal').classList.remove('hidden');
-      document.getElementById('gameEditModal').classList.add('flex');
+      const modal = document.getElementById('gameModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
     }
 
     function closeGameModal() {
-      document.getElementById('gameEditModal').classList.add('hidden');
-      document.getElementById('gameEditModal').classList.remove('flex');
+      const modal = document.getElementById('gameModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
     }
 
-    function toggleSourceType(type) {
-      if (type === 'inline') {
-        document.getElementById('urlInputContainer').classList.add('hidden');
-        document.getElementById('inlineCodeContainer').classList.remove('hidden');
+    function setSourceMode(mode) {
+      currentSourceMode = mode;
+      const bUrl = document.getElementById('sourceModeUrlBtn');
+      const bInline = document.getElementById('sourceModeInlineBtn');
+      const fUrl = document.getElementById('sourceUrlField');
+      const fInline = document.getElementById('sourceInlineField');
+
+      if (mode === 'url') {
+        bUrl.className = 'py-1.5 rounded-lg text-xs font-semibold transition-all bg-indigo-600 text-white';
+        bInline.className = 'py-1.5 rounded-lg text-xs font-semibold transition-all text-neutral-400 hover:text-white';
+        fUrl.style.display = 'block';
+        fInline.style.display = 'none';
       } else {
-        document.getElementById('urlInputContainer').classList.remove('hidden');
-        document.getElementById('inlineCodeContainer').classList.add('hidden');
+        bInline.className = 'py-1.5 rounded-lg text-xs font-semibold transition-all bg-indigo-600 text-white';
+        bUrl.className = 'py-1.5 rounded-lg text-xs font-semibold transition-all text-neutral-400 hover:text-white';
+        fInline.style.display = 'block';
+        fUrl.style.display = 'none';
+      }
+    }
+
+    function handleCoverPreviewInput(url) {
+      const img = document.getElementById('formCoverPreviewImg');
+      const status = document.getElementById('coverPreviewStatus');
+      if (!img) return;
+
+      if (url && url.trim().length > 0) {
+        img.src = url.trim();
+        img.classList.remove('opacity-0');
+        status.textContent = '🖼️ 封面图片解析成功';
+      } else {
+        img.src = '';
+        img.classList.add('opacity-0');
+        status.textContent = '未配置封面（将使用主题流光弥散底衬）';
       }
     }
 
     function handleGameFormSubmit(e) {
       e.preventDefault();
       const id = document.getElementById('formGameId').value;
-      const title = document.getElementById('formGameTitle').value.trim();
-      const category = document.getElementById('formGameCategory').value.trim();
-      const icon = document.getElementById('formGameIcon').value.trim() || '🎮';
-      const theme = document.getElementById('formGameTheme').value;
-      const cover = document.getElementById('formGameCover').value.trim();
-      const desc = document.getElementById('formGameDesc').value.trim();
-      const isInline = document.getElementById('sourceTypeInline').checked;
-      const url = document.getElementById('formGameUrl').value.trim();
-      const code = document.getElementById('formGameCode').value;
+      const title = document.getElementById('formTitle').value.trim();
+      const category = document.getElementById('formCategory').value.trim() || '自制';
+      const url = document.getElementById('formUrl').value.trim();
+      const code = document.getElementById('formCode').value;
+      const cover = document.getElementById('formCover').value.trim();
+      const icon = document.getElementById('formIcon').value.trim() || '🎮';
+      const theme = document.getElementById('formTheme').value;
+      const description = document.getElementById('formDescription').value.trim();
 
-      if (!id) {
-        // Create new
-        const newGame = {
-          id: 'game_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
-          title,
-          category,
-          icon,
-          theme,
-          cover,
-          description: desc,
-          sourceType: isInline ? 'inline' : 'url',
-          url,
-          code
-        };
-        games.push(newGame);
-        showToast(`已成功录入「${title}」`, '🎉');
-      } else {
-        // Edit existing
+      if (id) {
+        // Edit Existing
         const g = games.find(item => item.id === id);
         if (g) {
           g.title = title;
           g.category = category;
-          g.icon = icon;
-          g.theme = theme;
-          g.cover = cover;
-          g.description = desc;
-          g.sourceType = isInline ? 'inline' : 'url';
+          g.sourceType = currentSourceMode;
           g.url = url;
           g.code = code;
-          showToast(`已更新「${title}」`, '✨');
+          g.cover = cover;
+          g.icon = icon;
+          g.theme = theme;
+          g.description = description;
         }
+        showToast('游戏信息已更新', '💾');
+      } else {
+        // Add New
+        const newGame = {
+          id: 'game_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+          title,
+          category,
+          sourceType: currentSourceMode,
+          url,
+          code,
+          cover,
+          icon,
+          theme,
+          description,
+          createdAt: Date.now()
+        };
+        games.unshift(newGame);
+        showToast('成功录入新游戏！', '🎉');
       }
 
-      saveGamesToStorage();
+      saveGames();
       closeGameModal();
-      renderAll();
+      initHeroCarousel();
+      renderTodayPick();
+      renderQuickPortals();
+      renderCategoryPills();
+      renderLibrary();
     }
 
-    function handleDeleteGame() {
+    function handleDeleteGameFromModal() {
       const id = document.getElementById('formGameId').value;
       if (!id) return;
-      games = games.filter(g => g.id !== id);
-      saveGamesToStorage();
+      games = games.filter(item => item.id !== id);
+      saveGames();
       closeGameModal();
-      renderAll();
-      showToast('游戏已从大厅删除', '🗑️');
+      initHeroCarousel();
+      renderTodayPick();
+      renderQuickPortals();
+      renderCategoryPills();
+      renderLibrary();
+      showToast('游戏已从大厅移除', '🗑️');
+    }
+
+    /* Appearance & Showcase Customization Engine */
+    function openCustomizationModal(tab = 'poster') {
+      playSound('tap');
+      switchCustomTab(tab);
+
+      // Load Current Poster
+      const currentBg = localStorage.getItem(STORAGE_KEY_HERO_BG) || '';
+      document.getElementById('heroBgModalInput').value = currentBg;
+      handleHeroBgPreview(currentBg);
+
+      // Load Current Avatar
+      const currentAvatar = localStorage.getItem(STORAGE_KEY_AVATAR) || '👾';
+      document.getElementById('avatarInput').value = currentAvatar;
+      handleAvatarPreview(currentAvatar);
+
+      const modal = document.getElementById('customizationModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeCustomizationModal() {
+      const modal = document.getElementById('customizationModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function switchCustomTab(tab) {
+      const bPoster = document.getElementById('customTabPosterBtn');
+      const bAvatar = document.getElementById('customTabAvatarBtn');
+      const cPoster = document.getElementById('customTabPosterContent');
+      const cAvatar = document.getElementById('customTabAvatarContent');
+
+      if (tab === 'poster') {
+        bPoster.className = 'flex-1 py-1.5 rounded-lg font-semibold bg-indigo-600 text-white transition-all';
+        bAvatar.className = 'flex-1 py-1.5 rounded-lg font-semibold text-neutral-400 hover:text-white transition-all';
+        cPoster.style.display = 'block';
+        cAvatar.style.display = 'none';
+      } else {
+        bAvatar.className = 'flex-1 py-1.5 rounded-lg font-semibold bg-indigo-600 text-white transition-all';
+        bPoster.className = 'flex-1 py-1.5 rounded-lg font-semibold text-neutral-400 hover:text-white transition-all';
+        cAvatar.style.display = 'block';
+        cPoster.style.display = 'none';
+      }
+    }
+
+    function handleHeroBgPreview(val) {
+      const img = document.getElementById('heroBgModalPreviewImg');
+      if (!img) return;
+      if (val && val.trim().length > 0) {
+        img.src = val.trim();
+        img.classList.remove('opacity-0');
+        img.classList.add('opacity-100');
+      } else {
+        img.src = '';
+        img.classList.add('opacity-0');
+        img.classList.remove('opacity-100');
+      }
+    }
+
+    function saveHeroBg() {
+      const val = document.getElementById('heroBgModalInput').value.trim();
+      localStorage.setItem(STORAGE_KEY_HERO_BG, val);
+      applyHeroCustomBg();
+      closeCustomizationModal();
+      showToast('巨幕海报已保存并应用', '🖼️');
+    }
+
+    function clearHeroBg() {
+      document.getElementById('heroBgModalInput').value = '';
+      localStorage.removeItem(STORAGE_KEY_HERO_BG);
+      applyHeroCustomBg();
+      handleHeroBgPreview('');
+      closeCustomizationModal();
+      showToast('已恢复默认星芒背景', '🌌');
+    }
+
+    function selectPresetAvatar(emoji) {
+      playSound('tap');
+      document.getElementById('avatarInput').value = emoji;
+      handleAvatarPreview(emoji);
+    }
+
+    function handleAvatarPreview(val) {
+      renderAvatarElement(document.getElementById('avatarModalPreviewBox'), val, 'text-3xl');
+    }
+
+    function saveAvatar() {
+      const val = document.getElementById('avatarInput').value.trim() || '👾';
+      localStorage.setItem(STORAGE_KEY_AVATAR, val);
+      applyCustomAvatar();
+      closeCustomizationModal();
+      showToast('个性头像已更新', '👤');
+    }
+
+    function clearAvatar() {
+      document.getElementById('avatarInput').value = '👾';
+      localStorage.removeItem(STORAGE_KEY_AVATAR);
+      applyCustomAvatar();
+      closeCustomizationModal();
+      showToast('已恢复默认头像', '👾');
     }
 
     /* =============================================================== */
-    /* J. EXPORT, REFRESH, AND SETTINGS UTILITIES                      */
+    /* L. EXPORT, REFRESH & UTILITIES                                  */
     /* =============================================================== */
     function openExportModal() {
-      playBeep(480, 'sine', 0.05);
-      const cleanList = games.map(g => ({
+      playSound('tap');
+      const modal = document.getElementById('exportModal');
+      const area = document.getElementById('exportCodeArea');
+      const cleanData = games.map(g => ({
         id: g.id,
         title: g.title,
         category: g.category,
-        icon: g.icon,
-        theme: g.theme,
-        cover: g.cover,
-        description: g.description,
         sourceType: g.sourceType,
-        url: g.url,
-        code: g.sourceType === 'inline' ? g.code : ''
+        url: g.url || '',
+        code: g.code || '',
+        cover: g.cover || '',
+        icon: g.icon || '🎮',
+        theme: g.theme || 'cyber-blue',
+        description: g.description || ''
       }));
 
-      const codeStr = `const DEFAULT_GAMES = ${JSON.stringify(cleanList, null, 2)};`;
-      document.getElementById('exportTextarea').value = codeStr;
-      document.getElementById('exportModal').classList.remove('hidden');
-      document.getElementById('exportModal').classList.add('flex');
+      const codeString = `const DEFAULT_GAMES = ${JSON.stringify(cleanData, null, 2)};`;
+      area.value = codeString;
+      modal.classList.remove('opacity-0', 'pointer-events-none');
     }
 
     function closeExportModal() {
-      document.getElementById('exportModal').classList.add('hidden');
-      document.getElementById('exportModal').classList.remove('flex');
+      const modal = document.getElementById('exportModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
     }
 
     function copyExportCode() {
-      const textarea = document.getElementById('exportTextarea');
-      textarea.select();
+      const area = document.getElementById('exportCodeArea');
+      area.select();
       try {
         document.execCommand('copy');
-        showToast('代码已复制到剪贴板！', '📋');
+        showToast('已成功复制！粘贴至 GitHub 的 DEFAULT_GAMES 即可', '📋');
       } catch (e) {
-        showToast('复制失败，请手动长按复制', '⚠️');
+        showToast('请长按文本框手动全选复制', '⚠️');
       }
-    }
-
-    function refreshContainer() {
-      playBeep(640, 'triangle', 0.08);
-      showToast('正在从 GitHub 穿透缓存刷新...', '🔄');
-      setTimeout(() => {
-        const url = new URL(window.location.href);
-        url.searchParams.set('_v', Date.now());
-        window.location.href = url.toString();
-      }, 500);
     }
 
     function openSettingsModal() {
-      playBeep(480, 'sine', 0.04);
-      document.getElementById('settingsModal').classList.remove('hidden');
-      document.getElementById('settingsModal').classList.add('flex');
+      playSound('tap');
+      const modal = document.getElementById('settingsModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
     }
 
     function closeSettingsModal() {
-      document.getElementById('settingsModal').classList.add('hidden');
-      document.getElementById('settingsModal').classList.remove('flex');
+      const modal = document.getElementById('settingsModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
     }
 
-    function handleResetAllData() {
-      if (confirm('确定要清空本地所有已录入的游戏和自定义海报吗？')) {
+    function refreshContainerHot() {
+      playSound('tap');
+      showToast('正在从 GitHub 强制拉取最新容器代码...', '🔄');
+      setTimeout(() => {
+        const cleanUrl = window.location.href.split('?')[0];
+        window.location.href = `${cleanUrl}?_cache_bust=${Date.now()}`;
+      }, 400);
+    }
+
+    function clearAllLocalData() {
+      if (confirm('确认清空所有已录入的游戏数据吗？此操作不可逆！')) {
         localStorage.removeItem(STORAGE_KEY_GAMES);
         localStorage.removeItem(STORAGE_KEY_HERO_BG);
-        loadStoredData();
-        applyHeroCustomBg();
+        localStorage.removeItem(STORAGE_KEY_AVATAR);
+        games = [];
+        saveGames();
         closeSettingsModal();
-        renderAll();
-        showToast('本地存储已重置', '🧹');
+        initHeroCarousel();
+        renderTodayPick();
+        renderQuickPortals();
+        renderCategoryPills();
+        renderLibrary();
+        applyCustomAvatar();
+        applyHeroCustomBg();
+        showToast('本地游戏库已清空', '🗑️');
       }
     }
+
+    function showToast(msg, icon = '✨') {
+      const box = document.getElementById('toastBox');
+      const tMsg = document.getElementById('toastMsg');
+      const tIcon = document.getElementById('toastIcon');
+      if (!box) return;
+
+      tMsg.textContent = msg;
+      tIcon.textContent = icon;
+      box.classList.remove('opacity-0', 'translate-y-4');
+      box.classList.add('opacity-100', 'translate-y-0');
+
+      setTimeout(() => {
+        box.classList.remove('opacity-100', 'translate-y-0');
+        box.classList.add('opacity-0', 'translate-y-4');
+      }, 2500);
+    }
+
+    /* =============================================================== */
+    /* M. APPLICATION BOOTSTRAPPER                                     */
+    /* =============================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      loadInitialData();
+      initHeroCarousel();
+      renderTodayPick();
+      renderQuickPortals();
+      renderCategoryPills();
+      renderLibrary();
+    });
   </script>
 </body>
 </html>
