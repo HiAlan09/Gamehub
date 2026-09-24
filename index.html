@@ -362,6 +362,7 @@
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </button>
             <button 
+              id="heroSecondaryBtn"
               onclick="switchMainTab('library')" 
               class="px-4 sm:px-5 py-2.5 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-white font-medium text-xs sm:text-sm rounded-xl border border-white/10 backdrop-blur-md transition active:scale-95"
             >
@@ -799,13 +800,23 @@
           </div>
           <div>
             <label class="block font-semibold text-neutral-300 mb-1">游戏分类 *</label>
-            <input 
-              type="text" 
-              id="formGameCategory" 
-              required 
-              placeholder="如：棋牌、益智、街机、策略" 
-              class="w-full bg-neutral-950 text-white text-xs px-3.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
-            />
+            <div class="flex items-center space-x-1.5">
+              <input 
+                type="text" 
+                id="formGameCategory" 
+                required 
+                placeholder="如：棋牌、益智、街机、策略" 
+                class="flex-1 min-w-0 bg-neutral-950 text-white text-xs px-3.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
+              />
+              <select 
+                id="formCategorySelect" 
+                onchange="handleCategorySelectChange(this.value)" 
+                class="shrink-0 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs px-2.5 py-2.5 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 cursor-pointer"
+                title="选择已有分类"
+              >
+                <option value="">▼ 现有分类</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -830,7 +841,9 @@
               <option value="purple">霓虹紫 (Neon Purple)</option>
               <option value="emerald">翡翠绿 (Emerald)</option>
               <option value="amber">黑晶金 (Gold & Amber)</option>
+              <option value="orange">落日橙 (Sunset Orange)</option>
               <option value="rose">烈焰红 (Crimson Rose)</option>
+              <option value="cyan">极光青 (Aurora Cyan)</option>
             </select>
           </div>
         </div>
@@ -845,8 +858,18 @@
             id="formGameCover" 
             placeholder="./covers/game.webp 或 https://..." 
             class="w-full bg-neutral-950 text-white font-mono text-xs px-3.5 py-2 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500"
+            oninput="handleGameCoverPreview(this.value)"
           />
           <p class="text-[11px] text-neutral-500 mt-1">若不填，系统将自动渲染晶体全息渐变质感。</p>
+          
+          <!-- Live Cover Preview Box -->
+          <div id="formCoverPreviewBox" class="mt-2 relative w-full aspect-[16/9] max-h-36 rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 hidden">
+            <img id="formCoverPreviewImg" src="" alt="封面预览" class="w-full h-full object-cover" onerror="handleCoverPreviewError()" />
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-2 left-3 text-[10px] text-neutral-300 font-mono bg-black/60 px-2 py-0.5 rounded-md backdrop-blur-md">
+              🖼️ 16:9 封面预览
+            </div>
+          </div>
         </div>
 
         <!-- Description -->
@@ -1053,11 +1076,23 @@
         badgeBg: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
         overlayGradient: 'linear-gradient(135deg, rgba(217, 119, 6, 0.35) 0%, rgba(42, 25, 6, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
       },
+      orange: {
+        gradient: 'from-orange-500 via-amber-600 to-neutral-950',
+        accentGlow: 'rgba(249, 115, 22, 0.35)',
+        badgeBg: 'bg-orange-500/20 text-orange-300 border-orange-500/40',
+        overlayGradient: 'linear-gradient(135deg, rgba(234, 88, 12, 0.35) 0%, rgba(45, 20, 5, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
+      },
       rose: {
         gradient: 'from-rose-600 via-pink-800 to-neutral-950',
         accentGlow: 'rgba(244, 63, 94, 0.35)',
         badgeBg: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
         overlayGradient: 'linear-gradient(135deg, rgba(225, 29, 72, 0.35) 0%, rgba(42, 10, 20, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
+      },
+      cyan: {
+        gradient: 'from-cyan-500 via-teal-700 to-neutral-950',
+        accentGlow: 'rgba(6, 182, 212, 0.35)',
+        badgeBg: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+        overlayGradient: 'linear-gradient(135deg, rgba(8, 145, 178, 0.35) 0%, rgba(8, 30, 40, 0.4) 60%, rgba(10, 10, 12, 0.8) 100%)'
       }
     };
 
@@ -1190,7 +1225,7 @@
     function initHeroCarousel() {
       if (heroTimer) clearInterval(heroTimer);
       heroTimer = setInterval(() => {
-        if (games.length > 1) {
+        if (games.length > 0) {
           nextHeroSlide(false);
         }
       }, 7000);
@@ -1205,29 +1240,99 @@
       const categoryBadge = document.getElementById('heroCategoryBadge');
       const indicator = document.getElementById('heroSlideIndicator');
       const launchBtn = document.getElementById('heroLaunchBtn');
+      const secondaryBtn = document.getElementById('heroSecondaryBtn');
+      const heroBgImg = document.getElementById('heroCustomBgImg');
+      const totalSlides = games.length + 1; // Slide 0 is ALWAYS "我的主页"
 
-      if (games.length === 0) {
-        titleEl.textContent = '欢迎进入 Arcade Station';
-        descEl.textContent = 'iPad Pro 专属独立沙盒游戏中心。点击右上角「录入游戏」即可开启你的专属游戏库！';
-        iconEl.textContent = '👾';
-        subEl.innerHTML = '<span>STATUS: READY</span> • <span>iPad Pro 120Hz PROMOTION 适配</span>';
-        categoryBadge.textContent = '准备就绪';
-        indicator.textContent = '0 / 0';
-        launchBtn.classList.add('hidden');
+      if (heroIndex >= totalSlides) heroIndex = 0;
+      if (heroIndex < 0) heroIndex = totalSlides - 1;
+
+      if (indicator) indicator.textContent = `${heroIndex + 1} / ${totalSlides}`;
+
+      // SLIDE 0: 始终为用户的专属「我的主页」
+      if (heroIndex === 0) {
+        applyHeroCustomBg();
+        const savedAvatar = localStorage.getItem(STORAGE_KEY_AVATAR) || '👾';
+        renderAvatarElement(iconEl, savedAvatar, 'text-3xl sm:text-4xl');
+        
+        if (categoryBadge) {
+          categoryBadge.textContent = '我的主页';
+          categoryBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 backdrop-blur-xl';
+        }
+
+        if (titleEl) titleEl.textContent = '欢迎进入 Arcade Station';
+        if (subEl) subEl.innerHTML = '<span>STATUS: READY</span> • <span>iPad Pro 120Hz PROMOTION 适配</span>';
+        
+        if (games.length === 0) {
+          if (descEl) descEl.textContent = 'iPad Pro 专属独立沙盒游戏中心。点击右上角「录入游戏」即可开启你的专属游戏库！';
+          if (launchBtn) launchBtn.innerHTML = `<span>录入新游戏</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>`;
+        } else {
+          if (descEl) descEl.textContent = `iPad Pro 专属独立沙盒游戏中心。已收录 ${games.length} 款精彩游戏，可向右翻动查看精选展台，或直接进入游戏库畅玩！`;
+          if (launchBtn) launchBtn.innerHTML = `<span>进入游戏大厅</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+        }
+
+        if (secondaryBtn) {
+          secondaryBtn.textContent = '个性装扮 🎨';
+          secondaryBtn.onclick = () => openCustomizationModal('poster');
+        }
         return;
       }
 
-      launchBtn.classList.remove('hidden');
-      if (heroIndex >= games.length) heroIndex = 0;
-      if (heroIndex < 0) heroIndex = games.length - 1;
+      // SLIDE 1 ~ N: 轮播展示收录的具体游戏卡片
+      const g = games[heroIndex - 1];
+      if (!g) return;
 
-      const g = games[heroIndex];
-      titleEl.textContent = g.title;
-      descEl.textContent = g.description || '暂无描述信息。享受沉浸触控博弈乐趣。';
+      // 如果游戏配置了海报，使用游戏海报；否则回退到全局海报或渐变
+      if (heroBgImg) {
+        if (g.cover && g.cover.trim().length > 0) {
+          heroBgImg.src = g.cover.trim();
+          heroBgImg.classList.remove('hidden');
+        } else {
+          applyHeroCustomBg();
+        }
+      }
+
       renderAvatarElement(iconEl, g.icon || '🎮', 'text-3xl sm:text-4xl');
-      subEl.innerHTML = `<span>CATEGORY: ${g.category || '独立精选'}</span> • <span>HOT SPOTLIGHT</span>`;
-      categoryBadge.textContent = g.category || '精选主打';
-      indicator.textContent = `${heroIndex + 1} / ${games.length}`;
+      if (titleEl) titleEl.textContent = g.title;
+      if (subEl) subEl.innerHTML = `<span>CATEGORY: ${g.category || '独立精选'}</span> • <span>HOT SPOTLIGHT</span>`;
+      if (categoryBadge) {
+        categoryBadge.textContent = g.category || '精选主打';
+        categoryBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white/10 text-neutral-300 border border-white/10 backdrop-blur-xl';
+      }
+
+      if (descEl) descEl.textContent = g.description || '暂无描述信息。享受沉浸触控博弈乐趣。';
+
+      if (launchBtn) launchBtn.innerHTML = `<span>立即进入</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+      if (secondaryBtn) {
+        secondaryBtn.textContent = '浏览全部游戏库 →';
+        secondaryBtn.onclick = () => switchMainTab('library');
+      }
+    }
+
+    function prevHeroSlide() {
+      playBeep(380, 'triangle', 0.05);
+      const totalSlides = games.length + 1;
+      heroIndex = (heroIndex - 1 + totalSlides) % totalSlides;
+      updateHeroBanner();
+    }
+
+    function nextHeroSlide(manual = true) {
+      if (manual) playBeep(440, 'triangle', 0.05);
+      const totalSlides = games.length + 1;
+      heroIndex = (heroIndex + 1) % totalSlides;
+      updateHeroBanner();
+    }
+
+    function launchHeroGame() {
+      if (heroIndex === 0) {
+        if (games.length === 0) {
+          openAddGameModal();
+        } else {
+          switchMainTab('library');
+        }
+      } else if (games.length > 0 && games[heroIndex - 1]) {
+        openSandboxGame(games[heroIndex - 1].id);
+      }
     }
 
     /* Helper: Render Emoji or Image Avatar into Container */
@@ -1360,24 +1465,6 @@
       showToast('已恢复默认头像', '👾');
     }
 
-    function prevHeroSlide() {
-      playBeep(380, 'triangle', 0.05);
-      heroIndex--;
-      updateHeroBanner();
-    }
-
-    function nextHeroSlide(manual = true) {
-      if (manual) playBeep(440, 'triangle', 0.05);
-      heroIndex++;
-      updateHeroBanner();
-    }
-
-    function launchHeroGame() {
-      if (games.length > 0 && games[heroIndex]) {
-        openSandboxGame(games[heroIndex].id);
-      }
-    }
-
     function handleHeroBgPreview(url) {
       const pImg = document.getElementById('heroBgModalPreviewImg');
       if (url && url.trim()) {
@@ -1386,6 +1473,57 @@
       } else {
         pImg.src = '';
         pImg.classList.add('hidden');
+      }
+    }
+
+    /* Game Edit Form: Live Cover Preview Engine */
+    function handleGameCoverPreview(url) {
+      const box = document.getElementById('formCoverPreviewBox');
+      const img = document.getElementById('formCoverPreviewImg');
+      if (!box || !img) return;
+
+      if (url && url.trim().length > 0) {
+        img.src = url.trim();
+        box.classList.remove('hidden');
+      } else {
+        img.src = '';
+        box.classList.add('hidden');
+      }
+    }
+
+    function handleCoverPreviewError() {
+      const box = document.getElementById('formCoverPreviewBox');
+      if (box) box.classList.add('hidden');
+    }
+
+    /* Category Dropdown Engine: Memorize & Quick Select */
+    function populateCategoryDropdown() {
+      const select = document.getElementById('formCategorySelect');
+      if (!select) return;
+
+      // 从当前已有游戏库中提取全部不重复的分类列表
+      const existingCategories = Array.from(
+        new Set(games.map(g => (g.category || '').trim()).filter(Boolean))
+      );
+
+      select.innerHTML = '<option value="">▼ 现有分类</option>';
+      if (existingCategories.length === 0) {
+        select.innerHTML += '<option value="" disabled>（暂无已有分类）</option>';
+      } else {
+        existingCategories.forEach(cat => {
+          const opt = document.createElement('option');
+          opt.value = cat;
+          opt.textContent = cat;
+          select.appendChild(opt);
+        });
+      }
+    }
+
+    function handleCategorySelectChange(val) {
+      if (val) {
+        document.getElementById('formGameCategory').value = val;
+        // 选用后自动重置下拉选框为占位符
+        document.getElementById('formCategorySelect').value = '';
       }
     }
 
@@ -1946,6 +2084,10 @@
       document.getElementById('formGameUrl').value = '';
       document.getElementById('formGameCode').value = '';
 
+      // 填充分类下拉选框并重置海报预览
+      populateCategoryDropdown();
+      handleGameCoverPreview('');
+
       document.getElementById('sourceTypeUrl').checked = true;
       toggleSourceType('url');
       document.getElementById('deleteGameBtn').classList.add('hidden');
@@ -1970,6 +2112,10 @@
       document.getElementById('formGameDesc').value = g.description || '';
       document.getElementById('formGameUrl').value = g.url || '';
       document.getElementById('formGameCode').value = g.code || '';
+
+      // 填充已有分类列表并呈现当前封面预览
+      populateCategoryDropdown();
+      handleGameCoverPreview(g.cover || '');
 
       if (g.sourceType === 'inline') {
         document.getElementById('sourceTypeInline').checked = true;
